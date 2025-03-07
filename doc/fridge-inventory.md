@@ -36,6 +36,7 @@ erDiagram
         varchar category "カテゴリー"
         timestamp purchase_date "購入日"
         timestamp expiration "賞味期限"
+        bigint user_id FK "ユーザーID:user.id"
     }
     shopping_list {
         bigint id PK "ID"
