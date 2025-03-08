@@ -10,6 +10,7 @@ erDiagram
 
     account ||--o{ users : ""
     inventory ||--o{ purchases : ""
+    purchases ||--|| users : ""
 
     account {
         bigint id PK "ID"
@@ -25,18 +26,16 @@ erDiagram
         bigint id PK "ID"
         varchar category "カテゴリー"
         varcher general_name "一般名"
-        timestamp expiration "賞味期限"
         int remaining "残量"
     }
     purchases {
         bigint id PK "ID"
         bigint inventory_id FK "在庫ID:inventory.id"
+        bigint user_id FK "ユーザーID:users.id"
         varcher name "商品名"
         varcher general_name "一般名"
         varchar category "カテゴリー"
         timestamp purchase_date "購入日"
-        timestamp expiration "賞味期限"
-        bigint user_id FK "ユーザーID:user.id"
     }
     shopping_list {
         bigint id PK "ID"
