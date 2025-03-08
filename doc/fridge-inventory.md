@@ -11,6 +11,7 @@ erDiagram
     account ||--o{ users : ""
     inventory ||--o{ purchases : ""
     purchases ||--|| users : ""
+    shopping_list ||--|| inventory : ""
 
     account {
         bigint id PK "ID"
@@ -39,6 +40,7 @@ erDiagram
     }
     shopping_list {
         bigint id PK "ID"
+        bigint inventory_id FK "在庫ID:inventory.id"
         varcher name "品名"
         timestamp created_at "入力日"
         timestamp due_date "期限日"
