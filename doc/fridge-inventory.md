@@ -61,7 +61,7 @@ erDiagram
         string id PK "ID"
         string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
         string name "品名"
-        float remaining "残数"
+        decimal remaining "残数"
     }
     purchases {
         string id PK "ID"
@@ -71,14 +71,14 @@ erDiagram
         string name "商品名"
         string general_name "一般名（null許容）"
         string category "カテゴリー（null許容）"
-        timestamp purchase_date "購入日"
+        datetime purchase_date "購入日"
     }
     shopping_list {
         string id PK "ID"
         string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "品名"
-        timestamp created_at "入力日"
-        timestamp due_date "期限日（null許容）"
+        datetime created_at "入力日"
+        datetime due_date "期限日（null許容）"
     }
 ```
