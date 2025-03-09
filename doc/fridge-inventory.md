@@ -45,7 +45,7 @@ erDiagram
         string id PK "ID"
         string user_id FK "ユーザーID:users.id"
         string hashed_password "ハッシュ化パスワード"
-        boolean verified "検証済"
+        datetime email_verified "メール検証済日時"
         datetime created_at "作成日時"
     }
     user_fi_account{
