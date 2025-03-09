@@ -45,12 +45,12 @@ erDiagram
         string id PK "ID"
         string user_id FK "ユーザーID:users.id"
         string hashed_password "ハッシュ化パスワード"
-        datetime email_verified "メール検証済日時"
+        datetime email_verified "認証日時"
         datetime created_at "作成日時"
     }
     user_fi_account{
         string user_id FK "ユーザーID:users.id"
-        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string fi_account_id FK "在庫管理ID:fi_accounts.id"
     }
     fi_accounts {
         string id PK "ID"
@@ -59,7 +59,7 @@ erDiagram
     }
     inventories {
         string id PK "ID"
-        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string fi_account_id FK "在庫管理ID:fi_accounts.id"
         string name "品名"
         decimal remaining "残数"
     }
@@ -76,6 +76,7 @@ erDiagram
     shopping_list {
         string id PK "ID"
         string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string user_id FK "ユーザーID:users.id"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "品名"
         datetime created_at "入力日"
