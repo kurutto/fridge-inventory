@@ -14,7 +14,10 @@ erDiagram
     users ||--|{ user_fi_account : ""
     fi_accounts ||--|{ user_fi_account : ""
     inventories ||--o{ purchases : ""
-    purchases ||--|| users : ""
+    users ||--|{ purchases : ""
+    fi_accounts ||--o{ purchases : ""
+    fi_accounts ||--o{ inventories : ""
+    fi_accounts ||--o{ shopping_list : ""
     shopping_list ||--|| inventories : ""
 
     accounts {
@@ -56,20 +59,23 @@ erDiagram
     }
     inventories {
         string id PK "ID"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
         string name "品名"
         float remaining "残数"
     }
     purchases {
         string id PK "ID"
-        string inventory_id FK "在庫ID:inventories.id（null許容）"
         string user_id FK "ユーザーID:users.id"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "商品名"
-        string general_name "一般名"
+        string general_name "一般名（null許容）"
         string category "カテゴリー（null許容）"
         timestamp purchase_date "購入日"
     }
     shopping_list {
         string id PK "ID"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "品名"
         timestamp created_at "入力日"
