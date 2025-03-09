@@ -4,44 +4,82 @@
 
 ```mermaid
 ---
-title: "タイトル"
+title: "常備品管理ができる買い物リストアプリ"
 ---
 erDiagram
 
-    account ||--o{ users : ""
-    inventory ||--o{ purchases : ""
+    users ||--|{ accounts : ""
+    users ||--|{ credentials : ""
+    fi_accounts ||--|{ users : ""
+    users ||--|{ user_fi_account : ""
+    fi_accounts ||--|{ user_fi_account : ""
+    inventories ||--o{ purchases : ""
+    users ||--|{ purchases : ""
+    fi_accounts ||--o{ purchases : ""
+    fi_accounts ||--o{ inventories : ""
+    fi_accounts ||--o{ shopping_list : ""
+    shopping_list ||--|| inventories : ""
 
-    account {
-        bigint id PK "ID"
-        varchar name "名前"
-        varchar description "説明"
+    accounts {
+        string id PK "ID"
+        string user_id FK "ユーザーID:users.id"
+        string type "タイプ"
+        string provider "プロバイダー"
+        string provider_account_id "プロバイダーアカウントID"
+        string refresh_token "リフレッシュトークン（null許容）"
+        string access_token "アクセストークン（null許容）"
+        int expires_at "有効期限（null許容）"
+        string token_type "アクセストークンの種類（null許容）"
+        string scope "スコープ（null許容）"
+        string id_token "ID トークン（null許容）"
+        string session_state "セッションの状態（null許容）"
     }
     users {
-        bigint id PK "ID"
-        bigint account_id FK "アカウントID:account.id"
-        varchar name "名前"
+        string id PK "ID"
+        string name "名前（null許容）"
+        string email "メールアドレス（null許容）"
+        datetime email_verified "認証日時（null許容）"
+        string image "イメージ画像（null許容）"
     }
-    inventory {
-        bigint id PK "ID"
-        varchar category "カテゴリー"
-        varcher general_name "一般名"
-        timestamp expiration "賞味期限"
-        int remaining "残量"
+    credentials{
+        string id PK "ID"
+        string user_id FK "ユーザーID:users.id"
+        string hashed_password "ハッシュ化パスワード"
+        datetime email_verified "認証日時"
+        datetime created_at "作成日時"
+    }
+    user_fi_account{
+        string user_id FK "ユーザーID:users.id"
+        string fi_account_id FK "在庫管理ID:fi_accounts.id"
+    }
+    fi_accounts {
+        string id PK "ID"
+        string name "名前（null許容）"
+        string description "説明（null許容）"
+    }
+    inventories {
+        string id PK "ID"
+        string fi_account_id FK "在庫管理ID:fi_accounts.id"
+        string name "品名"
+        decimal remaining "残数"
     }
     purchases {
-        bigint id PK "ID"
-        bigint inventory_id FK "在庫ID:inventory.id"
-        varcher name "商品名"
-        varcher general_name "一般名"
-        varchar category "カテゴリー"
-        timestamp purchase_date "購入日"
-        timestamp expiration "賞味期限"
-        bigint user_id FK "ユーザーID:user.id"
+        string id PK "ID"
+        string user_id FK "ユーザーID:users.id"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string inventory_id FK "在庫ID:inventories.id（null許容）"
+        string name "商品名"
+        string general_name "一般名（null許容）"
+        string category "カテゴリー（null許容）"
+        datetime purchase_date "購入日"
     }
     shopping_list {
-        bigint id PK "ID"
-        varcher name "品名"
-        timestamp created_at "入力日"
-        timestamp due_date "期限日"
+        string id PK "ID"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string user_id FK "ユーザーID:users.id(null許容(inventory自動挿入))"
+        string inventory_id FK "在庫ID:inventories.id（null許容）"
+        string name "品名"
+        datetime created_at "入力日"
+        datetime due_date "期限日（null許容）"
     }
 ```
