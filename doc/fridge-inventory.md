@@ -23,14 +23,16 @@ erDiagram
     accounts {
         string id PK "ID"
         string user_id FK "ユーザーID:users.id"
-        string providerType "プロバイダー"
-        string provider_id "プロバイダーID"
+        string type "タイプ"
+        string provider "プロバイダー"
         string provider_account_id "プロバイダーアカウントID"
         string refresh_token "リフレッシュトークン（null許容）"
         string access_token "アクセストークン（null許容）"
-        datetime access_token_expires "アクセストークンの有効期限（null許容）"
-        datetime created_at "作成日時"
-        datetime updated_at "更新日時"
+        int expires_at "有効期限（null許容）"
+        string token_type "アクセストークンの種類（null許容）"
+        string scope "スコープ（null許容）"
+        string id_token "ID トークン（null許容）"
+        string session_state "セッションの状態（null許容）"
     }
     users {
         string id PK "ID"
@@ -38,8 +40,6 @@ erDiagram
         string email "メールアドレス（null許容）"
         datetime email_verified "認証日時（null許容）"
         string image "イメージ画像（null許容）"
-        datetime created_at "作成日時"
-        datetime updated_at "更新日時"
     }
     credentials{
         string id PK "ID"
