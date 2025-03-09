@@ -11,6 +11,8 @@ erDiagram
     users ||--|{ accounts : ""
     users ||--|{ credentials : ""
     fi_accounts ||--|{ users : ""
+    users ||--|{ user_fi_account : ""
+    fi_accounts ||--|{ user_fi_account : ""
     inventories ||--o{ purchases : ""
     purchases ||--|| users : ""
     shopping_list ||--|| inventories : ""
@@ -21,19 +23,18 @@ erDiagram
         string providerType "プロバイダー"
         string provider_id "プロバイダーID"
         string provider_account_id "プロバイダーアカウントID"
-        string refresh_token "リフレッシュトークン"
-        string access_token "アクセストークン"
-        datetime access_token_expires "アクセストークンの有効期限"
+        string refresh_token "リフレッシュトークン（null許容）"
+        string access_token "アクセストークン（null許容）"
+        datetime access_token_expires "アクセストークンの有効期限（null許容）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
     users {
         string id PK "ID"
-        string app_account FK "在庫管理カウント:fi_accounts.id"
-        string name "名前"
-        string email "メールアドレス"
+        string name "名前（null許容）"
+        string email "メールアドレス（null許容）"
         datetime email_verified "認証日時（null許容）"
-        string image "イメージ画像"
+        string image "イメージ画像（null許容）"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -44,10 +45,13 @@ erDiagram
         boolean verified "検証済"
         datetime created_at "作成日時"
     }
+    user_fi_account{
+        string user_id FK "ユーザーID:users.id"
+        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+    }
     fi_accounts {
         string id PK "ID"
-        string hashed_password "ハッシュ化パスワード"
-        string name "名前"
+        string name "名前（null許容）"
         string description "説明（null許容）"
     }
     inventories {
