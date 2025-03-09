@@ -76,7 +76,7 @@ erDiagram
     shopping_list {
         string id PK "ID"
         string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
-        string user_id FK "ユーザーID:users.id"
+        string user_id FK "ユーザーID:users.id(null許容(inventory自動挿入))"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "品名"
         datetime created_at "入力日"
