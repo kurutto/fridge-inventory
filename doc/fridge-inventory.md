@@ -54,7 +54,7 @@ erDiagram
     }
     fi_accounts {
         string id PK "ID"
-        string name "名前（null許容）"
+        string name "名前"
         string description "説明（null許容）"
     }
     inventories {
@@ -62,7 +62,7 @@ erDiagram
         string fi_account_id FK "在庫管理ID:fi_accounts.id"
         string name "品名"
         decimal remaining "残数"
-        decimal stock "備蓄"
+        int stock "備蓄"
     }
     purchases {
         string id PK "ID"
