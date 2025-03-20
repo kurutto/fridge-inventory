@@ -10,7 +10,6 @@ erDiagram
 
     users ||--|{ accounts : ""
     users ||--|{ credentials : ""
-    fridges ||--|{ users : ""
     users ||--|{ user_fridge : ""
     fridges ||--|{ user_fridge : ""
     inventories ||--o{ purchases : ""
