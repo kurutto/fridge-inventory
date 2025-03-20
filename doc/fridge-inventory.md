@@ -10,15 +10,15 @@ erDiagram
 
     users ||--|{ accounts : ""
     users ||--|{ credentials : ""
-    fi_accounts ||--|{ users : ""
-    users ||--|{ user_fi_account : ""
-    fi_accounts ||--|{ user_fi_account : ""
+    fridges ||--|{ users : ""
+    users ||--|{ user_fridge : ""
+    fridges ||--|{ user_fridge : ""
     inventories ||--o{ purchases : ""
     users ||--|{ purchases : ""
-    fi_accounts ||--o{ purchases : ""
-    fi_accounts ||--o{ inventories : ""
-    fi_accounts ||--o{ shopping_list : ""
-    shopping_list ||--|| inventories : ""
+    fridges ||--o{ purchases : ""
+    fridges ||--o{ inventories : ""
+    fridges ||--o{ shopping_lists : ""
+    shopping_lists ||--|| inventories : ""
 
     accounts {
         string id PK "ID"
@@ -53,11 +53,11 @@ erDiagram
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
-    user_fi_account{
+    user_fridge{
         string user_id FK "ユーザーID:users.id"
-        string fi_account_id FK "在庫管理ID:fi_accounts.id"
+        string fridge_id FK "冷蔵庫ID:fridges.id"
     }
-    fi_accounts {
+    fridges {
         string id PK "ID"
         string name "名前"
         string description "説明（null許容）"
@@ -66,7 +66,7 @@ erDiagram
     }
     inventories {
         string id PK "ID"
-        string fi_account_id FK "在庫管理ID:fi_accounts.id"
+        string fridge_id FK "冷蔵庫ID:fridges.id"
         string name "品名"
         decimal remaining "残数"
         int stock "備蓄"
@@ -76,7 +76,7 @@ erDiagram
     purchases {
         string id PK "ID"
         string user_id FK "ユーザーID:users.id"
-        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string fridge_id FK "冷蔵庫ID:fridges.id"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "商品名"
         int category "カテゴリー（null許容）"
@@ -86,7 +86,7 @@ erDiagram
     }
     shopping_lists {
         string id PK "ID"
-        string fi_accounts_id FK "在庫管理ID:fi_accounts.id"
+        string fridge_id FK "冷蔵庫ID:fridges.id"
         string user_id FK "ユーザーID:users.id(null許容(inventory自動挿入))"
         string inventory_id FK "在庫ID:inventories.id（null許容）"
         string name "品名"
