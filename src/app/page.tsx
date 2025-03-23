@@ -6,9 +6,9 @@ export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
   console.log(session);
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main>
+      <main className="flex-1 md:px-5 md:py-16 md:max-w-7xl md:mx-auto max-md:px-4 max-md:py-6 max-md:bg-light-gray">
         {session ? (
           <a href="/api/auth/signout">ログアウト</a>
         ) : (
