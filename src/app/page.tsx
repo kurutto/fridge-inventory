@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/lib/next-auth/options";
 import Header from "@/components/header/header";
+import BottomMenu from "@/components/bottom-menu/bottom-menu";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -15,6 +16,7 @@ export default async function Home() {
           <a href="/signin">ログイン</a>
         )}
       </main>
+      <BottomMenu className="md:hidden fixed bottom-0 left-0 w-full" />
     </div>
   );
 }
