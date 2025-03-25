@@ -95,7 +95,7 @@ const CredentialSignup = () => {
         setSendMessage("");
         setResponseMessage(data.message);
       }
-    } catch (err) {
+    } catch {
       setError("root", { message: "サーバーエラーが発生しました" });
     }
   };
