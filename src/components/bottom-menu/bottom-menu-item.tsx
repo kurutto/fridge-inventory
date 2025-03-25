@@ -5,7 +5,7 @@ interface BottomMenuItemProps
   extends Omit<ComponentPropsWithoutRef<"li">, "className"> {
   className?: string;
   href?: string;
-  icon: React.ComponentType<any>;
+  icon: React.ElementType;
   children: React.ReactNode;
 }
 const BottomMenuItem = ({
