@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 
 const accounts = ["account1", "account2"];
 
-const page = () => {
+const AccountPage = () => {
   const router = useRouter();
   const { data: session, update } = useSession();
-  if(!session){
+  if (!session) {
     router.push("/login");
   }
-  if(session && session.user.account){
+  if (session && session.user.account) {
     router.push("/");
   }
   const handleAccount = async (data: string) => {
@@ -32,4 +32,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AccountPage;

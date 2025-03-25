@@ -1,15 +1,31 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import { cn } from "@/lib/utils";
+import type { ComponentPropsWithoutRef } from "react";
+import HamburgerMenuLink from "./hamburger-menu-link";
 
-interface HamburgerSubMenuItemProps   
-extends Omit<ComponentPropsWithoutRef<'li'>, "className"> {
+interface HamburgerSubMenuItemProps
+  extends Omit<ComponentPropsWithoutRef<"li">, "className"> {
+  href?: string;
+  children: React.ReactNode;
   className?: string;
-  children:React.ReactNode;
 }
 
-const HamburgerSubMenuItem = ({className,children,...props}:HamburgerSubMenuItemProps) => {
+const HamburgerSubMenuItem = ({
+  href,
+  children,
+  className,
+  ...props
+}: HamburgerSubMenuItemProps) => {
+  const baseStyle = "pt-2 pl-3";
+  const Tag: React.ElementType = href ? HamburgerMenuLink : "div";
+  const tagProps = Tag === HamburgerMenuLink ? { href } : {};
+
   return (
-    <li className='md:hover:opacity-65 pt-2 pl-3 cursor-pointer'>-&nbsp;{children}</li>
-  )
-}
+    <li className={cn(baseStyle, className)} {...props}>
+      <Tag className="md:hover:opacity-65 md:cursor-pointer" {...tagProps}>
+        -&nbsp;{children}
+      </Tag>
+    </li>
+  );
+};
 
-export default HamburgerSubMenuItem
+export default HamburgerSubMenuItem;

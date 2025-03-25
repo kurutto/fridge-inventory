@@ -1,14 +1,26 @@
-import type { ComponentPropsWithoutRef } from 'react'
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import type { ComponentPropsWithoutRef } from "react";
 
 interface MenuItemProps
-  extends Omit<ComponentPropsWithoutRef<'li'>, "className"> {
+  extends Omit<ComponentPropsWithoutRef<"li">, "className"> {
+  href?: string;
+  children: React.ReactNode;
   className?: string;
-  children:React.ReactNode;
 }
-const MenuItem = ({className,children,...props}:MenuItemProps) => {
-  return (
-    <li className="md:hover:opacity-65 transition-opacity" {...props}>{children}</li>
-  )
-}
+const MenuItem = ({ href, children, className, ...props }: MenuItemProps) => {
+  const baseStyle =
+    "md:hover:opacity-65 md:cursor-pointer md:transition-opacity";
+  const Tag: React.ElementType = href ? Link : "div";
+  const tagProps = Tag === Link ? { href } : {};
 
-export default MenuItem
+  return (
+    <li className={cn(baseStyle, className)} {...props}>
+      <Tag className="block" {...tagProps}>
+        {children}
+      </Tag>
+    </li>
+  );
+};
+
+export default MenuItem;

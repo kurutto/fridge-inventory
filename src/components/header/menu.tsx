@@ -1,20 +1,25 @@
+'use client'
 import { cn } from "@/lib/utils";
-import type { ComponentPropsWithoutRef } from 'react'
-import Link from "next/link";
+import type { ComponentPropsWithoutRef } from "react";
+import { menuItems } from "@/constants/menuItems";
 import MenuItem from "./menu-item";
 
-interface MenuProps
-  extends Omit<ComponentPropsWithoutRef<'ul'>, "className"> {
+interface MenuProps extends Omit<ComponentPropsWithoutRef<"ul">, "className"> {
   className?: string;
 }
 const Menu = ({ className, ...props }: MenuProps) => {
-  const baseStyle = "";
+  const baseStyle = "max-md:hidden flex md:gap-6 lg:gap-7 max-lg:text-sm";
   return (
     <ul className={cn(baseStyle, className)} {...props}>
-      <MenuItem><Link href="">買物リスト追加</Link></MenuItem>
-      <MenuItem><Link href="">在庫管理追加</Link></MenuItem>
-      <MenuItem><Link href="">購入品追加</Link></MenuItem>
-      <MenuItem><Link href="">購入履歴追加</Link></MenuItem>
+      {menuItems.map((menuItem, idx) => (
+        <MenuItem
+          href={menuItem.link}
+          onClick={menuItem.func}
+          key={idx}
+        >
+          {menuItem.title}
+        </MenuItem>
+      ))}
     </ul>
   );
 };
