@@ -2,6 +2,7 @@ import Logo from "@/assets/logo";
 import Menu from "./menu";
 import HamburgerMenu from "./hamburger-menu";
 import Link from "next/link";
+import HeaderFridgeAccount from "./header-fridge-account";
 
 const Header = () => {
   return (
@@ -16,9 +17,7 @@ const Header = () => {
       </h1>
       <div className="flex items-center lg:gap-7 md:gap-6 max-md:gap-3">
         <Menu />
-        <div className="md:py-1.5 md:px-3 md:rounded-md md:bg-secondary max-lg:text-sm max-md:text-base max-md:text-white">
-          冷蔵庫アカウント
-        </div>
+        <HeaderFridgeAccount />
         <HamburgerMenu />
       </div>
     </header>
