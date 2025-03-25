@@ -3,7 +3,6 @@ import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 import { menuItems } from "@/constants/menuItems";
 import BottomMenuItem from "./bottom-menu-item";
-import Link from "next/link";
 
 interface BottomMenuProps
   extends Omit<ComponentPropsWithoutRef<"ul">, "className"> {
