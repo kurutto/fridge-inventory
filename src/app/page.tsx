@@ -5,6 +5,7 @@ import BottomMenu from "@/components/bottom-menu/bottom-menu";
 import Link from "next/link";
 import { FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import Heading from "@/components/ui/heading";
+import Button from "@/components/ui/button";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -23,6 +24,34 @@ export default async function Home() {
           入力して登録
         </Heading>
         <Heading level={3}>入力して登録</Heading>
+
+        <Heading level={2} outline={true}>
+          button
+        </Heading>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>baseボタン</Heading>
+          <Button color="primary">primary color</Button>
+          <Button color="secondary">secondary color</Button>
+          <Button color="destructive">destructive color</Button>
+        </div>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>smallボタン</Heading>
+          <Button variant="small" color="secondary">
+            テスト
+          </Button>
+        </div>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>addボタン</Heading>
+          <Button variant="add" color="primary" />
+        </div>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>deleteボタン</Heading>
+          <Button variant="delete" />
+        </div>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>photoボタン</Heading>
+          <Button variant="photo" color="primary" />
+        </div>
         {session ? (
           <Link href="/api/auth/signout">ログアウト</Link>
         ) : (
