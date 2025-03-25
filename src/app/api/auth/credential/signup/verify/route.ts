@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, res: NextResponse) {
+export async function GET(req: Request) {
   try {
     const token = await req.url.split("?token=")[1];
     if (!token) {

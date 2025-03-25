@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { createId } from "@paralleldrive/cuid2";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   try {
     const { userId, name, email, password } = await req.json();
 
