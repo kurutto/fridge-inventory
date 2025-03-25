@@ -22,7 +22,7 @@ export const nextAuthOptions: NextAuthOptions = {
         id: { label: "ID", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/credential/signin`,
           {
