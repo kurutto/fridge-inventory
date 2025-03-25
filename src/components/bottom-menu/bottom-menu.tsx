@@ -1,9 +1,7 @@
+"use client";
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
-import { FaListUl } from "react-icons/fa6";
-import { FaCubesStacked } from "react-icons/fa6";
-import { FaBagShopping } from "react-icons/fa6";
-import { FaFileLines } from "react-icons/fa6";
+import { menuItems } from "@/constants/menuItems";
 import BottomMenuItem from "./bottom-menu-item";
 import Link from "next/link";
 
@@ -15,18 +13,16 @@ const BottomMenu = ({ className, ...props }: BottomMenuProps) => {
   const baseStyle = "grid grid-cols-4 bg-white";
   return (
     <ul className={cn(baseStyle, className)} {...props}>
-      <BottomMenuItem as="div" icon={FaListUl}>
-        買物リスト追加
-      </BottomMenuItem>
-      <BottomMenuItem as="div" icon={FaCubesStacked}>
-        在庫管理追加
-      </BottomMenuItem>
-      <BottomMenuItem as={Link} href="/" icon={FaBagShopping}>
-        購入品追加
-      </BottomMenuItem>
-      <BottomMenuItem as={Link} href="/" icon={FaFileLines}>
-        購入品履歴
-      </BottomMenuItem>
+      {menuItems.map((menuItem, idx) => (
+        <BottomMenuItem
+          icon={menuItem.icon}
+          href={menuItem.link}
+          onClick={menuItem.func}
+          key={idx}
+        >
+          {menuItem.title}
+        </BottomMenuItem>
+      ))}
     </ul>
   );
 };

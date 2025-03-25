@@ -1,34 +1,29 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
+import HamburgerMenuLink from "./hamburger-menu-link";
 
 interface HamburgerMenuItemProps
   extends Omit<ComponentPropsWithoutRef<"li">, "className"> {
-  className?: string;
+  href?: string;
   children: React.ReactNode;
-  hasSub?:boolean;
-  link?: boolean;
-  href?:string;
+  className?: string;
 }
 
 const HamburgerMenuItem = ({
-  className,
-  children,
-  hasSub = false,
-  link =true,
   href,
+  children,
+  className,
   ...props
 }: HamburgerMenuItemProps) => {
-  const baseStyle = "block p-4 border-b border-dotted border-gray";
+  const baseStyle = "border-b border-dotted border-gray";
+  const Tag: React.ElementType = href ? HamburgerMenuLink : "div";
+  const tagProps = Tag === HamburgerMenuLink ? { href } : {};
+
   return (
-    <li
-      className={`${!link && baseStyle}  ${
-        !hasSub && "md:hover:opacity-65 md:cursor-pointer"}`}
-      {...props}
-    >
-      {link && href ? (
-        <Link href={href} className={baseStyle}>{children}</Link>
-      ) : (<>{children}</>)}
+    <li className={cn(baseStyle, className)} {...props}>
+      <Tag className="p-4" {...tagProps}>
+        {children}
+      </Tag>
     </li>
   );
 };
