@@ -6,6 +6,9 @@ import Link from "next/link";
 import { FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import Heading from "@/components/ui/heading";
 import Button from "@/components/ui/button";
+import Input from "@/components/ui/input";
+import Select from "@/components/ui/select";
+import Label from "@/components/ui/label";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -24,7 +27,6 @@ export default async function Home() {
           入力して登録
         </Heading>
         <Heading level={3}>入力して登録</Heading>
-
         <Heading level={2} outline={true}>
           button
         </Heading>
@@ -51,6 +53,32 @@ export default async function Home() {
         <div className="space-x-4 space-y-4">
           <Heading level={3}>photoボタン</Heading>
           <Button variant="photo" color="primary" />
+        </div>
+        <Heading level={2} outline={true}>
+          form
+        </Heading>
+        <div className="space-x-4 space-y-5">
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="name" className="w-28">品名</Label>
+            <Input type="text" id="name" className="flex-1" />
+          </div>
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="date" className="w-28">購入日</Label>
+            <Input type="date" id="date" className="flex-1" />
+          </div>
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="category" className="w-28">カテゴリ</Label>
+            <Select options={['食品','日用品','非常用品']} id="category" className="flex-1" />
+          </div>
+          <div className="flex items-center space-x-4">
+            <Label htmlFor="inventory" className="w-28">在庫管理登録</Label>
+            <Input type="checkbox" id="inventory" />
+          </div>
+        </div>
+        <div className="space-x-4 space-y-4">
+          <Heading level={3}>小さいサイズ</Heading>
+          <Select options={['1','1/2','1/4','少','備蓄を挿入']} padding="small" />
+          <Input type="text" padding="small" />
         </div>
         {session ? (
           <Link href="/api/auth/signout">ログアウト</Link>
