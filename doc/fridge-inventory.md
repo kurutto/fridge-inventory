@@ -11,13 +11,13 @@ erDiagram
     users ||--|{ accounts : ""
     users ||--|{ credentials : ""
     users ||--|{ user_fridge : ""
+    users ||--o{ shopping_lists : ""
     fridges ||--|{ user_fridge : ""
     inventories ||--o{ purchases : ""
     users ||--|{ purchases : ""
     fridges ||--o{ purchases : ""
     fridges ||--o{ inventories : ""
     fridges ||--o{ shopping_lists : ""
-    shopping_lists ||--|| inventories : ""
 
     accounts {
         string id PK "ID"
@@ -67,8 +67,7 @@ erDiagram
         string id PK "ID"
         string fridge_id FK "冷蔵庫ID:fridges.id"
         string name "品名"
-        decimal remaining "残数"
-        int stock "備蓄"
+        int remaining "残数"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
     }
@@ -86,8 +85,7 @@ erDiagram
     shopping_lists {
         string id PK "ID"
         string fridge_id FK "冷蔵庫ID:fridges.id"
-        string user_id FK "ユーザーID:users.id(null許容(inventory自動挿入))"
-        string inventory_id FK "在庫ID:inventories.id（null許容）"
+        string user_id FK "ユーザーID:users.id"
         string name "品名"
         int amount "数量"
         datetime due_date "期限日（null許容）"
