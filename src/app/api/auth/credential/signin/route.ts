@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const hashedPassword = await existingUser.passwordHash;
+    const hashedPassword = await existingUser.hashedPassword;
     const isMatch = await bcrypt.compare(password, hashedPassword);
 
     if (isMatch) {

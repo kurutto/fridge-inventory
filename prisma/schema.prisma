@@ -28,6 +28,8 @@ model Account {
   scope              String?
   id_token           String? @db.Text
   session_state      String?
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
@@ -35,43 +37,107 @@ model Account {
   @@map("accounts")
 }
 
-// model Session {
-//   id           String   @id @default(cuid())
-//   sessionToken String   @unique @map("session_token")
-//   userId       String   @map("user_id")
-//   expires      DateTime
-//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-//   @@map("sessions")
-// }
-
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  credential Credential[]
-  // sessions      Session[]
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  accounts          Account[]
+  credential        Credential[]
+  userFridges       UserFridge[]
+  purchases         Purchase[]
+  shoppingLists     ShoppingList[]
+
   @@map("users")
 }
 model Credential{
-  id String @id @default(cuid()) @unique
-  passwordHash String @map("password_hash")
-  emailVerified DateTime?
-  createdAt DateTime @default(now()) @map("created_at")
+  id                String @id @default(cuid()) @unique
+  userId            String? @map("user_id")
+  hashedPassword    String @map("hashed_password")
+  emailVerified     DateTime? @map("email_verified")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @map("user_id")
- 
+
   @@map("credentials")
 }
 
-// model VerificationToken {
-//   identifier String
-//   token      String
-//   expires    DateTime
- 
-//   @@unique([identifier, token])
-//   @@map("verification_tokens")
-// }
+model Fridge{
+  id                String @id @default(cuid()) @unique
+  name              String
+  description       String?
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  userFridges       UserFridge[]
+  inventories       Inventory[]
+  purchases         Purchase[]
+  shoppingLists     ShoppingList[]
+
+  @@map("fridges")
+}
+
+model UserFridge {
+  userId            String  @map("user_id")
+  fridgeId          String  @map("fridge_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fridge Fridge @relation(fields: [fridgeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, fridgeId])
+  @@map("user_fridge")
+}
+
+model Inventory {
+  id                String @id @default(cuid()) @unique
+  fridgeId          String @map("fridge_id")
+  name              String
+  remaining         Int
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  fridge Fridge @relation(fields: [fridgeId], references: [id], onDelete: Cascade)
+
+  purchases         Purchase[]
+
+  @@map("inventories")
+}
+
+model Purchase{
+  id                String @id @default(cuid()) @unique
+  userId            String @map("user_id")
+  fridgeId          String @map("fridge_id")
+  inventoryId       String @map("inventory_id")
+  name              String
+  category          Int
+  purchaseDate      DateTime @map("purchase_date")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fridge Fridge @relation(fields: [fridgeId], references: [id], onDelete: Cascade)
+  inventory Inventory @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+
+  @@map("purchases")
+}
+
+model ShoppingList{
+  id                String @id @default(cuid()) @unique
+  userId            String @map("user_id")
+  fridgeId          String @map("fridge_id")
+  name              String
+  amount            Int?
+  dueDate           DateTime? @map("due_date")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fridge Fridge @relation(fields: [fridgeId], references: [id], onDelete: Cascade)
+
+  @@map("shopping_lists")
+}
