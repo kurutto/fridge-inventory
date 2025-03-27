@@ -18,6 +18,7 @@ import {
   TableData,
 } from "@/components/ui/table";
 import Box from "@/components/ui/box";
+import Paragraph from "@/components/ui/paragraph";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -25,7 +26,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 w-full md:px-5 md:py-16 md:max-w-7xl md:mx-auto md:space-y-12 max-md:px-4 max-md:py-6 max-md:space-y-6 max-md:bg-light-gray">
+      <main className="flex-1 w-full md:px-5 md:py-16 md:max-w-7xl md:mx-auto md:space-y-12 max-md:px-4 max-md:py-6 max-md:space-y-6 max-md:bg-slight-gray">
         <Heading level={1} icon={FaBagShopping}>
           購入品登録
         </Heading>
@@ -145,9 +146,27 @@ export default async function Home() {
             </TableRow>
           </TableBody>
         </Table>
-        <Box variant="rounded">
-          boxです
-        </Box>
+        <Box variant="rounded">boxです</Box>
+        <Heading level={2} outline={true}>
+          paragraph
+        </Heading>
+        <Paragraph>テキストテキストテキストテキスト</Paragraph>
+        <Paragraph className="text-gray">
+          gray color テキストテキストテキストテキスト
+        </Paragraph>
+        <Paragraph className="text-destructive">
+          destructive color テキストテキストテキストテキスト
+        </Paragraph>
+        <Paragraph variant="error">
+          error テキストテキストテキストテキスト
+        </Paragraph>
+        <Paragraph className="text-sm">
+          smサイズ テキストテキストテキストテキスト
+        </Paragraph>
+        <Paragraph className="text-xs">
+          xsサイズ テキストテキストテキストテキスト
+        </Paragraph>
+
         {session ? (
           <Link href="/api/auth/signout">ログアウト</Link>
         ) : (

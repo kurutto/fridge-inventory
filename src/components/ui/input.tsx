@@ -10,7 +10,7 @@ interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ type, padding, className, ...props }, ref) => {
     const baseStyle = cn(
-      "p-2.5 rounded-md border border-gray bg-white outline-none",
+      "p-2.5 rounded-md border border-light-gray bg-white outline-none",
       padding === "base" && "p-2.5",
       padding === "small" && "md:py-2 max-md:px-1.5 max-md:py-1",
       type === "checkbox" && "w-4 h-4 accent-primary"
