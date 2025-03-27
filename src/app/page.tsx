@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableData,
 } from "@/components/ui/table";
+import Box from "@/components/ui/box";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -144,6 +145,9 @@ export default async function Home() {
             </TableRow>
           </TableBody>
         </Table>
+        <Box variant="rounded">
+          boxです
+        </Box>
         {session ? (
           <Link href="/api/auth/signout">ログアウト</Link>
         ) : (
