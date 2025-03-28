@@ -12,7 +12,6 @@ export default async function RootLayout({
   if (!session) {
     redirect("/signin");
   }
-  console.log("layout session:", session);
 
   return <>{children}</>;
 }

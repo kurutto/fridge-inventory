@@ -1,5 +1,5 @@
-import AccountList from '@/components/account/account-list'
-import CreateAccount from '@/components/account/create-account'
+import AccountList from '@/components/fridge-account/account-list'
+import CreateAccount from '@/components/fridge-account/create-account'
 import Heading from '@/components/ui/heading'
 import Paragraph from '@/components/ui/paragraph'
 import React from 'react'
