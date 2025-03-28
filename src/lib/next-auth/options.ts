@@ -41,7 +41,7 @@ export const nextAuthOptions: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma),
   callbacks: {
-    async jwt({ token, trigger, user, account, session }) {
+    async jwt({ token, trigger, user, session }) {
       if (trigger === "signIn") {
         if (user) {
           token.sub = user.id;
@@ -49,7 +49,7 @@ export const nextAuthOptions: NextAuthOptions = {
           token.email = user.email;
           token.emailVerified = user.emailVerified ? user.emailVerified : null;
         }
-        if (account) {
+        if (token) {
           const dbUser = await prisma.user.findUnique({
             where: { id: token.sub as string },
           });
@@ -59,12 +59,12 @@ export const nextAuthOptions: NextAuthOptions = {
         }
         token.jat = Math.floor(Date.now() / 1000);
       }
-      if (trigger === "update" && session?.account) {
-        token.account = session.account;
+      if (trigger === "update" && session?.fridgeId) {
+        token.fridgeId = session.fridgeId;
       }
-      // JWT 更新時にtoken.account を保持
-      if (!token.account && session?.user?.account) {
-        token.account = session.user.account;
+      // JWT 更新時にtoken.fridgeId を保持
+      if (!token.fridgeId && session?.user?.fridgeId) {
+        token.fridgeId = session.user.fridgeId;
       }
       return token;
     },
@@ -74,7 +74,7 @@ export const nextAuthOptions: NextAuthOptions = {
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.emailVerified = token.emailVerified as Date | null;
-      session.user.account = token.account as string;
+      session.user.fridgeId = token.fridgeId as string;
       return session;
     },
   },
