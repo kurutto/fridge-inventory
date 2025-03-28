@@ -1,11 +1,23 @@
+'use client'
 import { createContext, useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
+import { FridgeType } from '@/types/types';
+import { useRouter } from 'next/navigation';
 
-const FridgeAccountContext = createContext({});
+export interface FridgeAccountContextType{
+  fridgeAccounts?:FridgeType[];
+  changeFridgeAccount:(fridgeId:string) => void;
+}
+
+export const FridgeAccountContext = createContext<FridgeAccountContextType>({
+  fridgeAccounts: [], 
+  changeFridgeAccount: () => {},
+});
 
 export function FridgeAccountProvider( {children}:{children:React.ReactNode}){
+  const router = useRouter()
   const { data: session, update } = useSession();
-  const [fridgeAccounts, setFridgeAccounts] = useState();
+  const [fridgeAccounts, setFridgeAccounts] = useState<FridgeType[]>();
   useEffect(() => {
       if(session){
       const getFridgeAccounts = async () => {
@@ -19,8 +31,8 @@ export function FridgeAccountProvider( {children}:{children:React.ReactNode}){
     }
     }, [session]);
     const changeFridgeAccount = (fridgeId:string) => {
-      update({fridgeId:fridgeId})
-
+      update({fridgeId:fridgeId});
+      router.push(`/member/${fridgeId}`);
     }
     return (
       <FridgeAccountContext.Provider value={{ fridgeAccounts, changeFridgeAccount }}>

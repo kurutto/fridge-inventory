@@ -31,7 +31,7 @@ const CreateAccount = () => {
 
   return (
     <Box variant="rounded" className="justify-center md:w-fit md:mx-auto">
-      <Heading level={2} className="justify-center">アカウント新規作成</Heading>
+      <Heading level={3} className="text-center">アカウント新規作成</Heading>
       <div className="space-y-4">
         <div className="md:flex md:items-center md:space-x-4 md:justify-center max-md:space-y-2">
           <Label htmlFor="name" className="w-48">冷蔵庫アカウント名</Label>
