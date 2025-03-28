@@ -5,7 +5,7 @@ import { FaCirclePlus, FaXmark, FaCamera } from "react-icons/fa6";
 interface ButtonProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
   variant?: "base" | "small" | "add" | "delete" | "photo";
-  color?: "primary" | "secondary" | "destructive";
+  color?: "primary" | "secondary" | "outline" | "destructive";
   children?: React.ReactNode;
   className?: string;
 }
@@ -34,6 +34,7 @@ const Button = ({
           variant === "add" ? "text-primary" : "bg-primary text-white"
         ),
         secondary: cn(variant === "add" ? "text-secondary" : "bg-secondary"),
+        outline: cn(variant === "add" ? null : "bg-white border border-gray"),
         destructive: cn(
           variant === "add"
             ? "text-destructive"
