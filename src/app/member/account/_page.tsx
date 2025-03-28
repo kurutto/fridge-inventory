@@ -11,11 +11,11 @@ const AccountPage = () => {
   if (!session) {
     router.push("/login");
   }
-  if (session && session.user.account) {
+  if (session && session.user.fridgeId) {
     router.push("/");
   }
   const handleAccount = async (data: string) => {
-    await update({ account: data });
+    await update({ fridgeId: data });
     router.push("/");
   };
   return (
