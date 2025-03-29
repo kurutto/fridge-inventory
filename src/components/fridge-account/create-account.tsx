@@ -29,7 +29,7 @@ const CreateAccount = () => {
     const data = await res.json();
     const fridgeId = data.fridgeId;
     await update({ fridgeId: fridgeId });
-    router.push(`/member/${fridgeId}`);
+    router.refresh();
   };
 
   return (
