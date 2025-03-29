@@ -1,17 +1,22 @@
 "use client";
-import { useContext, useState } from "react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import { FaXmark } from "react-icons/fa6";
 import HamburgerMenuItem from "./hamburger-menu-item";
 import HamburgerSubMenuItem from "./hamburger-sub-menu-item";
 import HamburgerMenuLink from "./hamburger-menu-link";
-import { cn } from "@/lib/utils";
-import { FridgeType } from "@/types/types";
+import { FridgeType, UserType } from "@/types/types";
 import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
 
-const HamburgerMenu = ({fridgeAccounts}:{fridgeAccounts:FridgeType[]}) => {
+interface HamburgerMenu {
+  fridgeAccounts?: FridgeType[];
+  user?: UserType;
+}
+
+const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
   const [isOpen, setIsOpen] = useState(false);
-  const {changeFridgeAccount} = useChangeFridgeAccount()
+  const { changeFridgeAccount } = useChangeFridgeAccount();
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
@@ -46,28 +51,52 @@ const HamburgerMenu = ({fridgeAccounts}:{fridgeAccounts:FridgeType[]}) => {
         </div>
         <ul>
           <HamburgerMenuItem href="/">トップページ</HamburgerMenuItem>
-          <HamburgerMenuItem href="/">在庫管理設定</HamburgerMenuItem>
-          <HamburgerMenuItem>
-            <HamburgerMenuLink href="/member/fridge-account" onClick={handleOpen}>
-              冷蔵庫アカウント切替・作成
-            </HamburgerMenuLink>
-            {fridgeAccounts ? (
-              <ul>
-                {fridgeAccounts?.map((fridgeAccount, idx) => (
-                  <HamburgerSubMenuItem
-                    key={idx}
-                    onClick={() => handleAccountClick(fridgeAccount.id)}
-                  >
-                    {fridgeAccount.name}
-                  </HamburgerSubMenuItem>
-                ))}
-              </ul>) : null}
-          </HamburgerMenuItem>
-          <HamburgerMenuItem href="/">冷蔵庫アカウント管理</HamburgerMenuItem>
-          <HamburgerMenuItem href="/mypage">マイページ</HamburgerMenuItem>
-          <HamburgerMenuItem href="/api/auth/signout">
-            ログアウト
-          </HamburgerMenuItem>
+
+          {user && (
+            <HamburgerMenuItem>
+              <HamburgerMenuLink
+                href="/member/fridge-account"
+                onClick={handleOpen}
+              >
+                冷蔵庫アカウント作成・切替
+              </HamburgerMenuLink>
+              {fridgeAccounts && (
+                <ul>
+                  {fridgeAccounts.map((fridgeAccount, idx) => (
+                    <HamburgerSubMenuItem
+                      key={idx}
+                      onClick={() => handleAccountClick(fridgeAccount.id)}
+                    >
+                      {fridgeAccount.name}
+                    </HamburgerSubMenuItem>
+                  ))}
+                </ul>
+              )}
+            </HamburgerMenuItem>
+          )}
+          {user?.fridgeId && (
+            <>
+              <HamburgerMenuItem href="/">
+                冷蔵庫アカウント管理
+              </HamburgerMenuItem>
+              <HamburgerMenuItem href="/">在庫管理設定</HamburgerMenuItem>
+            </>
+          )}
+          {user ? (
+            <>
+              <HamburgerMenuItem href="/mypage">マイページ</HamburgerMenuItem>
+              <HamburgerMenuItem href="/api/auth/signout">
+                ログアウト
+              </HamburgerMenuItem>
+            </>
+          ) : (
+            <>
+              <HamburgerMenuItem href="/signin">ログイン</HamburgerMenuItem>
+              <HamburgerMenuItem href="/signup">
+                アカウント作成
+              </HamburgerMenuItem>
+            </>
+          )}
         </ul>
       </div>
     </>

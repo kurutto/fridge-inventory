@@ -12,7 +12,7 @@ const Header = async() => {
   const session = await getServerSession(nextAuthOptions);
   let fridgeAccounts:FridgeType[] = [];
   if(session){
-    fridgeAccounts =await getFridgeAccounts(session!.user.id);
+    fridgeAccounts =await getFridgeAccounts(session.user.id);
   }
 
   return (
@@ -26,9 +26,13 @@ const Header = async() => {
         </Link>
       </h1>
       <div className="flex items-center lg:gap-7 md:gap-6 max-md:gap-3">
-        <Menu />
-        <HeaderFridgeAccount />
-        <HamburgerMenu fridgeAccounts={fridgeAccounts} />
+        {session?.user.fridgeId ? (
+          <>
+            <Menu />
+            <HeaderFridgeAccount />
+            </>
+        ):null}
+        <HamburgerMenu fridgeAccounts={fridgeAccounts} user={session?.user} />
       </div>
     </header>
   );

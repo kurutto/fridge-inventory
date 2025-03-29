@@ -12,7 +12,7 @@ const page = async() => {
   return (
     <>
       <Heading level={1}>FIショッピングリスト</Heading>
-      {fridgeAccounts && (
+      {session?.user.fridgeId && (
         <> 
           <AccountList fridgeAccounts={fridgeAccounts} />
           <Paragraph color='gray' className='text-center'>or</Paragraph>
