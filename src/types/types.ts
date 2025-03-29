@@ -6,7 +6,6 @@ export interface UserType {
   image?: string | null;
   fridgeId?: string | null;
 }
-  
 export interface FridgeType {
   id: string;
   name: string;
