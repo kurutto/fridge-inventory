@@ -11,9 +11,9 @@ interface SelectProps
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   ({ options, padding = "base", className, ...props }, ref) => {
     const baseStyle = cn(
-      "p-2.5 rounded-md border border-light-gray bg-white outline-none",
-      padding === "base" && "p-2.5",
-      padding === "small" && "md:py-2 max-md:px-1.5 max-md:py-1"
+      "rounded-md border border-light-gray bg-white outline-none",
+      padding === "base" && "px-2 py-1.5",
+      padding === "small" && "md:px-2 md:py-1.5 max-md:px-1 max-md:py-0.5"
     );
     return (
       <select className={cn(baseStyle, className)} {...props} ref={ref}>

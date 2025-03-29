@@ -15,14 +15,17 @@ const CreateAccount = () => {
 
   const { data: session, update } = useSession();
   const handleCreate = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fridge-account`, {
-      method: "POST",
-      body: JSON.stringify({
-        userId: session!.user.id,
-        name: nameRef.current!.value,
-        description: descriptionRef.current!.value,
-      }),
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge-account`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          userId: session!.user.id,
+          name: nameRef.current!.value,
+          description: descriptionRef.current!.value,
+        }),
+      }
+    );
     const data = await res.json();
     const fridgeId = data.fridgeId;
     await update({ fridgeId: fridgeId });
@@ -30,24 +33,39 @@ const CreateAccount = () => {
   };
 
   return (
-    <Box variant="rounded" className="justify-center md:w-fit md:mx-auto">
-      <Heading level={3} className="text-center">アカウント新規作成</Heading>
-      <div className="space-y-4">
+    <Box variant="rounded" className="justify-center md:max-w-lg md:mx-auto">
+      <Heading level={3} className="text-center">
+        アカウント新規作成
+      </Heading>
+      <div className="space-y-4 md:w-full">
         <div className="md:flex md:items-center md:space-x-4 md:justify-center max-md:space-y-2">
-          <Label htmlFor="name" className="w-48">冷蔵庫アカウント名</Label>
-          <Input type="text" id="name" ref={nameRef} className="max-md:w-full" />
+          <Label htmlFor="name" className="w-37">
+            冷蔵庫アカウント名
+          </Label>
+          <Input
+            type="text"
+            id="name"
+            ref={nameRef}
+            className="md:flex-1 max-md:w-full"
+          />
         </div>
         <div className="md:flex md:items-center md:space-x-4 md:justify-center max-md:space-y-2">
-          <Label htmlFor="description" className="w-48">アカウントの説明</Label>
-          <Input type="text" id="description" ref={descriptionRef} className="max-md:w-full" />
+          <Label htmlFor="description" className="w-37">
+            アカウントの説明
+          </Label>
+          <Input
+            type="text"
+            id="description"
+            ref={descriptionRef}
+            className="md:flex-1 max-md:w-full"
+          />
         </div>
       </div>
       <div className="text-center">
         <Button color="primary" className="min-w-52" onClick={handleCreate}>
-        作成
-      </Button>
+          作成
+        </Button>
       </div>
-      
     </Box>
   );
 };
