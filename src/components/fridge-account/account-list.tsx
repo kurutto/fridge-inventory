@@ -1,14 +1,16 @@
 "use client";
+import { FridgeType } from "@/types/types";
+import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
 import Button from "../ui/button";
-import { FridgeAccountContextType } from "@/contexts/FridgeAccountContext";
 
 const AccountList = ({
   fridgeAccounts,
-  changeFridgeAccount,
-}: FridgeAccountContextType) => {
+}:{fridgeAccounts:FridgeType[]} ) => {
   if (!fridgeAccounts) {
     return;
   }
+  const {changeFridgeAccount} = useChangeFridgeAccount()
+
   return (
     <ul className="space-y-4 pt-4">
       {fridgeAccounts.map((fridgeAccount, idx) => (

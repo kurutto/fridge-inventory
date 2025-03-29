@@ -6,15 +6,12 @@ import HamburgerMenuItem from "./hamburger-menu-item";
 import HamburgerSubMenuItem from "./hamburger-sub-menu-item";
 import HamburgerMenuLink from "./hamburger-menu-link";
 import { cn } from "@/lib/utils";
-import {
-  FridgeAccountContext,
-  FridgeAccountContextType,
-} from "@/contexts/FridgeAccountContext";
+import { FridgeType } from "@/types/types";
+import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
 
-const HamburgerMenu = () => {
+const HamburgerMenu = ({fridgeAccounts}:{fridgeAccounts:FridgeType[]}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { fridgeAccounts, changeFridgeAccount } =
-    useContext<FridgeAccountContextType>(FridgeAccountContext);
+  const {changeFridgeAccount} = useChangeFridgeAccount()
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
@@ -54,16 +51,17 @@ const HamburgerMenu = () => {
             <HamburgerMenuLink href="/member/fridge-account" onClick={handleOpen}>
               冷蔵庫アカウント切替・作成
             </HamburgerMenuLink>
-            <ul>
-              {fridgeAccounts?.map((fridgeAccount, idx) => (
-                <HamburgerSubMenuItem
-                  key={idx}
-                  onClick={() => handleAccountClick(fridgeAccount.id)}
-                >
-                  {fridgeAccount.name}
-                </HamburgerSubMenuItem>
-              ))}
-            </ul>
+            {fridgeAccounts ? (
+              <ul>
+                {fridgeAccounts?.map((fridgeAccount, idx) => (
+                  <HamburgerSubMenuItem
+                    key={idx}
+                    onClick={() => handleAccountClick(fridgeAccount.id)}
+                  >
+                    {fridgeAccount.name}
+                  </HamburgerSubMenuItem>
+                ))}
+              </ul>) : null}
           </HamburgerMenuItem>
           <HamburgerMenuItem href="/">冷蔵庫アカウント管理</HamburgerMenuItem>
           <HamburgerMenuItem href="/mypage">マイページ</HamburgerMenuItem>

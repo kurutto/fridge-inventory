@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/lib/next-auth/options";
-
-const page = async() => {
+import { redirect } from "next/navigation";
+const FridgePage = async ({ params }: { params: { fridgeId: string } }) => {
   const session = await getServerSession(nextAuthOptions);
-  console.log(session?.user.fridgeId);
-  return (
-    <div>page</div>
-  )
-}
+  if (params.fridgeId !== session?.user.fridgeId) {
+    redirect("/member/fridge-account");
+  }
+  return <div>page</div>;
+};
 
-export default page
+export default FridgePage;
