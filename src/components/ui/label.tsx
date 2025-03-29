@@ -4,13 +4,11 @@ interface LabelProps
   extends Omit<React.ComponentPropsWithoutRef<"label">, "className"> {
   className?: string;
 }
-const Label = ({ className, children, ...props }: LabelProps) => {
+const Label = ({ className, ...props }: LabelProps) => {
   const baseStyle = "block";
 
   return (
-    <label className={cn(baseStyle, className)} {...props}>
-      {children}
-    </label>
+    <label className={cn(baseStyle, className)} {...props} />
   );
 };
 
