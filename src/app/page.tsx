@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/table";
 import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
-import Head from "next/head";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
