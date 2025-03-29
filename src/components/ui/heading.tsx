@@ -24,7 +24,7 @@ const Heading = ({
       cn(
         "flex items-center font-bold md:text-xl md:gap-4 max-md:text-lg max-md:gap-2.5",
         outline &&
-          "bg-white rounded-2xl md:py-5 md:px-7 md:shadow-[0_0_7px_rgba(0,0,0,0.1)] max-md:py-3.5 max-md:px-3.5 max-md:shadow-[0_2px_5px_rgba(0,0,0,0.05)]"
+          "bg-white rounded-2xl md:py-5 md:px-7 md:shadow-pc max-md:py-3.5 max-md:px-3.5 max-md:shadow-sp"
       ),
     level === 3 && "font-bold md:text-lg max-md:text-base"
   );

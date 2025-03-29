@@ -1,29 +1,28 @@
-'use client'
-import AccountList from '@/components/fridge-account/account-list'
-import CreateAccount from '@/components/fridge-account/create-account'
-import Heading from '@/components/ui/heading'
-import Paragraph from '@/components/ui/paragraph'
-import {
-  FridgeAccountContext,
-  FridgeAccountContextType,
-} from "@/contexts/FridgeAccountContext";
-import { useContext } from 'react';
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "@/lib/next-auth/options";
+import { getFridgeAccounts } from "@/lib/fridge";
+import AccountList from "@/components/fridge-account/account-list";
+import CreateAccount from "@/components/fridge-account/create-account";
+import Heading from "@/components/ui/heading";
+import Paragraph from "@/components/ui/paragraph";
 
-const page = () => {
-  const { fridgeAccounts, changeFridgeAccount } =
-    useContext<FridgeAccountContextType>(FridgeAccountContext);
+const page = async () => {
+  const session = await getServerSession(nextAuthOptions);
+  const fridgeAccounts = await getFridgeAccounts(session!.user.id);
   return (
     <>
       <Heading level={1}>FIショッピングリスト</Heading>
-      {fridgeAccounts && (
-        <> 
-          <AccountList fridgeAccounts={fridgeAccounts} changeFridgeAccount={changeFridgeAccount} />
-          <Paragraph color='gray' className='text-center'>or</Paragraph>
+      {fridgeAccounts.length > 0 && (
+        <>
+          <AccountList fridgeAccounts={fridgeAccounts} />
+          <Paragraph color="gray" className="text-center">
+            or
+          </Paragraph>
         </>
       )}
       <CreateAccount />
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
