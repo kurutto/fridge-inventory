@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
+import List from "@/components/ui/list";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -166,6 +167,24 @@ export default async function Home() {
       <Paragraph className="text-xs">
         xsサイズ テキストテキストテキストテキスト
       </Paragraph>
+      <Heading level={2} outline={true}>
+        list
+      </Heading>
+      <List
+        items={[
+          <>テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト</>,
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+        ]}
+      />
+      <List
+        variant="ol"
+        items={[
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+        ]}
+      />
 
       {session ? (
         <Link href="/api/auth/signout">ログアウト</Link>
