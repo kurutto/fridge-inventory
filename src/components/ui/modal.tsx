@@ -8,6 +8,7 @@ interface ModalProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "className"> {
   isOpen: boolean;
   handleOpen: () => void;
+  boxW?:string,
   children: React.ReactNode;
   className?: string;
 }
@@ -15,6 +16,7 @@ interface ModalProps
 const Modal = ({
   isOpen = false,
   handleOpen,
+  boxW,
   children,
   className,
   ...props
@@ -24,7 +26,8 @@ const Modal = ({
     isOpen ? "visible opacity-100" : "invisible opacity-0"
   );
   const boxStyle = cn(
-    "absolute transition-opacity max-h-screen overscroll-y-auto",
+    "absolute transition-opacity max-h-screen overscroll-y-auto -mx-4",
+    boxW,
     isOpen ? "visible opacity-100" : "invisible opacity-0"
   );
   return (
@@ -33,7 +36,7 @@ const Modal = ({
       <Box variant="rounded" className={boxStyle}>
         <CloseButton
           handleOpen={handleOpen}
-          className="ml-auto -mr-4 -mt-4 mb-2"
+          className="ml-auto md:-mr-4 md:-mt-4 mb-2"
         />
         {children}
       </Box>

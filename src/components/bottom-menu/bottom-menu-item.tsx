@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 
@@ -17,9 +18,10 @@ const BottomMenuItem = ({
 }: BottomMenuItemProps) => {
   const Tag: React.ElementType = href ? Link : "div";
   const tagProps = Tag === Link ? { href } : {};
+  const baseStyle = "";
 
   return (
-    <li className={className} {...props}>
+    <li className={cn(baseStyle, className)} {...props}>
       <Tag className="block py-2 text-center" {...tagProps}>
         <div className="w-fit mx-auto">
           <Icon className="text-xl" />
