@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ type, padding = "base", className, ...props }, ref) => {
     const baseStyle = cn(
       "rounded-md border border-light-gray bg-white outline-none",
-      padding === "base" && "px-2 py-1.5",
+      padding === "base" && "p-2",
       padding === "small" && "md:px-2 md:py-1.5 max-md:px-1 max-md:py-0.5",
       type === "checkbox" && "w-4 h-4 accent-primary"
     );
