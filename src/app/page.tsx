@@ -1,7 +1,4 @@
 'use client'
-// import { getServerSession } from "next-auth";
-// import { nextAuthOptions } from "@/lib/next-auth/options";
-import Link from "next/link";
 import { FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import Heading from "@/components/ui/heading";
 import Button from "@/components/ui/button";

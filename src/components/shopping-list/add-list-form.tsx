@@ -6,7 +6,6 @@ import Button from "../ui/button";
 import Heading from "../ui/heading";
 import Input from "../ui/input";
 import Label from "../ui/label";
-import Select from "../ui/select";
 import Paragraph from "../ui/paragraph";
 import { useRouter } from "next/navigation";
 

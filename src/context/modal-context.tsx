@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { createContext, useState } from "react";
 
 export interface ModalContextType {
@@ -21,7 +20,6 @@ export const ModalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const router = useRouter();
   const [item, setItem] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const handleItemOpen = (itemNumber: number) => {
