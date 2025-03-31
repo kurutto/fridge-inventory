@@ -20,12 +20,12 @@ const formSchema = z.object({
 });
 
 type formType = z.infer<typeof formSchema>;
-interface AddListFormProps {
+interface AddToListFormProps {
   userId: string;
   fridgeId: string;
 }
 
-const AddListForm = ({ userId, fridgeId }: AddListFormProps) => {
+const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const router = useRouter();
   const {
@@ -124,4 +124,4 @@ const AddListForm = ({ userId, fridgeId }: AddListFormProps) => {
   );
 };
 
-export default AddListForm;
+export default AddToListForm;
