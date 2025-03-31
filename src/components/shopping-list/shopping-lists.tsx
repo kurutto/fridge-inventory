@@ -8,7 +8,6 @@ interface ShoppingListsProps {
 }
 
 const ShoppingLists = async ({ userId, fridgeId }: ShoppingListsProps) => {
-  // let shoppingLists: ShoppingListType[] = [];
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list`
   );
@@ -26,10 +25,10 @@ const ShoppingLists = async ({ userId, fridgeId }: ShoppingListsProps) => {
         {item.dueDate && <span className="text-xs text-gray pl-0.5">({new Date(item.dueDate).toLocaleDateString("en-US", {
           month: "numeric",
           day: "numeric",
-        })})</span>}
+        })}まで)</span>}
       </span>
       <span className="text-xs text-gray pl-1 leading-1">{item.user?.name}</span>
-      {item.userId === userId && <DeleteListButton fridgeId={fridgeId} itemId={item.id} />}
+      {item.userId === userId && <DeleteListButton fridgeId={fridgeId} listId={item.id} />}
     </>
   ));
   

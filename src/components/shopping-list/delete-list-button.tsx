@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 
 interface DeleteListButtonProps {
   fridgeId: string;
-  itemId: string;
+  listId: string;
 }
 
-const DeleteListButton = ({ fridgeId, itemId }: DeleteListButtonProps) => {
+const DeleteListButton = ({ fridgeId, listId }: DeleteListButtonProps) => {
   const router = useRouter();
   const handleDelete = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${itemId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listId}`,
       {
         method: "DELETE",
       }
