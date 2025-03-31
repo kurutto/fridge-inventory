@@ -41,7 +41,7 @@ const ShoppingList = async ({ userId, fridgeId }: ShoppingListProps) => {
           </span>
           <span className="text-xs text-gray pl-1">{item.user?.name}</span>
           {item.userId === userId && (
-            <RemoveFromListButton fridgeId={fridgeId} listId={item.id} />
+            <RemoveFromListButton fridgeId={fridgeId} listItemId={item.id} />
           )}
         </Li>
       ))}
