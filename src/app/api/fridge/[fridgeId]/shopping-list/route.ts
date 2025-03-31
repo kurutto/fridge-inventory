@@ -1,12 +1,34 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+export async function POST(req: Request) {
+  try {
+    const { userId, fridgeId, name, amount, dueDate } = await req.json();
+    await prisma.shoppingList.create({
+      data: {
+        userId: userId,
+        fridgeId: fridgeId,
+        name: name,
+        amount: amount,
+        dueDate: dueDate,
+      },
+    });
+    return NextResponse.json({ message: "Success" }, { status: 201 });
+  } catch (err) {
+    console.error("POST Error:", err);
+    return NextResponse.json(
+      { message: "データの送信に失敗しました。" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function GET(req: Request) {
   try {
     const fridgeId = await req.url
       .split("fridge/")[1]
       .replace("/shopping-list", "");
-    const shoppingLists = await prisma.shoppingList.findMany({
+    const shoppingList = await prisma.shoppingList.findMany({
       where: { fridgeId: fridgeId },
       include: {
         user: {
@@ -16,8 +38,12 @@ export async function GET(req: Request) {
         },
       },
     });
-    return NextResponse.json(shoppingLists);
+    return NextResponse.json(shoppingList);
   } catch (err) {
-    return NextResponse.json(err);
+    console.error("GET Error:", err);
+    return NextResponse.json(
+      { message: "データの取得に失敗しました。" },
+      { status: 500 }
+    );
   }
 }

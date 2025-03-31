@@ -5,14 +5,11 @@ interface ListProps
   extends Omit<React.ComponentPropsWithoutRef<"ul">, "className"> {
   variant?: "ul" | "ol";
   space?: "base" | "lg" | "none";
-  items: React.ReactNode[];
   className?: string;
 }
-
 const List = ({
   variant = "ul",
   space = "base",
-  items,
   className,
   ...props
 }: ListProps) => {
@@ -40,12 +37,16 @@ const List = ({
     <Tag
       className={cn(list({ variant: variant, space: space }), className)}
       {...props}
-    >
-      {items.map((item,idx) => (
-        <li key={idx}>{variant === 'ul'&& "・"}{item}</li>
-      ))}
-    </Tag>
+    />
   );
 };
 
-export default List;
+interface LiProps
+  extends Omit<React.ComponentPropsWithoutRef<"li">, "className"> {
+  className?: string;
+}
+const Li = ({ className, ...props }: LiProps) => {
+  return <li className={className} {...props} />;
+};
+
+export { List, Li };
