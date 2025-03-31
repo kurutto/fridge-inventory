@@ -4,7 +4,7 @@ import { tv } from "tailwind-variants";
 interface ListProps
   extends Omit<React.ComponentPropsWithoutRef<"ul">, "className"> {
   variant?: "ul" | "ol";
-  space?: "base" | "lg";
+  space?: "base" | "lg" | "none";
   items: React.ReactNode[];
   className?: string;
 }
@@ -27,6 +27,7 @@ const List = ({
       space: {
         base: "space-y-1.5",
         lg: "space-y-2.5",
+        none: "",
       },
     },
     defaultVariants: {

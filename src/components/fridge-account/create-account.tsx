@@ -16,7 +16,7 @@ const CreateAccount = () => {
   const { data: session, update } = useSession();
   const handleCreate = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge-account`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/account`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -33,7 +33,7 @@ const CreateAccount = () => {
   };
 
   return (
-    <Box variant="rounded" className="w-lg max-w-9/10 mx-auto">
+    <Box variant="rounded" className="w-lg max-w-full mx-auto">
       <Heading level={3} className="text-center">
         アカウント新規作成
       </Heading>

@@ -1,18 +1,19 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { createContext, useState } from "react";
 
 export interface ModalContextType {
-  item: number;
+  item: number | null;
   isOpen: boolean;
-  handleItemOpen:(itemNumber: number) => void;
+  handleItemOpen: (itemNumber: number) => void;
   handleOpen: () => void;
 }
 
 export const ModalContext = createContext<ModalContextType>({
-  item : 0,
-  isOpen : false,
-  handleItemOpen : () => {},
-  handleOpen : () => {},
+  item: null,
+  isOpen: false,
+  handleItemOpen: () => {},
+  handleOpen: () => {},
 });
 
 export const ModalContextProvider = ({
@@ -20,18 +21,23 @@ export const ModalContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [item, setItem] = useState<number>(0);
+  const router = useRouter();
+  const [item, setItem] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const handleItemOpen = (itemNumber: number) => {
     setItem(itemNumber);
     setIsOpen((prev) => !prev);
-  }
+  };
   const handleOpen = () => {
-    setIsOpen((prev) => !prev)
-  }
-
+    if(isOpen){
+      setItem(null);
+    }
+    setIsOpen((prev) => !prev);
+  };
 
   return (
-    <ModalContext.Provider value={{item,isOpen,handleItemOpen,handleOpen}}>{children}</ModalContext.Provider>
+    <ModalContext.Provider value={{ item, isOpen, handleItemOpen, handleOpen }}>
+      {children}
+    </ModalContext.Provider>
   );
 };
