@@ -3,16 +3,16 @@ import React from "react";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
 
-interface DeleteListButtonProps {
+interface RemoveFromListButtonProps {
   fridgeId: string;
-  listId: string;
+  listItemId: string;
 }
 
-const DeleteListButton = ({ fridgeId, listId }: DeleteListButtonProps) => {
+const RemoveFromListButton = ({ fridgeId, listItemId }: RemoveFromListButtonProps) => {
   const router = useRouter();
   const handleDelete = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listItemId}`,
       {
         method: "DELETE",
       }
@@ -28,4 +28,4 @@ const DeleteListButton = ({ fridgeId, listId }: DeleteListButtonProps) => {
   );
 };
 
-export default DeleteListButton;
+export default RemoveFromListButton;

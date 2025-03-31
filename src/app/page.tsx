@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import Heading from "@/components/ui/heading";
 import Button from "@/components/ui/button";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
-import List from "@/components/ui/list";
+import { List, Li } from "@/components/ui/list";
 import Modal from "@/components/ui/modal";
 import { useHandleOpen } from "@/hooks/useHandleOpen";
 
@@ -170,32 +170,27 @@ export default function Page() {
       <Heading level={2} outline={true}>
         list
       </Heading>
-      <List
-        items={[
-          <>テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト</>,
-          <>テストテストテスト</>,
-          <>テストテストテスト</>,
-        ]}
-      />
-      <List
-        variant="ol"
-        items={[
-          <>テストテストテスト</>,
-          <>テストテストテスト</>,
-          <>テストテストテスト</>,
-        ]}
-      />
+      <List>
+        <Li>
+          ・テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト
+        </Li>
+        <Li>・テストテストテスト</Li>
+        <Li>・テストテストテスト</Li>
+      </List>
+      <List variant="ol">
+        <Li>テストテストテスト</Li>
+        <Li>テストテストテスト</Li>
+        <Li>テストテストテスト</Li>
+      </List>
       <Heading level={2} outline={true}>
         modal
       </Heading>
-      <Button onClick={handleOpen} color="primary">モーダルオープン</Button>
-      <Modal isOpen={isOpen} handleOpen={handleOpen}><Paragraph>テストです。</Paragraph></Modal>
-
-      {/* {session ? (
-        <Link href="/api/auth/signout">ログアウト</Link>
-      ) : (
-        <Link href="/signin">ログイン</Link>
-      )} */}
+      <Button onClick={handleOpen} color="primary">
+        モーダルオープン
+      </Button>
+      <Modal isOpen={isOpen} handleOpen={handleOpen}>
+        <Paragraph>テストです。</Paragraph>
+      </Modal>
     </>
   );
 }

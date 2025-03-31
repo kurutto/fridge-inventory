@@ -1,13 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useContext } from "react";
+import { ModalContext, ModalContextType } from "@/context/modal-context";
+import { useRouter } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
 import Input from "../ui/input";
 import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -16,13 +18,15 @@ const formSchema = z.object({
   amount: z.string(),
   dueDate: z.string(),
 });
+
 type formType = z.infer<typeof formSchema>;
-interface AddListFormProps {
+interface AddToListFormProps {
   userId: string;
   fridgeId: string;
 }
 
-const AddListForm = ({ userId, fridgeId }: AddListFormProps) => {
+const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
+  const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const router = useRouter();
   const {
     register,
@@ -36,22 +40,36 @@ const AddListForm = ({ userId, fridgeId }: AddListFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
-    reset();
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fridge`, {
-      method: "POST",
-      body: JSON.stringify({
-        userId: userId,
-        fridgeId: fridgeId,
-        name: values.name,
-        amount: values.amount,
-        dueDate: new Date(values.dueDate),
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    router.push(`/member/${fridgeId}`);
-    router.refresh();
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            userId: userId,
+            fridgeId: fridgeId,
+            name: values.name,
+            amount: values.amount,
+            dueDate: new Date(values.dueDate),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!res.ok) {
+        const errData = await res.json();
+        alert(errData.message);
+      } else {
+        reset();
+        router.push(`/member/${fridgeId}`);
+        router.refresh();
+        handleOpen();
+      }
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      alert(`サーバーエラーが発生しました`);
+    }
   };
   return (
     <>
@@ -106,4 +124,4 @@ const AddListForm = ({ userId, fridgeId }: AddListFormProps) => {
   );
 };
 
-export default AddListForm;
+export default AddToListForm;
