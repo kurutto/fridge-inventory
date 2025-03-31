@@ -5,11 +5,9 @@ interface LabelProps
   className?: string;
 }
 const Label = ({ className, ...props }: LabelProps) => {
-  const baseStyle = "block";
+  const baseStyle = "block leading-11";
 
-  return (
-    <label className={cn(baseStyle, className)} {...props} />
-  );
+  return <label className={cn(baseStyle, className)} {...props} />;
 };
 
 export default Label;

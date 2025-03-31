@@ -1,13 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { FaBars } from "react-icons/fa6";
-import { FaXmark } from "react-icons/fa6";
 import HamburgerMenuItem from "./hamburger-menu-item";
 import HamburgerSubMenuItem from "./hamburger-sub-menu-item";
 import HamburgerMenuLink from "./hamburger-menu-link";
 import { FridgeType, UserType } from "@/types/types";
 import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
+import { useHandleOpen } from "@/hooks/useHandleOpen";
+import Overlay from "../ui/overlay";
+import CloseButton from "../ui/close-button";
 
 interface HamburgerMenu {
   fridgeAccounts?: FridgeType[];
@@ -15,11 +16,8 @@ interface HamburgerMenu {
 }
 
 const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
-  const [isOpen, setIsOpen] = useState(false);
   const { changeFridgeAccount } = useChangeFridgeAccount();
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { isOpen, handleOpen } = useHandleOpen();
   const handleAccountClick = (id: string) => {
     changeFridgeAccount(id);
     handleOpen();
@@ -30,28 +28,16 @@ const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
       <div className="md:cursor-pointer max-md:text-white" onClick={handleOpen}>
         <FaBars className="md:text-4xl max-md:text-3xl" />
       </div>
+      <Overlay isOpen={isOpen} handleOpen={handleOpen} />
       <div
         className={cn(
-          "fixed top-0 right-0 transition-opacity",
-          isOpen ? "h-screen w-screen opacity-50 bg-black" : "h-0 w-0 opacity-0"
-        )}
-        onClick={handleOpen}
-      ></div>
-      <div
-        className={cn(
-          "fixed w-80 h-screen top-0 transition-all bg-white",
+          "fixed w-80 h-screen top-0 transition-all bg-white z-50",
           isOpen ? "right-0" : "-right-80"
         )}
       >
-        <div
-          className="w-fit ml-auto mt-4 mr-4 md:cursor-pointer "
-          onClick={handleOpen}
-        >
-          <FaXmark className="md:text-4xl max-md:text-3xl" />
-        </div>
+        <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
         <ul>
           <HamburgerMenuItem href="/">トップページ</HamburgerMenuItem>
-
           {user && (
             <HamburgerMenuItem>
               <HamburgerMenuLink

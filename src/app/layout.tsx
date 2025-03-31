@@ -4,6 +4,7 @@ import "./globals.css";
 import { NextAuthProvider } from "@/lib/next-auth/provider";
 import Header from "@/components/header/header";
 import BottomMenu from "@/components/bottom-menu/bottom-menu";
+import { ModalContextProvider } from "@/context/modal-context";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,11 +22,13 @@ export default function RootLayout({
       <body className={`${notoSansJP.className} antialiased min-h-full`}>
         <div className="min-h-screen flex flex-col">
           <NextAuthProvider>
+            <ModalContextProvider>
             <Header />
             <main className="flex-1 w-full md:px-5 md:py-20 md:max-w-7xl md:mx-auto md:space-y-12 max-md:px-4 max-md:pt-11 max-md:pb-20 max-md:space-y-6 max-md:bg-slight-gray">
               {children}
             </main>
             <BottomMenu className="md:hidden fixed bottom-0 left-0 w-full" />
+            </ModalContextProvider>
           </NextAuthProvider>
         </div>
       </body>

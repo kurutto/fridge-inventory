@@ -16,7 +16,7 @@ const CreateAccount = () => {
   const { data: session, update } = useSession();
   const handleCreate = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge-account`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/account`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -33,12 +33,12 @@ const CreateAccount = () => {
   };
 
   return (
-    <Box variant="rounded" className="justify-center md:max-w-lg md:mx-auto">
+    <Box variant="rounded" className="w-lg max-w-full mx-auto">
       <Heading level={3} className="text-center">
         アカウント新規作成
       </Heading>
-      <div className="space-y-4 md:w-full">
-        <div className="md:flex md:items-center md:space-x-4 md:justify-center max-md:space-y-2">
+      <Box variant="spaceY">
+        <Box variant="horizontally">
           <Label htmlFor="name" className="w-37">
             冷蔵庫アカウント名
           </Label>
@@ -46,10 +46,10 @@ const CreateAccount = () => {
             type="text"
             id="name"
             ref={nameRef}
-            className="md:flex-1 max-md:w-full"
+            className="sm:flex-1 max-sm:w-full"
           />
-        </div>
-        <div className="md:flex md:items-center md:space-x-4 md:justify-center max-md:space-y-2">
+        </Box>
+        <Box variant="horizontally">
           <Label htmlFor="description" className="w-37">
             アカウントの説明
           </Label>
@@ -57,15 +57,13 @@ const CreateAccount = () => {
             type="text"
             id="description"
             ref={descriptionRef}
-            className="md:flex-1 max-md:w-full"
+            className="sm:flex-1 max-sm:w-full"
           />
-        </div>
-      </div>
-      <div className="text-center">
-        <Button color="primary" className="min-w-52" onClick={handleCreate}>
-          作成
-        </Button>
-      </div>
+        </Box>
+      </Box>
+      <Button color="primary" className="block mx-auto w-45" onClick={handleCreate}>
+        作成
+      </Button>
     </Box>
   );
 };

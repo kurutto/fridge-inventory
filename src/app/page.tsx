@@ -1,6 +1,4 @@
-import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "@/lib/next-auth/options";
-import Link from "next/link";
+'use client'
 import { FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import Heading from "@/components/ui/heading";
 import Button from "@/components/ui/button";
@@ -17,10 +15,13 @@ import {
 } from "@/components/ui/table";
 import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
+import List from "@/components/ui/list";
+import Modal from "@/components/ui/modal";
+import { useHandleOpen } from "@/hooks/useHandleOpen";
 
-export default async function Home() {
-  const session = await getServerSession(nextAuthOptions);
-  console.log(session);
+export default function Page() {
+  const { isOpen, handleOpen } = useHandleOpen();
+  // const session = await getServerSession(nextAuthOptions);
   return (
     <>
       <Heading level={1} icon={FaBagShopping}>
@@ -166,12 +167,35 @@ export default async function Home() {
       <Paragraph className="text-xs">
         xsサイズ テキストテキストテキストテキスト
       </Paragraph>
+      <Heading level={2} outline={true}>
+        list
+      </Heading>
+      <List
+        items={[
+          <>テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト</>,
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+        ]}
+      />
+      <List
+        variant="ol"
+        items={[
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+          <>テストテストテスト</>,
+        ]}
+      />
+      <Heading level={2} outline={true}>
+        modal
+      </Heading>
+      <Button onClick={handleOpen} color="primary">モーダルオープン</Button>
+      <Modal isOpen={isOpen} handleOpen={handleOpen}><Paragraph>テストです。</Paragraph></Modal>
 
-      {session ? (
+      {/* {session ? (
         <Link href="/api/auth/signout">ログアウト</Link>
       ) : (
         <Link href="/signin">ログイン</Link>
-      )}
+      )} */}
     </>
   );
 }
