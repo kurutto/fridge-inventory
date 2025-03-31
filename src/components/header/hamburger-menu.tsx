@@ -32,7 +32,7 @@ const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
       <Overlay isOpen={isOpen} handleOpen={handleOpen} />
       <div
         className={cn(
-          "fixed w-80 h-screen top-0 transition-all bg-white",
+          "fixed w-80 h-screen top-0 transition-all bg-white z-50",
           isOpen ? "right-0" : "-right-80"
         )}
       >

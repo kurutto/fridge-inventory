@@ -9,7 +9,7 @@ interface OverlayProps
 }
 const Overlay = ({ isOpen = false, handleOpen, className, ...props }: OverlayProps) => {
   const baseStyle = cn(
-    "fixed h-screen w-screen top-0 right-0 transition-opacity",
+    "fixed h-screen w-screen top-0 right-0 transition-opacity  z-40",
     isOpen ? "visible opacity-50 bg-black" : "invisible opacity-0"
   );
   return <div className={cn(baseStyle, className)} {...props} onClick={handleOpen} />;
