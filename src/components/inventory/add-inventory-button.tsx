@@ -1,13 +1,13 @@
 "use client";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import Button from "../ui/button";
 import { ModalContext, ModalContextType } from "@/context/modal-context"
 
-const AddToListButton = () => {
+const AddInventoryButton = () => {
   const { handleItemOpen } = useContext<ModalContextType>(ModalContext);
   return (
-    <Button variant="add" color="primary" onClick={() => handleItemOpen(0)} />
+    <Button variant="add" color="primary" onClick={() => handleItemOpen(1)} />
   );
 };
 
-export default AddToListButton;
+export default AddInventoryButton;

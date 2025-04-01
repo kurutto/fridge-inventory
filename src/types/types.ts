@@ -13,7 +13,6 @@ export interface FridgeType {
   createdAt: Date;
   updatedAt: Date;
 }
-
 export interface ShoppingListType{
   id:string;
   userId:string;
@@ -26,4 +25,13 @@ export interface ShoppingListType{
   user?:{
     name:string;
   }
+}
+export interface InventoryType{
+  id:string;
+  fridgeId:string;
+  category:number;
+  name:string;
+  remaining:number;
+  createdAt:Date;
+  updatedAt:Date;
 }

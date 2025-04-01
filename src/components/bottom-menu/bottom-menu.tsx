@@ -1,9 +1,7 @@
 "use client";
-import React, { useContext } from "react";
-import { ModalContext, ModalContextType } from "@/context/modal-context"
 import { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
-import { menuItems } from "@/constants/menuItems";
+import { useMenuItems } from "@/hooks/use-menu-items";
 import BottomMenuItem from "./bottom-menu-item";
 
 interface BottomMenuProps
@@ -11,12 +9,22 @@ interface BottomMenuProps
   className?: string;
 }
 const BottomMenu = ({ className, ...props }: BottomMenuProps) => {
-  const { handleItemOpen} = useContext<ModalContextType>(ModalContext);
+  const { menuItems } = useMenuItems();
   const baseStyle = "grid grid-cols-4 bg-white";
   return (
     <>
       <ul className={cn(baseStyle, className)} {...props}>
+        {menuItems.map((menuItem, idx) => (
           <BottomMenuItem
+            key={idx}
+            icon={menuItem.icon}
+            onClick={menuItem.func}
+            href={menuItem.link}
+          >
+            {menuItem.title}
+          </BottomMenuItem>
+        ))}
+        {/* <BottomMenuItem
             icon={menuItems[0].icon}
             onClick={() => handleItemOpen(0)}
           >
@@ -39,7 +47,7 @@ const BottomMenu = ({ className, ...props }: BottomMenuProps) => {
             href="/"
           >
             {menuItems[3].title}
-          </BottomMenuItem>
+          </BottomMenuItem> */}
       </ul>
     </>
   );

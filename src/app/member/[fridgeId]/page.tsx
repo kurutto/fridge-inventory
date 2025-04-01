@@ -12,6 +12,8 @@ import {
 import AddToListButton from "@/components/shopping-list/add-to-list-button";
 import FridgeModal from "@/components/fridge/fridge-modal";
 import ShoppingList from "@/components/shopping-list/shopping-list";
+import InventoryTable from "@/components/inventory/inventory-table";
+import AddInventoryButton from "@/components/inventory/add-inventory-button";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -24,7 +26,7 @@ const FridgePage = async () => {
     redirect("/fridge-account");
   }
   return (
-    <div>
+    <>
       <Box variant="rounded">
         <div className="flex justify-between">
           <Heading level={2} icon={FaListUl}>
@@ -34,8 +36,17 @@ const FridgePage = async () => {
         </div>
         <ShoppingList userId={userId} fridgeId={fridgeId} />
       </Box>
+      <Box variant="spaceY">
+        <Heading outline={true} level={2} icon={FaCubesStacked}>
+          <div className="flex justify-between items-center w-full">
+            在庫管理
+            <AddInventoryButton />
+          </div>
+        </Heading>
+        <InventoryTable fridgeId={fridgeId} />
+      </Box>
       <FridgeModal userId={userId} fridgeId={fridgeId} />
-    </div>
+    </>
   );
 };
 

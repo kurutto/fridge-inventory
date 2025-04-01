@@ -12,13 +12,12 @@ const ShoppingList = async ({ userId, fridgeId }: ShoppingListProps) => {
     `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list`
   );
   const data: ShoppingListType[] = await res.json();
-  console.log("データダウ", data);
 
   return (
     <List space="none" className="leading-[1.1] -mt-2.5">
       {data.map((item, idx) => (
-        <Li key={idx} className="relative pr-10 pt-2.5">・
-          {item.name}
+        <Li key={idx} className="relative pr-10 pt-2.5">
+          ・{item.name}
           {item.amount && (
             <span className="text-sm pl-1 leading-none">{item.amount}</span>
           )}
