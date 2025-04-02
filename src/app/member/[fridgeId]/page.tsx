@@ -14,6 +14,8 @@ import FridgeModal from "@/components/fridge/fridge-modal";
 import ShoppingList from "@/components/shopping-list/shopping-list";
 import InventoryTable from "@/components/inventory/inventory-table";
 import AddInventoryButton from "@/components/inventory/add-inventory-button";
+import { getInventories } from "@/lib/inventory";
+import { getShoppingList } from "@/lib/shopping-list";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -25,6 +27,8 @@ const FridgePage = async () => {
   if (!fridgeId) {
     redirect("/fridge-account");
   }
+  const shoppingList = await getShoppingList(fridgeId);
+  const inventories = await getInventories(fridgeId);
   return (
     <>
       <Box variant="rounded">
@@ -34,7 +38,7 @@ const FridgePage = async () => {
           </Heading>
           <AddToListButton />
         </div>
-        <ShoppingList userId={userId} fridgeId={fridgeId} />
+        <ShoppingList userId={userId} fridgeId={fridgeId} shoppingList={shoppingList} />
       </Box>
       <Box variant="spaceY">
         <Heading outline={true} level={2} icon={FaCubesStacked}>
@@ -43,7 +47,7 @@ const FridgePage = async () => {
             <AddInventoryButton />
           </div>
         </Heading>
-        <InventoryTable fridgeId={fridgeId} />
+        <InventoryTable inventories={inventories} />
       </Box>
       <FridgeModal userId={userId} fridgeId={fridgeId} />
     </>

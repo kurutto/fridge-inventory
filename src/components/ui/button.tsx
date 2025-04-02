@@ -4,7 +4,7 @@ import { FaCirclePlus, FaXmark, FaCamera } from "react-icons/fa6";
 
 interface ButtonProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
-  variant?: "base" | "small" | "add" | "delete" | "photo";
+  variant?: "base" | "small" | "add" | "delete" | "photo" | "text";
   color?: "primary" | "secondary" | "outline" | "destructive";
   children?: React.ReactNode;
   className?: string;
@@ -28,6 +28,7 @@ const Button = ({
         delete: "leading-none p-3",
         photo:
           "w-14 h-14 rounded-full flex items-center justify-center text-2xl",
+        text: "p-1",
       },
       color: {
         primary: cn(
@@ -57,7 +58,7 @@ const Button = ({
       className={cn(button({ variant: variant, color: color }), className)}
       {...props}
     >
-      {variant === "base" || variant === "small" ? (
+      {variant === "base" || variant === "small" || variant === "text" ? (
         <>{children}</>
       ) : variant === "add" ? (
         <FaCirclePlus />

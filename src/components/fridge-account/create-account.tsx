@@ -38,7 +38,7 @@ const CreateAccount = () => {
         アカウント新規作成
       </Heading>
       <Box variant="spaceY">
-        <Box variant="horizontally">
+        <Box variant="horizontallyForm">
           <Label htmlFor="name" className="w-37">
             冷蔵庫アカウント名
           </Label>
@@ -49,7 +49,7 @@ const CreateAccount = () => {
             className="sm:flex-1 max-sm:w-full"
           />
         </Box>
-        <Box variant="horizontally">
+        <Box variant="horizontallyForm">
           <Label htmlFor="description" className="w-37">
             アカウントの説明
           </Label>

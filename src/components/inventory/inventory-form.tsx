@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 import { useRouter } from "next/navigation";
 import Box from "../ui/box";
@@ -80,9 +80,11 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
     }
   };
 
-  const handleDelete = async() => {
+  const handleDelete = async () => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory/${inventory!.id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory/${
+        inventory!.id
+      }`,
       {
         method: "DELETE",
       }
@@ -90,7 +92,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
     reset();
     router.refresh();
     handleOpen();
-  }
+  };
   return (
     <>
       <Heading level={2} className="justify-center">
@@ -98,7 +100,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="category" className="w-20">
               カテゴリ<span className="text-destructive pl-0.5">*</span>
             </Label>
@@ -121,7 +123,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="name" className="w-20">
               品名<span className="text-destructive pl-0.5">*</span>
             </Label>
@@ -139,7 +141,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="remaining" className="w-20">
               残数<span className="text-destructive pl-0.5">*</span>
             </Label>
@@ -160,12 +162,24 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
             </div>
           </Box>
         </Box>
-        <Box variant="horizontally" className=" md:mt-8 max-md:mt-6 justify-center">
-          <Button type="submit" color="primary" className={cn('block',inventory ? 'w-30':'w-45')}>
+        <Box
+          variant="horizontally"
+          className=" md:mt-8 max-md:mt-6 justify-center"
+        >
+          <Button
+            type="submit"
+            color="primary"
+            className={cn("block", inventory ? "w-30" : "w-45")}
+          >
             送信
           </Button>
           {inventory && (
-            <Button type="button" color="secondary" className="block w-30" onClick={handleDelete}>
+            <Button
+              type="button"
+              color="secondary"
+              className="block w-30"
+              onClick={handleDelete}
+            >
               削除
             </Button>
           )}

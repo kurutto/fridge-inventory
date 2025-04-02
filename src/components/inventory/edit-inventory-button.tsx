@@ -10,7 +10,7 @@ const EditInventoryButton = ({ inventory }: { inventory: InventoryType }) => {
     <Button
       variant="small"
       color="secondary"
-      className="w-20"
+      className="sm:w-20 max-sm:w-11"
       onClick={() => handleItemOpen(1, inventory)}
     >
       編集

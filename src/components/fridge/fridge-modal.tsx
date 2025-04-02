@@ -14,7 +14,7 @@ const FridgeModal = ({ userId, fridgeId }: FridgeModal) => {
   const { item, isOpen, inventory, handleOpen } =
     useContext<ModalContextType>(ModalContext);
   return (
-    <Modal isOpen={isOpen} handleOpen={handleOpen} boxW="w-lg max-w-9/10">
+    <Modal isOpen={isOpen} handleOpen={handleOpen} boxW="w-lg">
       {item === 0 && <AddToListForm userId={userId} fridgeId={fridgeId} />}
       {item ===1 && <InventoryForm fridgeId={fridgeId} inventory={inventory} />}
     </Modal>
