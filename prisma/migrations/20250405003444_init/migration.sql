@@ -68,6 +68,7 @@ CREATE TABLE "inventories" (
     "fridge_id" TEXT NOT NULL,
     "category" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
+    "kana" TEXT NOT NULL,
     "remaining" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,

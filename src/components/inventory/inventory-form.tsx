@@ -13,8 +13,9 @@ import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import Select from "../ui/select";
 import { categories } from "@/constants/categories";
-import { InventoryType } from "@/types/types";
+import { InventoryType, KanaDataType } from "@/types/types";
 import { cn } from "@/lib/utils";
+import { getKana } from "@/lib/inventory";
 
 const formSchema = z.object({
   category: z.string().min(1, {
@@ -50,6 +51,11 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   });
   const onSubmit = async (values: formType) => {
     try {
+      const kanaData = await getKana(fridgeId, values.name);
+      const kana = kanaData.result.word.map(
+        (kanaObj: KanaDataType) => kanaObj.furigana
+      );
+      kana.join("");
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory`,
         {
@@ -59,6 +65,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
             inventoryId: inventory?.id,
             category: Number(values.category),
             name: values.name,
+            kana: kana[0] === undefined ? values.name : kana[0],
             amount: values.remaining,
           }),
           headers: {

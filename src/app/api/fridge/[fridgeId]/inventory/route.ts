@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { fridgeId, category, name, amount } = await req.json();
+    const { fridgeId, category, name, kana, amount } = await req.json();
     await prisma.inventory.create({
       data: {
         fridgeId: fridgeId,
         category: category,
         name: name,
+        kana: kana,
         remaining: amount,
       },
     });
@@ -24,7 +25,8 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const { fridgeId, inventoryId, category, name, amount } = await req.json();
+    const { fridgeId, inventoryId, category, name, kana, amount } =
+      await req.json();
     await prisma.inventory.update({
       where: {
         fridgeId: fridgeId,
@@ -33,6 +35,7 @@ export async function PUT(req: Request) {
       data: {
         category: category,
         name: name,
+        kana: kana,
         remaining: amount,
       },
     });
