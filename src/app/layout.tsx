@@ -27,7 +27,6 @@ export default function RootLayout({
             <main className="flex-1 w-full md:px-5 md:py-20 md:max-w-7xl md:mx-auto md:space-y-12 max-md:px-4 max-md:pt-11 max-md:pb-20 max-md:space-y-6 max-md:bg-slight-gray">
               {children}
             </main>
-            <BottomMenu className="md:hidden fixed bottom-0 left-0 w-full" />
             </ModalContextProvider>
           </NextAuthProvider>
         </div>

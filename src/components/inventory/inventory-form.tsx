@@ -52,10 +52,10 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   const onSubmit = async (values: formType) => {
     try {
       const kanaData = await getKana(fridgeId, values.name);
-      const kana = kanaData.result.word.map(
-        (kanaObj: KanaDataType) => kanaObj.furigana
+      const kanaArr = kanaData.result.word.map((kanaObj: KanaDataType) =>
+        kanaObj.furigana ? kanaObj.furigana : kanaObj.surface
       );
-      kana.join("");
+      const kana = kanaArr.join("");
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory`,
         {
@@ -65,7 +65,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
             inventoryId: inventory?.id,
             category: Number(values.category),
             name: values.name,
-            kana: kana[0] === undefined ? values.name : kana[0],
+            kana: kana,
             amount: values.remaining,
           }),
           headers: {
@@ -102,13 +102,13 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   };
   return (
     <>
-      <Heading level={2} className="justify-center">
+      <Heading level={2} className="justify-center mb-8">
         {inventory ? "在庫管理編集" : "在庫管理追加"}
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
-          <Box variant="horizontallyForm">
-            <Label htmlFor="category" className="w-20">
+          <Box variant="horizontally">
+            <Label htmlFor="category" className="w-19">
               カテゴリ<span className="text-destructive pl-0.5">*</span>
             </Label>
             <div className="sm:flex-1">
@@ -130,11 +130,11 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontallyForm">
-            <Label htmlFor="name" className="w-20">
+          <Box variant="horizontally">
+            <Label htmlFor="name" className="w-19">
               品名<span className="text-destructive pl-0.5">*</span>
             </Label>
-            <div className="sm:flex-1">
+            <div className="flex-1">
               <Input
                 type="text"
                 id="name"
@@ -148,8 +148,8 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontallyForm">
-            <Label htmlFor="remaining" className="w-20">
+          <Box variant="horizontally">
+            <Label htmlFor="remaining" className="w-19">
               残数<span className="text-destructive pl-0.5">*</span>
             </Label>
             <div className="sm:flex-1">

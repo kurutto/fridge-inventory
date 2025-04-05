@@ -22,11 +22,11 @@ const Modal = ({
   ...props
 }: ModalProps) => {
   const baseStyle = cn(
-    "fixed top-0 left-0 h-screen w-screen flex items-center justify-center",
+    "fixed top-0 left-0 h-screen w-screen flex items-center justify-center z-50",
     isOpen ? "visible opacity-100" : "invisible opacity-0"
   );
   const boxStyle = cn(
-    "absolute transition-opacity max-h-screen overscroll-y-auto -mx-4 z-50 max-w-9/10",
+    "absolute transition-opacity max-h-[calc(100vh-2rem)] overscroll-contain overflow-y-auto -mx-4 max-w-9/10 z-55 my-1",
     boxW,
     isOpen ? "visible opacity-100" : "invisible opacity-0"
   );

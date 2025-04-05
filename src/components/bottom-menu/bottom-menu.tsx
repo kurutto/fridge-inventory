@@ -10,7 +10,7 @@ interface BottomMenuProps
 }
 const BottomMenu = ({ className, ...props }: BottomMenuProps) => {
   const { menuItems } = useMenuItems();
-  const baseStyle = "grid grid-cols-4 bg-white";
+  const baseStyle = "grid grid-cols-4 bg-white z-25";
   return (
     <>
       <ul className={cn(baseStyle, className)} {...props}>

@@ -32,7 +32,7 @@ const Button = ({
         base: "p-2.5 rounded-lg",
         small:
           "md:p-2 md:rounded-lg max-md:p-1.5 max-md:rounded-md max-md:text-sm",
-        add: "text-5xl",
+        add: "md:text-[40px] max-md:text-4xl",
         delete: "leading-none p-3",
         photo:
           "w-14 h-14 rounded-full flex items-center justify-center text-2xl",
