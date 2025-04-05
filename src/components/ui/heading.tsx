@@ -30,7 +30,7 @@ const Heading = ({
   );
   const iconStyle = cn(
     level === 1 && "md:text-3xl max-md:text-2xl",
-    level === 2 && "md:text-2xl max-md:text-lg"
+    level === 2 && "md:text-2xl max-md:text-xl"
   );
 
   return (

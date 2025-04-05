@@ -16,6 +16,8 @@ import InventoryTable from "@/components/inventory/inventory-table";
 import AddInventoryButton from "@/components/inventory/add-inventory-button";
 import { getInventories } from "@/lib/inventory";
 import { getShoppingList } from "@/lib/shopping-list";
+import AddPurchaseButton from "@/components/purchase/add-purchase-button";
+import BottomMenu from "@/components/bottom-menu/bottom-menu";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -49,7 +51,19 @@ const FridgePage = async () => {
         </Heading>
         <InventoryTable inventories={inventories} />
       </Box>
+
+      <Box variant="rounded">
+        <div className="flex justify-between">
+          <Heading level={2} icon={FaBagShopping}>
+            今日の購入品
+          </Heading>
+          <AddPurchaseButton />
+        </div>
+        <ShoppingList userId={userId} fridgeId={fridgeId} shoppingList={shoppingList} />
+      </Box>
       <FridgeModal userId={userId} fridgeId={fridgeId} />
+
+      <BottomMenu className="md:hidden fixed bottom-0 left-0 w-full" />
     </>
   );
 };

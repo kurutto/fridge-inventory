@@ -8,12 +8,15 @@ import HeaderFridgeAccount from "./header-fridge-account";
 import { getFridgeAccounts } from "@/lib/fridge";
 import { FridgeType } from "@/types/types";
 
-const Header = async() => {
+const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
-  let fridgeAccounts:FridgeType[] = [];
-  if(session){
-    fridgeAccounts =await getFridgeAccounts(session.user.id);
+  let fridgeAccounts: FridgeType[] = [];
+  if (session) {
+    fridgeAccounts = await getFridgeAccounts(session.user.id);
   }
+  const fridgeName = fridgeAccounts.find(
+    (fridgeAccount) => fridgeAccount.id === session!.user.fridgeId
+  )!.name;
 
   return (
     <header className="flex justify-between lg:pl-12 lg:py-9 md:py-7 md:pl-7 md:pr-7 md:shadow-[0_4px_10px_rgba(0,0,0,0.05)] max-md:bg-primary max-md:py-2.5 max-md:px-4">
@@ -29,9 +32,9 @@ const Header = async() => {
         {session?.user.fridgeId ? (
           <>
             <Menu />
-            <HeaderFridgeAccount />
-            </>
-        ):null}
+            <HeaderFridgeAccount fridgeName={fridgeName} />
+          </>
+        ) : null}
         <HamburgerMenu fridgeAccounts={fridgeAccounts} user={session?.user} />
       </div>
     </header>

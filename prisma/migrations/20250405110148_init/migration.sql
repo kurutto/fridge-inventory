@@ -81,7 +81,7 @@ CREATE TABLE "purchases" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "fridge_id" TEXT NOT NULL,
-    "inventory_id" TEXT NOT NULL,
+    "inventory_id" TEXT,
     "name" TEXT NOT NULL,
     "category" INTEGER NOT NULL,
     "purchase_date" TIMESTAMP(3) NOT NULL,
