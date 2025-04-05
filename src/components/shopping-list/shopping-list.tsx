@@ -4,21 +4,16 @@ import RemoveFromListButton from "./remove-from-list-button";
 
 interface ShoppingListProps {
   userId: string;
-  fridgeId: string;
+  fridgeId:string;
+  shoppingList: ShoppingListType[];
 }
 
-const ShoppingList = async ({ userId, fridgeId }: ShoppingListProps) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list`
-  );
-  const data: ShoppingListType[] = await res.json();
-  console.log("データダウ", data);
-
+const ShoppingList = async ({ userId, fridgeId, shoppingList }: ShoppingListProps) => {
   return (
     <List space="none" className="leading-[1.1] -mt-2.5">
-      {data.map((item, idx) => (
-        <Li key={idx} className="relative pr-10 pt-2.5">・
-          {item.name}
+      {shoppingList.map((item, idx) => (
+        <Li key={idx} className="relative pr-10 pt-2.5">
+          ・{item.name}
           {item.amount && (
             <span className="text-sm pl-1 leading-none">{item.amount}</span>
           )}

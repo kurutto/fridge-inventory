@@ -78,7 +78,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="name" className="w-12">
               品名<span className="text-destructive">*</span>
             </Label>
@@ -94,7 +94,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="amount" className="w-12">
               数量
             </Label>
@@ -105,7 +105,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
               className="w-36"
             />
           </Box>
-          <Box variant="horizontally">
+          <Box variant="horizontallyForm">
             <Label htmlFor="name" className="w-12">
               期限日
             </Label>

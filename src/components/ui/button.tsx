@@ -1,10 +1,17 @@
 import { cn } from "@/lib/utils";
 import { tv } from "tailwind-variants";
-import { FaCirclePlus, FaXmark, FaCamera } from "react-icons/fa6";
+import {
+  FaCirclePlus,
+  FaXmark,
+  FaCamera,
+  FaArrowDown,
+  FaArrowUp,
+} from "react-icons/fa6";
 
 interface ButtonProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
-  variant?: "base" | "small" | "add" | "delete" | "photo";
+  variant?: "base" | "small" | "add" | "delete" | "photo" | "angle";
+  angle?: "up" | "down";
   color?: "primary" | "secondary" | "outline" | "destructive";
   children?: React.ReactNode;
   className?: string;
@@ -12,6 +19,7 @@ interface ButtonProps
 
 const Button = ({
   variant = "base",
+  angle,
   color,
   children,
   className,
@@ -28,6 +36,7 @@ const Button = ({
         delete: "leading-none p-3",
         photo:
           "w-14 h-14 rounded-full flex items-center justify-center text-2xl",
+        angle: "text-sm",
       },
       color: {
         primary: cn(
@@ -65,6 +74,10 @@ const Button = ({
         <FaXmark />
       ) : variant === "photo" ? (
         <FaCamera />
+      ) : variant === "angle" && angle === "up" ? (
+        <FaArrowUp />
+      ) : variant === "angle" && angle === "down" ? (
+        <FaArrowDown />
       ) : null}
     </button>
   );

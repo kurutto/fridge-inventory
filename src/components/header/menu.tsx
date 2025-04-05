@@ -1,22 +1,19 @@
-'use client'
+"use client";
 import { cn } from "@/lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
-import { menuItems } from "@/constants/menuItems";
+import { useMenuItems } from "@/hooks/use-menu-items";
 import MenuItem from "./menu-item";
 
 interface MenuProps extends Omit<ComponentPropsWithoutRef<"ul">, "className"> {
   className?: string;
 }
 const Menu = ({ className, ...props }: MenuProps) => {
+  const { menuItems } = useMenuItems();
   const baseStyle = "max-md:hidden flex md:gap-6 lg:gap-7 max-lg:text-sm";
   return (
     <ul className={cn(baseStyle, className)} {...props}>
       {menuItems.map((menuItem, idx) => (
-        <MenuItem
-          href={menuItem.link}
-          onClick={menuItem.func}
-          key={idx}
-        >
+        <MenuItem href={menuItem.link} onClick={menuItem.func} key={idx}>
           {menuItem.title}
         </MenuItem>
       ))}

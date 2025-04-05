@@ -1,16 +1,20 @@
 "use client";
 import { FridgeType } from "@/types/types";
-import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
+import { useChangeFridgeAccount } from "@/hooks/use-change-fridge-account";
 import Button from "../ui/button";
 import { cn } from "@/lib/utils";
 
-interface AccountListProps 
-extends Omit<React.ComponentPropsWithoutRef<"ul">, "className"> {
+interface AccountListProps
+  extends Omit<React.ComponentPropsWithoutRef<"ul">, "className"> {
   fridgeAccounts: FridgeType[];
-  className?:string;
+  className?: string;
 }
 
-const AccountList = ({ fridgeAccounts, className, ...props }: AccountListProps) => {
+const AccountList = ({
+  fridgeAccounts,
+  className,
+  ...props
+}: AccountListProps) => {
   const { changeFridgeAccount } = useChangeFridgeAccount();
   if (!fridgeAccounts) {
     return null;

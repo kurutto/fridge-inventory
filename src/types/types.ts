@@ -13,17 +13,38 @@ export interface FridgeType {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface ShoppingListType {
+  id: string;
+  userId: string;
+  fridgeId: string;
+  name: string;
+  amount?: string;
+  dueDate?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user?: {
+    name: string;
+  };
+}
+export interface InventoryType {
+  id: string;
+  fridgeId: string;
+  category: number;
+  name: string;
+  kana: string;
+  remaining: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-export interface ShoppingListType{
-  id:string;
-  userId:string;
-  fridgeId:string;
-  name:string;
-  amount?:string;
-  dueDate?:string;
-  createdAt:Date;
-  updatedAt:Date;
-  user?:{
-    name:string;
-  }
+interface SubwordType {
+  furigana: string;
+  roman: string;
+  surface: string;
+}
+export interface KanaDataType {
+  furigana: string;
+  roman: string;
+  subword: SubwordType[];
+  surface: string;
 }

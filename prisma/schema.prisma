@@ -96,7 +96,9 @@ model UserFridge {
 model Inventory {
   id                String @id @default(cuid()) @unique
   fridgeId          String @map("fridge_id")
+  category          Int
   name              String
+  kana              String
   remaining         Int
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @updatedAt @map("updated_at")

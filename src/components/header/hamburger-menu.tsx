@@ -5,8 +5,8 @@ import HamburgerMenuItem from "./hamburger-menu-item";
 import HamburgerSubMenuItem from "./hamburger-sub-menu-item";
 import HamburgerMenuLink from "./hamburger-menu-link";
 import { FridgeType, UserType } from "@/types/types";
-import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
-import { useHandleOpen } from "@/hooks/useHandleOpen";
+import { useChangeFridgeAccount } from "@/hooks/use-change-fridge-account";
+import { useHandleOpen } from "@/hooks/use-handle-open";
 import Overlay from "../ui/overlay";
 import CloseButton from "../ui/close-button";
 
@@ -61,12 +61,7 @@ const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
             </HamburgerMenuItem>
           )}
           {user?.fridgeId && (
-            <>
-              <HamburgerMenuItem href="/">
-                冷蔵庫アカウント管理
-              </HamburgerMenuItem>
-              <HamburgerMenuItem href="/">在庫管理設定</HamburgerMenuItem>
-            </>
+            <HamburgerMenuItem href="/">冷蔵庫アカウント管理</HamburgerMenuItem>
           )}
           {user ? (
             <>

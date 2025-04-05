@@ -17,7 +17,7 @@ import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
 import { List, Li } from "@/components/ui/list";
 import Modal from "@/components/ui/modal";
-import { useHandleOpen } from "@/hooks/useHandleOpen";
+import { useHandleOpen } from "@/hooks/use-handle-open";
 
 export default function Page() {
   const { isOpen, handleOpen } = useHandleOpen();
@@ -82,11 +82,11 @@ export default function Page() {
           <Label htmlFor="category" className="w-28">
             カテゴリ
           </Label>
-          <Select
-            options={["食品", "日用品", "非常用品"]}
-            id="category"
-            className="flex-1"
-          />
+          <Select id="category" className="flex-1">
+            <option value={0}>食品</option>
+            <option value={1}>日用品</option>
+            <option value={2}>非常用品</option>
+          </Select>
         </div>
         <div className="flex items-center space-x-4">
           <Label htmlFor="inventory" className="w-28">
@@ -97,10 +97,12 @@ export default function Page() {
       </div>
       <div className="space-x-4 space-y-4">
         <Heading level={3}>小さいサイズ</Heading>
-        <Select
-          options={["1", "1/2", "1/4", "少", "備蓄を挿入"]}
-          padding="small"
-        />
+        <Select padding="small">
+          <option value={"1"}>1</option>
+          <option value={"1/2"}>1/2</option>
+          <option value={"1/4"}>1/4</option>
+          <option value={"少"}>少</option>
+        </Select>
         <Input type="text" padding="small" />
       </div>
       <Heading level={2} outline={true}>
