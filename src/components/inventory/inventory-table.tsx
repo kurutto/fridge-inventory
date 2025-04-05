@@ -12,6 +12,7 @@ import EditInventoryButton from "./edit-inventory-button";
 import { InventoryType } from "@/types/types";
 import Button from "../ui/button";
 import { categories } from "@/constants/categories";
+import { cn } from "@/lib/utils";
 
 interface InventoryTableProps
   extends Omit<React.ComponentPropsWithoutRef<"table">, "className"> {
@@ -23,6 +24,7 @@ const InventoryTable = ({
   className,
   ...props
 }: InventoryTableProps) => {
+  const baseStyle = ""
   const [sortedInventories, setSortedInventories] =
     useState<InventoryType[]>(inventories);
   useEffect(() => {
@@ -90,7 +92,7 @@ const InventoryTable = ({
     setSortedInventories(newList);
   };
   return (
-    <Table {...props}>
+    <Table className={cn(baseStyle,className)} {...props}>
       <TableHead>
         <TableRow>
           <TableHeader className="text-left">
