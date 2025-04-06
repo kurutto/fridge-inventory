@@ -17,6 +17,8 @@ import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
 import { getPurchases } from "@/lib/purchase";
 import PurchaseList from "@/components/purchase/purchase-list";
+import { PurchaseType } from "@/types/types";
+import { getFridgeAccountUsers } from "@/lib/fridge";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -31,13 +33,19 @@ const FridgePage = async () => {
   const shoppingList = await getShoppingList(fridgeId);
   const inventories = await getInventories(fridgeId);
   const purchases = await getPurchases(fridgeId);
-  const now = new Date();
-  const purchasesUsers: { id: string; name: string }[] = [];
-  purchases.forEach((purchase, idx) => {
-    if (idx === 0 || purchase.userId !== purchases[idx - 1].userId) {
-      purchasesUsers.push({ id: purchase.userId, name: purchase.user.name });
+  const sortedPurchases:PurchaseType[] = [...purchases];
+  sortedPurchases.sort((first, second) => {
+    if (first.purchaseDate > second.purchaseDate) {
+      return -1;
+    } else if (second.purchaseDate > first.purchaseDate) {
+      return 1;
+    } else {
+      return 0;
     }
-  })
+  });
+  const now = new Date();
+  const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
+  console.log('fridgeAccountUsers',fridgeAccountUsers)
   return (
     <>
       <Box variant="rounded">
@@ -66,7 +74,7 @@ const FridgePage = async () => {
           </Heading>
           <AddPurchaseButton />
         </div>
-        <PurchaseList userId={userId} fridgeId={fridgeId} date={now} purchases={purchases} purchasesUsers={purchasesUsers} headingStyle="max-md:text-center" />
+        <PurchaseList userId={userId} fridgeId={fridgeId} date={now} purchases={sortedPurchases} users={fridgeAccountUsers} headingStyle="max-md:text-center" />
       </Box>
 
     </>

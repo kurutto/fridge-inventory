@@ -60,3 +60,8 @@ export interface PurchaseType {
     name:string;
   }
 }
+export interface UserFridgeType{
+  fridgeId:string;
+  userId:string;
+  user:{name:string};
+}

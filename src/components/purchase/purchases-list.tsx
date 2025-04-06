@@ -1,4 +1,4 @@
-import { PurchaseType } from "@/types/types";
+import { PurchaseType, UserFridgeType } from "@/types/types";
 import React from "react";
 import Heading from "../ui/heading";
 import PurchaseList from "./purchase-list";
@@ -7,13 +7,13 @@ interface PurchasesListProps {
   userId: string;
   fridgeId: string;
   purchases: PurchaseType[];
-  purchasesUsers: { id: string; name: string }[];
+  users: UserFridgeType[];
 }
 const PurchasesList = ({
   userId,
   fridgeId,
   purchases,
-  purchasesUsers,
+  users,
 }: PurchasesListProps) => {
   const dates: Date[] = [];
   purchases.forEach((purchase, idx) => {
@@ -46,7 +46,7 @@ const PurchasesList = ({
             fridgeId={fridgeId}
             date={new Date(date)}
             purchases={purchases}
-            purchasesUsers={purchasesUsers}
+            users={users}
             headingStyle="text-left"
           />
         </div>

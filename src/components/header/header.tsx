@@ -5,7 +5,7 @@ import Menu from "./menu";
 import HamburgerMenu from "./hamburger-menu";
 import Link from "next/link";
 import HeaderFridgeAccount from "./header-fridge-account";
-import { getFridgeAccounts } from "@/lib/fridge";
+import { getFridgeAccounts } from "@/lib/user";
 import { FridgeType } from "@/types/types";
 
 const Header = async () => {
