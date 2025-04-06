@@ -73,16 +73,16 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
   };
   return (
     <>
-      <Heading level={2} className="justify-center">
+      <Heading level={2} className="justify-center mb-8">
         買物リスト追加
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
-          <Box variant="horizontallyForm">
+          <Box variant="horizontally">
             <Label htmlFor="name" className="w-12">
               品名<span className="text-destructive">*</span>
             </Label>
-            <div className="sm:flex-1">
+            <div className="flex-1">
               <Input
                 type="text"
                 id="name"
@@ -94,7 +94,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
               )}
             </div>
           </Box>
-          <Box variant="horizontallyForm">
+          <Box variant="horizontally">
             <Label htmlFor="amount" className="w-12">
               数量
             </Label>
@@ -105,7 +105,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
               className="w-36"
             />
           </Box>
-          <Box variant="horizontallyForm">
+          <Box variant="horizontally">
             <Label htmlFor="name" className="w-12">
               期限日
             </Label>

@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/lib/next-auth/options";
-import { getFridgeAccounts } from "@/lib/fridge";
+import { getFridgeAccounts } from "@/lib/user";
 import AccountList from "@/components/fridge-account/account-list";
 import CreateAccount from "@/components/fridge-account/create-account";
 import Heading from "@/components/ui/heading";

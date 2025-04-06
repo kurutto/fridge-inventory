@@ -5,15 +5,18 @@ import Menu from "./menu";
 import HamburgerMenu from "./hamburger-menu";
 import Link from "next/link";
 import HeaderFridgeAccount from "./header-fridge-account";
-import { getFridgeAccounts } from "@/lib/fridge";
+import { getFridgeAccounts } from "@/lib/user";
 import { FridgeType } from "@/types/types";
 
-const Header = async() => {
+const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
-  let fridgeAccounts:FridgeType[] = [];
-  if(session){
-    fridgeAccounts =await getFridgeAccounts(session.user.id);
+  let fridgeAccounts: FridgeType[] = [];
+  if (session) {
+    fridgeAccounts = await getFridgeAccounts(session.user.id);
   }
+  const fridgeName = fridgeAccounts.find(
+    (fridgeAccount) => fridgeAccount.id === session!.user.fridgeId
+  )!.name;
 
   return (
     <header className="flex justify-between lg:pl-12 lg:py-9 md:py-7 md:pl-7 md:pr-7 md:shadow-[0_4px_10px_rgba(0,0,0,0.05)] max-md:bg-primary max-md:py-2.5 max-md:px-4">
@@ -28,10 +31,10 @@ const Header = async() => {
       <div className="flex items-center lg:gap-7 md:gap-6 max-md:gap-3">
         {session?.user.fridgeId ? (
           <>
-            <Menu />
-            <HeaderFridgeAccount />
-            </>
-        ):null}
+            <Menu fridgeId={session.user.fridgeId} />
+            <HeaderFridgeAccount fridgeName={fridgeName} />
+          </>
+        ) : null}
         <HamburgerMenu fridgeAccounts={fridgeAccounts} user={session?.user} />
       </div>
     </header>

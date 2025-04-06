@@ -5,10 +5,11 @@ import { useMenuItems } from "@/hooks/use-menu-items";
 import MenuItem from "./menu-item";
 
 interface MenuProps extends Omit<ComponentPropsWithoutRef<"ul">, "className"> {
+  fridgeId: string;
   className?: string;
 }
-const Menu = ({ className, ...props }: MenuProps) => {
-  const { menuItems } = useMenuItems();
+const Menu = ({ fridgeId, className, ...props }: MenuProps) => {
+  const { menuItems } = useMenuItems(fridgeId);
   const baseStyle = "max-md:hidden flex md:gap-6 lg:gap-7 max-lg:text-sm";
   return (
     <ul className={cn(baseStyle, className)} {...props}>

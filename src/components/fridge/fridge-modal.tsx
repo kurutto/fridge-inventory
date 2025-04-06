@@ -4,6 +4,7 @@ import Modal from "../ui/modal";
 import AddToListForm from "../shopping-list/add-to-list-form";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 import InventoryForm from "../inventory/inventory-form";
+import PurchaseForm from "../purchase/purchase-form";
 
 interface FridgeModal {
   userId: string;
@@ -16,7 +17,10 @@ const FridgeModal = ({ userId, fridgeId }: FridgeModal) => {
   return (
     <Modal isOpen={isOpen} handleOpen={handleOpen} boxW="w-lg">
       {item === 0 && <AddToListForm userId={userId} fridgeId={fridgeId} />}
-      {item ===1 && <InventoryForm fridgeId={fridgeId} inventory={inventory} />}
+      {item === 1 && (
+        <InventoryForm fridgeId={fridgeId} inventory={inventory} />
+      )}
+      {item === 2 && <PurchaseForm userId={userId} fridgeId={fridgeId} />}
     </Modal>
   );
 };

@@ -3,19 +3,17 @@ import { nextAuthOptions } from "@/lib/next-auth/options";
 import { redirect } from "next/navigation";
 import Box from "@/components/ui/box";
 import Heading from "@/components/ui/heading";
-import {
-  FaListUl,
-  FaCubesStacked,
-  FaBagShopping,
-  FaFileLines,
-} from "react-icons/fa6";
+import { FaListUl, FaCubesStacked, FaBagShopping } from "react-icons/fa6";
 import AddToListButton from "@/components/shopping-list/add-to-list-button";
-import FridgeModal from "@/components/fridge/fridge-modal";
 import ShoppingList from "@/components/shopping-list/shopping-list";
 import InventoryTable from "@/components/inventory/inventory-table";
 import AddInventoryButton from "@/components/inventory/add-inventory-button";
 import { getInventories } from "@/lib/inventory";
 import { getShoppingList } from "@/lib/shopping-list";
+import AddPurchaseButton from "@/components/purchase/add-purchase-button";
+import { getPurchases } from "@/lib/purchase";
+import PurchaseList from "@/components/purchase/purchase-list";
+import { getFridgeAccountUsers } from "@/lib/fridge";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -29,6 +27,9 @@ const FridgePage = async () => {
   }
   const shoppingList = await getShoppingList(fridgeId);
   const inventories = await getInventories(fridgeId);
+  const purchases = await getPurchases(fridgeId);
+  const now = new Date();
+  const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
   return (
     <>
       <Box variant="rounded">
@@ -38,7 +39,11 @@ const FridgePage = async () => {
           </Heading>
           <AddToListButton />
         </div>
-        <ShoppingList userId={userId} fridgeId={fridgeId} shoppingList={shoppingList} />
+        <ShoppingList
+          userId={userId}
+          fridgeId={fridgeId}
+          shoppingList={shoppingList}
+        />
       </Box>
       <Box variant="spaceY">
         <Heading outline={true} level={2} icon={FaCubesStacked}>
@@ -49,7 +54,23 @@ const FridgePage = async () => {
         </Heading>
         <InventoryTable inventories={inventories} />
       </Box>
-      <FridgeModal userId={userId} fridgeId={fridgeId} />
+
+      <Box variant="rounded">
+        <div className="flex justify-between">
+          <Heading level={2} icon={FaBagShopping}>
+            今日の購入品
+          </Heading>
+          <AddPurchaseButton />
+        </div>
+        <PurchaseList
+          userId={userId}
+          fridgeId={fridgeId}
+          date={now}
+          purchases={purchases}
+          users={fridgeAccountUsers}
+          headingStyle="max-md:text-center"
+        />
+      </Box>
     </>
   );
 };
