@@ -48,3 +48,15 @@ export interface KanaDataType {
   subword: SubwordType[];
   surface: string;
 }
+export interface PurchaseType {
+  id:string;
+  userId:string;
+  fridgeId:string;
+  inventoryId:string;
+  name:string;
+  category:number;
+  purchaseDate:Date;
+  user:{
+    name:string;
+  }
+}

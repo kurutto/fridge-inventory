@@ -24,3 +24,28 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const fridgeId = await req.url
+      .split("fridge/")[1]
+      .replace("/purchase", "");
+    const purchases = await prisma.purchase.findMany({
+      where: { fridgeId: fridgeId },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+    return NextResponse.json(purchases);
+  } catch (err) {
+    console.error("GET Error:", err);
+    return NextResponse.json(
+      { message: "データの取得に失敗しました。" },
+      { status: 500 }
+    );
+  }
+}

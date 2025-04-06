@@ -18,6 +18,8 @@ import { getInventories } from "@/lib/inventory";
 import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
 import BottomMenu from "@/components/bottom-menu/bottom-menu";
+import { getPurchases } from "@/lib/purchase";
+import PurchaseList from "@/components/purchase/purchase-list";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -31,6 +33,8 @@ const FridgePage = async () => {
   }
   const shoppingList = await getShoppingList(fridgeId);
   const inventories = await getInventories(fridgeId);
+  const purchases = await getPurchases(fridgeId);
+  console.log(purchases);
   return (
     <>
       <Box variant="rounded">
@@ -59,7 +63,7 @@ const FridgePage = async () => {
           </Heading>
           <AddPurchaseButton />
         </div>
-        <ShoppingList userId={userId} fridgeId={fridgeId} shoppingList={shoppingList} />
+        <PurchaseList userId={userId} fridgeId={fridgeId} purchases={purchases} />
       </Box>
       <FridgeModal userId={userId} fridgeId={fridgeId} />
 
