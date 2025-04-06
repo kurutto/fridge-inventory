@@ -6,31 +6,32 @@ import RemovePurchaseButton from "./remove-purchase-button";
 interface PurchaseListProps {
   userId: string;
   fridgeId: string;
+  date:Date;
   purchases: PurchaseType[];
+  purchasesUsers: { id: string; name: string }[]
+  headingStyle:string;
 }
 
-const PurchaseList = async ({
+const PurchaseList = ({
   userId,
   fridgeId,
+  date,
   purchases,
+  purchasesUsers,
+  headingStyle,
 }: PurchaseListProps) => {
-  const now = new Date();
-  const todayPurchases = purchases.filter(purchase => new Date(purchase.purchaseDate).toLocaleDateString() === now.toLocaleDateString())
-  const users: { id: string; name: string }[] = [];
-  todayPurchases.forEach((purchase, idx) => {
-    if (idx === 0 || purchase.userId !== purchases[idx - 1].userId) {
-      users.push({ id: purchase.userId, name: purchase.user.name });
-    }
-  });
+  const datePurchases = purchases.filter(purchase => new Date(purchase.purchaseDate).toLocaleDateString() === date.toLocaleDateString())
+
   return (
     <>
-      {users.map((user) => (
+    {purchasesUsers.map(user => (
+      datePurchases.some(datePurchase => datePurchase.userId === user.id) ? (
         <div key={user.id}>
-          <Heading level={3} className="text-center">
+          <Heading level={3} className={headingStyle}>
             {user.name}
           </Heading>
           <List className="mt-2.5">
-            {todayPurchases.map(
+            {datePurchases.map(
               (purchase) =>
                 purchase.userId === user.id && (
                   <Li key={purchase.id} className="relative pr-4 pt-3">
@@ -46,6 +47,7 @@ const PurchaseList = async ({
             )}
           </List>
         </div>
+        ):null
       ))}
     </>
   );

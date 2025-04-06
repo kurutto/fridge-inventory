@@ -7,17 +7,14 @@ import {
   FaListUl,
   FaCubesStacked,
   FaBagShopping,
-  FaFileLines,
 } from "react-icons/fa6";
 import AddToListButton from "@/components/shopping-list/add-to-list-button";
-import FridgeModal from "@/components/fridge/fridge-modal";
 import ShoppingList from "@/components/shopping-list/shopping-list";
 import InventoryTable from "@/components/inventory/inventory-table";
 import AddInventoryButton from "@/components/inventory/add-inventory-button";
 import { getInventories } from "@/lib/inventory";
 import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
-import BottomMenu from "@/components/bottom-menu/bottom-menu";
 import { getPurchases } from "@/lib/purchase";
 import PurchaseList from "@/components/purchase/purchase-list";
 
@@ -34,7 +31,13 @@ const FridgePage = async () => {
   const shoppingList = await getShoppingList(fridgeId);
   const inventories = await getInventories(fridgeId);
   const purchases = await getPurchases(fridgeId);
-  console.log(purchases);
+  const now = new Date();
+  const purchasesUsers: { id: string; name: string }[] = [];
+  purchases.forEach((purchase, idx) => {
+    if (idx === 0 || purchase.userId !== purchases[idx - 1].userId) {
+      purchasesUsers.push({ id: purchase.userId, name: purchase.user.name });
+    }
+  })
   return (
     <>
       <Box variant="rounded">
@@ -63,11 +66,9 @@ const FridgePage = async () => {
           </Heading>
           <AddPurchaseButton />
         </div>
-        <PurchaseList userId={userId} fridgeId={fridgeId} purchases={purchases} />
+        <PurchaseList userId={userId} fridgeId={fridgeId} date={now} purchases={purchases} purchasesUsers={purchasesUsers} headingStyle="max-md:text-center" />
       </Box>
-      <FridgeModal userId={userId} fridgeId={fridgeId} />
 
-      <BottomMenu className="md:hidden fixed bottom-0 left-0 w-full" />
     </>
   );
 };

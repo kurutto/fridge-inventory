@@ -31,7 +31,7 @@ const Header = async () => {
       <div className="flex items-center lg:gap-7 md:gap-6 max-md:gap-3">
         {session?.user.fridgeId ? (
           <>
-            <Menu />
+            <Menu fridgeId={session.user.fridgeId} />
             <HeaderFridgeAccount fridgeName={fridgeName} />
           </>
         ) : null}
