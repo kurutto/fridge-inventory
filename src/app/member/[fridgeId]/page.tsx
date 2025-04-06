@@ -13,7 +13,6 @@ import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
 import { getPurchases } from "@/lib/purchase";
 import PurchaseList from "@/components/purchase/purchase-list";
-import { PurchaseType } from "@/types/types";
 import { getFridgeAccountUsers } from "@/lib/fridge";
 
 const FridgePage = async () => {
