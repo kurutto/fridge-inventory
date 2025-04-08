@@ -14,10 +14,7 @@ const Header = async () => {
   if (session) {
     fridgeAccounts = await getFridgeAccounts(session.user.id);
   }
-  const fridgeName = fridgeAccounts.find(
-    (fridgeAccount) => fridgeAccount.id === session!.user.fridgeId
-  )!.name;
-
+  const fridgeName = "test";
   return (
     <header className="flex justify-between lg:pl-12 lg:py-9 md:py-7 md:pl-7 md:pr-7 md:shadow-[0_4px_10px_rgba(0,0,0,0.05)] max-md:bg-primary max-md:py-2.5 max-md:px-4">
       <h1 className="content-center">
