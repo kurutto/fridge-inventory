@@ -14,7 +14,7 @@ interface UserRegistrationProps {
   fridgeId: string;
 }
 
-const UserRegistration = ({ fridgeId }: UserRegistrationProps) => {
+const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
   const router = useRouter();
   const inputId = useRef<HTMLInputElement>(null);
   const [user, setUser] = useState<UserType>();
@@ -51,35 +51,35 @@ const UserRegistration = ({ fridgeId }: UserRegistrationProps) => {
     }
   };
   return (
-    <Box variant="rounded">
-      <Heading level={3}>ユーザー登録</Heading>
-      <Box variant="spaceY">
-        <Label>ユーザー検索</Label>
-        <Box variant="horizontally">
+    <div className="space-y-2">
+      <Heading level={3}>メンバー登録</Heading>
+      <div>
+        <Label className="">ユーザー検索</Label>
+        <div>
           <Input type="text" placeholder="ユーザーID" ref={inputId}></Input>
-          <Button color="primary" onClick={handleSearch}>
+          <Button color="secondary" onClick={handleSearch} className="ml-2">
             検索
           </Button>
+        </div>
+        <Box>
+          {user ? (
+            user.userFridges.some(
+              (userFridge) => fridgeId === userFridge.fridgeId
+            ) ? (
+              <Paragraph>{user.name}：登録済</Paragraph>
+            ) : (
+              <Box variant="horizontally" className="items-center">
+                <Paragraph>{user.name}</Paragraph>
+                <Button variant="small" color="secondary" onClick={handleAdd}>
+                  追加
+                </Button>
+              </Box>
+            )
+          ) : null}
         </Box>
-      </Box>
-      <Box>
-        {user ? (
-          user.userFridges.some(
-            (userFridge) => fridgeId === userFridge.fridgeId
-          ) ? (
-            <Paragraph>{user.name}：登録済</Paragraph>
-          ) : (
-            <Box variant="horizontally" className="items-center">
-              <Paragraph>{user.name}</Paragraph>
-              <Button variant="small" color="secondary" onClick={handleAdd}>
-                追加
-              </Button>
-            </Box>
-          )
-        ) : null}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 
-export default UserRegistration;
+export default MemberRegistration;
