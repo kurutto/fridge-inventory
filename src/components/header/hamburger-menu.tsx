@@ -37,7 +37,7 @@ const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
       >
         <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
         <ul>
-          <HamburgerMenuItem href="/">トップページ</HamburgerMenuItem>
+          <HamburgerMenuItem href={`/member/${user?.fridgeId}/account`}>トップページ</HamburgerMenuItem>
           {user && (
             <HamburgerMenuItem>
               <HamburgerMenuLink
@@ -61,11 +61,11 @@ const HamburgerMenu = ({ fridgeAccounts, user }: HamburgerMenu) => {
             </HamburgerMenuItem>
           )}
           {user?.fridgeId && (
-            <HamburgerMenuItem href="/">冷蔵庫アカウント管理</HamburgerMenuItem>
+            <HamburgerMenuItem href={`/member/${user?.fridgeId}/account`}>冷蔵庫アカウント管理</HamburgerMenuItem>
           )}
           {user ? (
             <>
-              <HamburgerMenuItem href="/mypage">マイページ</HamburgerMenuItem>
+              <HamburgerMenuItem href="/member/mypage">マイページ</HamburgerMenuItem>
               <HamburgerMenuItem href="/api/auth/signout">
                 ログアウト
               </HamburgerMenuItem>

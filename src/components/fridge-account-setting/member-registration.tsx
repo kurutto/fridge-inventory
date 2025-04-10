@@ -68,7 +68,7 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
             ) ? (
               <Paragraph>{user.name}：登録済</Paragraph>
             ) : (
-              <Box variant="horizontally" className="items-center">
+              <Box variant="horizontally" className="items-center mt-4">
                 <Paragraph>{user.name}</Paragraph>
                 <Button variant="small" color="secondary" onClick={handleAdd}>
                   追加
