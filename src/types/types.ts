@@ -5,6 +5,7 @@ export interface UserType {
   emailVerified?: Date | null;
   image?: string | null;
   fridgeId?: string | null;
+  userFridges: UserFridgeType[];
 }
 export interface FridgeType {
   id: string;
@@ -12,6 +13,7 @@ export interface FridgeType {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  userFridges: UserFridgeType[];
 }
 export interface ShoppingListType {
   id: string;
@@ -49,19 +51,20 @@ export interface KanaDataType {
   surface: string;
 }
 export interface PurchaseType {
-  id:string;
-  userId:string;
-  fridgeId:string;
-  inventoryId:string;
-  name:string;
-  category:number;
-  purchaseDate:Date;
-  user:{
-    name:string;
-  }
+  id: string;
+  userId: string;
+  fridgeId: string;
+  inventoryId: string;
+  name: string;
+  category: number;
+  purchaseDate: Date;
+  user: {
+    name: string;
+  };
 }
-export interface UserFridgeType{
-  fridgeId:string;
-  userId:string;
-  user:{name:string};
+export interface UserFridgeType {
+  fridgeId: string;
+  userId: string;
+  user: UserType;
+  fridge:FridgeType;
 }
