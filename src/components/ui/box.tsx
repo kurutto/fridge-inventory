@@ -14,7 +14,7 @@ interface BoxProps
 const Box = ({ variant, className, ...props }: BoxProps) => {
   const baseStyle = cn(
     variant === "rounded" &&
-      "bg-white md:rounded-[20px] md:p-8 md:shadow-pc max-md:rounded-2xl max-md:px-4 max-md:py-6 max-md:space-y-5 max-md:shadow-sp",
+      "bg-white md:rounded-[20px] md:p-8 md:space-y-7 md:shadow-pc max-md:rounded-2xl max-md:px-4 max-md:py-6 max-md:space-y-5 max-md:shadow-sp",
     variant === "roundedMaxMd" &&
       " md:space-y-7 max-md:bg-white max-md:rounded-2xl max-md:px-4 max-md:py-6 max-md:space-y-5 max-md:shadow-sp",
     variant === "horizontally" && "flex space-x-4",

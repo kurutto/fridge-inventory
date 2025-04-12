@@ -3,18 +3,19 @@ import { UserFridgeType } from "@/types/types";
 import { useChangeFridgeAccount } from "@/hooks/use-change-fridge-account";
 import Button from "../ui/button";
 import { cn } from "@/lib/utils";
+import { Li, List } from "../ui/list";
 
-interface AccountListProps
+interface FridgeListProps
   extends Omit<React.ComponentPropsWithoutRef<"ul">, "className"> {
   fridgeAccounts: UserFridgeType[];
   className?: string;
 }
 
-const AccountList = ({
+const FridgeList = ({
   fridgeAccounts,
   className,
   ...props
-}: AccountListProps) => {
+}: FridgeListProps) => {
   const { changeFridgeAccount } = useChangeFridgeAccount();
   if (!fridgeAccounts) {
     return null;
@@ -22,20 +23,23 @@ const AccountList = ({
   const baseStyle = "space-y-4 pt-4";
 
   return (
-    <ul className={cn(baseStyle, className)} {...props}>
+    <List className={cn(baseStyle, className)} {...props}>
       {fridgeAccounts.map((fridgeAccount, idx) => (
-        <li className="text-center" key={idx}>
+        <Li key={idx}>
+          ・
           <Button
-            color="outline"
-            className="min-w-52"
+            variant="text"
+            className="pb-1.5"
             onClick={() => changeFridgeAccount(fridgeAccount.fridgeId)}
           >
             {fridgeAccount.fridge.name}
           </Button>
-        </li>
+          <br />
+          {fridgeAccount.fridge.description}
+        </Li>
       ))}
-    </ul>
+    </List>
   );
 };
 
-export default AccountList;
+export default FridgeList;
