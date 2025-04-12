@@ -15,7 +15,7 @@ const HamburgerMenuItem = ({
   className,
   ...props
 }: HamburgerMenuItemProps) => {
-  const baseStyle = "border-b border-dotted border-gray";
+  const baseStyle = "border-b-2 border-dashed border-secondary";
   const Tag: React.ElementType = href ? HamburgerMenuLink : "div";
   const tagProps = Tag === HamburgerMenuLink ? { href } : {};
 

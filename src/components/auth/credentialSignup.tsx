@@ -3,11 +3,16 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Heading from "../ui/heading";
+import Box from "../ui/box";
+import Label from "../ui/label";
+import Input from "../ui/input";
+import Button from "../ui/button";
+import Paragraph from "../ui/paragraph";
 
 const formSchema = z.object({
   id: z
     .string({
-      required_error: "必須項目です",
       invalid_type_error: "入力値に誤りがります",
     })
     .regex(/^[a-zA-Z0-9]+$/, { message: "半角英数字で入力してください" })
@@ -16,7 +21,6 @@ const formSchema = z.object({
     }),
   name: z
     .string({
-      required_error: "必須項目です",
       invalid_type_error: "入力値に誤りがります",
     })
     .min(2, {
@@ -24,13 +28,12 @@ const formSchema = z.object({
     }),
   email: z
     .string({
-      required_error: "必須項目です",
       invalid_type_error: "入力値に誤りがります",
     })
+    .min(1, { message: "必須項目です" })
     .email({ message: "正しいメールアドレスを入力してください" }),
   password: z
     .string({
-      required_error: "必須項目です",
       invalid_type_error: "入力値に誤りがります",
     })
     .regex(/^[a-zA-Z0-9]+$/, { message: "半角英数字で入力してください" })
@@ -50,12 +53,6 @@ const CredentialSignup = () => {
     setError,
   } = useForm<formType>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      id: "",
-      name: "",
-      email: "",
-      password: "",
-    },
   });
 
   const onSubmit = async (values: formType) => {
@@ -101,36 +98,85 @@ const CredentialSignup = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="md:space-y-10 max-md:space-y-7"
+    >
+      <Heading level={3} className="text-center">
+        IDとパスワードで作成
+      </Heading>
+      <Box variant="spaceY" className="mx-auto md:max-w-sm">
         {errors.root && <p>{errors.root.message}</p>}
-        <div>
-          <label htmlFor="id">ID</label>
-          <input type="text" id="id" {...register("id")} />
-          {errors.id && <p>{errors.id.message}</p>}
-        </div>
-        <div>
-          <label htmlFor="name">ユーザー名</label>
-          <input type="text" id="name" {...register("name")} />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
-        <div>
-          <label htmlFor="email">メールアドレス</label>
-          <input type="email" id="email" {...register("email")} />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <div>
-          <label htmlFor="password">パスワード</label>
-          <input type="password" id="password" {...register("password")} />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
-        <button type="submit" className="mt-10 w-48 block mx-auto">
-          新規作成
-        </button>
-      </form>
+        <Box variant="horizontallyForm">
+          <Label htmlFor="id" className="md:w-30">
+            ID<span className="text-destructive">*</span>
+          </Label>
+          <div className="flex-1">
+            <Input type="text" id="id" {...register("id")} className="w-full" />
+            {errors.id && (
+              <Paragraph variant="error">{errors.id.message}</Paragraph>
+            )}
+          </div>
+        </Box>
+        <Box variant="horizontallyForm">
+          <Label htmlFor="name" className="md:w-30">
+            ユーザー名<span className="text-destructive">*</span>
+          </Label>
+          <div className="flex-1">
+            <Input
+              type="text"
+              id="name"
+              {...register("name")}
+              className="w-full"
+            />
+            {errors.name && (
+              <Paragraph variant="error">{errors.name.message}</Paragraph>
+            )}
+          </div>
+        </Box>
+        <Box variant="horizontallyForm">
+          <Label htmlFor="email" className="md:w-30">
+            メールアドレス<span className="text-destructive">*</span>
+          </Label>
+          <div className="flex-1">
+            <Input
+              type="email"
+              id="email"
+              {...register("email")}
+              className="w-full"
+            />
+            {errors.email && (
+              <Paragraph variant="error">{errors.email.message}</Paragraph>
+            )}
+          </div>
+        </Box>
+        <Box variant="horizontallyForm">
+          <Label htmlFor="password" className="md:w-30">
+            パスワード<span className="text-destructive">*</span>
+          </Label>
+          <div className="flex-1">
+            <Input
+              type="password"
+              id="password"
+              {...register("password")}
+              className="w-full"
+            />
+            {errors.password && (
+              <Paragraph variant="error">{errors.password.message}</Paragraph>
+            )}
+          </div>
+        </Box>
+      </Box>
+      <Button
+        color="secondary"
+        type="submit"
+        className="mt-10 w-48 block mx-auto"
+      >
+        新規作成
+      </Button>
       {sendMessage && <p>{sendMessage}</p>}
       {responseMessage && <p>{responseMessage}</p>}
-    </div>
+    </form>
   );
 };
 
