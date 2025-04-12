@@ -59,12 +59,27 @@ export const nextAuthOptions: NextAuthOptions = {
         }
         token.jat = Math.floor(Date.now() / 1000);
       }
-      if (trigger === "update" && session?.fridgeId) {
-        token.fridgeId = session.fridgeId;
+      //update() が呼ばれたときの処理
+      if (trigger === "update" && session) {
+        if (session.fridgeId) {
+          token.fridgeId = session.fridgeId;
+        }
+        if (session.id) {
+          token.sub = session.id;
+        }
+        if (session.name) {
+          token.name = session.name;
+        }
       }
-      // JWT 更新時にtoken.fridgeId を保持
+      // 初期セッション作成時 or token 再生成時に値がなければ埋める
       if (!token.fridgeId && session?.user?.fridgeId) {
         token.fridgeId = session.user.fridgeId;
+      }
+      if (!token.id && session?.user?.id) {
+        token.sub = session.user.id;
+      }
+      if (!token.name && session?.user?.name) {
+        token.name = session.user.name;
       }
       return token;
     },
