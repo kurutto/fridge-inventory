@@ -134,7 +134,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
           <Box variant="horizontally">
-            <Label htmlFor="name" className="w-19">
+            <Label htmlFor="name" className="w-20">
               品名<span className="text-destructive pl-0.5">*</span>
             </Label>
             <div className="flex-1">
@@ -150,7 +150,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
             </div>
           </Box>
           <Box variant="horizontally">
-            <Label htmlFor="category" className="w-19">
+            <Label htmlFor="category" className="w-20">
               カテゴリ<span className="text-destructive pl-0.5">*</span>
             </Label>
             <div className="sm:flex-1">
@@ -171,7 +171,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
             </div>
           </Box>
           <Box variant="horizontally">
-            <Label htmlFor="name" className="w-19">
+            <Label htmlFor="name" className="w-20">
               購入日
             </Label>
             <Input type="date" id="date" {...register("date")} />
@@ -195,7 +195,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
               variant="horizontally"
               className={inventoryCheck ? "" : "hidden"}
             >
-              <Label htmlFor="inventoryId" className="sm:w-19">
+              <Label htmlFor="inventoryId" className="sm:w-20">
                 在庫管理名
               </Label>
               <div>
@@ -216,7 +216,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
               variant="horizontally"
               className={inventoryCheck ? "" : "hidden"}
             >
-              <Label htmlFor="amount" className="w-19">
+              <Label htmlFor="amount" className="w-20">
                 追加数量<span className="text-destructive pl-0.5">*</span>
               </Label>
               <div className="flex-1">
