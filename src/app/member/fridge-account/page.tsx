@@ -20,7 +20,7 @@ const page = async () => {
           </Paragraph>
         </>
       )}
-      <CreateAccount />
+      <CreateAccount userId={session!.user.id} />
     </>
   );
 };
