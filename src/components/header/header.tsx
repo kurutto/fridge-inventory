@@ -12,7 +12,9 @@ const Header = async () => {
   const session = await getServerSession(nextAuthOptions);
   const user = session ? await getUser(session.user.id) : undefined;
   const fridgeId = session?.user.fridgeId;
-  const fridgeObj:UserFridgeType | undefined | null =  user?.userFridges.find(userFridge => userFridge.fridgeId === fridgeId);
+  const fridgeObj: UserFridgeType | undefined | null = user?.userFridges.find(
+    (userFridge) => userFridge.fridgeId === fridgeId
+  );
   const fridgeName = fridgeObj?.fridge.name;
   return (
     <header className="flex justify-between lg:pl-12 lg:py-9 md:py-7 md:pl-7 md:pr-7 md:shadow-[0_4px_10px_rgba(0,0,0,0.05)] max-md:bg-primary max-md:py-2.5 max-md:px-4">
@@ -31,7 +33,7 @@ const Header = async () => {
             <HeaderFridgeAccount fridgeName={fridgeName} />
           </>
         ) : null}
-        <HamburgerMenu user={user} />
+        <HamburgerMenu session={session} user={user} />
       </div>
     </header>
   );

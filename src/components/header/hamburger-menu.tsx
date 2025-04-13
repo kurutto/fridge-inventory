@@ -4,17 +4,18 @@ import { FaBars } from "react-icons/fa6";
 import HamburgerMenuItem from "./hamburger-menu-item";
 import HamburgerSubMenuItem from "./hamburger-sub-menu-item";
 import HamburgerMenuLink from "./hamburger-menu-link";
-import { UserType } from "@/types/types";
+import { SessionType, UserType } from "@/types/types";
 import { useChangeFridgeAccount } from "@/hooks/use-change-fridge-account";
 import { useHandleOpen } from "@/hooks/use-handle-open";
 import Overlay from "../ui/overlay";
 import CloseButton from "../ui/close-button";
 
 interface HamburgerMenu {
+  session?:SessionType | null;
   user?: UserType;
 }
 
-const HamburgerMenu = ({ user }: HamburgerMenu) => {
+const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
   const { changeFridgeAccount } = useChangeFridgeAccount();
   const { isOpen, handleOpen } = useHandleOpen();
   const handleAccountClick = (id: string) => {
@@ -36,7 +37,7 @@ const HamburgerMenu = ({ user }: HamburgerMenu) => {
       >
         <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
         <ul>
-          <HamburgerMenuItem href={`/member/${user?.fridgeId}/account`}>
+          <HamburgerMenuItem href={session?.user?.fridgeId ? `/member/${session.user.fridgeId}`:session?.user?.fridgeId ? '/member/fridge-account':'/signin'} onClick={handleOpen}>
             トップページ
           </HamburgerMenuItem>
           {user && (
@@ -62,23 +63,28 @@ const HamburgerMenu = ({ user }: HamburgerMenu) => {
             </HamburgerMenuItem>
           )}
           {user?.fridgeId && (
-            <HamburgerMenuItem href={`/member/${user?.fridgeId}/account`}>
+            <HamburgerMenuItem
+              href={`/member/${user?.fridgeId}/account`}
+              onClick={handleOpen}
+            >
               冷蔵庫アカウント管理
             </HamburgerMenuItem>
           )}
           {user ? (
             <>
-              <HamburgerMenuItem href="/member/mypage">
+              <HamburgerMenuItem href="/member/mypage" onClick={handleOpen}>
                 マイページ
               </HamburgerMenuItem>
-              <HamburgerMenuItem href="/api/auth/signout">
+              <HamburgerMenuItem href="/api/auth/signout" onClick={handleOpen}>
                 ログアウト
               </HamburgerMenuItem>
             </>
           ) : (
             <>
-              <HamburgerMenuItem href="/signin">ログイン</HamburgerMenuItem>
-              <HamburgerMenuItem href="/signup">
+              <HamburgerMenuItem href="/signin" onClick={handleOpen}>
+                ログイン
+              </HamburgerMenuItem>
+              <HamburgerMenuItem href="/signup" onClick={handleOpen}>
                 アカウント作成
               </HamburgerMenuItem>
             </>

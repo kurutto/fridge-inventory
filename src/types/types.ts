@@ -7,6 +7,9 @@ export interface UserType {
   fridgeId?: string | null;
   userFridges: UserFridgeType[];
 }
+export interface SessionType {
+  user:UserType;
+}
 export interface FridgeType {
   id: string;
   name: string;
