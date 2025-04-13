@@ -52,7 +52,9 @@ const FridgePage = async () => {
             <AddInventoryButton />
           </div>
         </Heading>
+        <div className="max-md:max-h-67 max-md:overflow-y-scroll">
         <InventoryTable inventories={inventories} />
+        </div>
       </Box>
 
       <Box variant="rounded">
