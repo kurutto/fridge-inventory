@@ -8,7 +8,7 @@ import {
   FaFileLines,
 } from "react-icons/fa6";
 import Box from "@/components/ui/box";
-import { getFridgeAccountUsers } from "@/lib/fridge";
+import { getFridgeAccount } from "@/lib/fridge";
 import { PurchaseType } from "@/types/types";
 
 
@@ -33,7 +33,8 @@ const PurchasesPage = async () => {
       return 0;
     }
   });
-  const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
+  const fridgeAccount = await getFridgeAccount(fridgeId);
+  const fridgeAccountUsers = fridgeAccount.userFridges;
   return (
     <>
     <Heading level={1} icon={FaFileLines}>購入履歴</Heading>

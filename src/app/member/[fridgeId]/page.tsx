@@ -13,7 +13,7 @@ import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
 import { getPurchases } from "@/lib/purchase";
 import PurchaseList from "@/components/purchase/purchase-list";
-import { getFridgeAccountUsers } from "@/lib/fridge";
+import { getFridgeAccount } from "@/lib/fridge";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -29,7 +29,8 @@ const FridgePage = async () => {
   const inventories = await getInventories(fridgeId);
   const purchases = await getPurchases(fridgeId);
   const now = new Date();
-  const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
+  const fridgeAccount = await getFridgeAccount(fridgeId);
+  const fridgeAccountUsers = fridgeAccount.userFridges
   return (
     <div className="w-full md:flex md:flex-wrap md:gap-x-11 md:gap-y-12 max-md:space-y-6">
       <Box variant="rounded" className="md:order-1 md:flex-1">
