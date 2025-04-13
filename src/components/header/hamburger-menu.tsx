@@ -25,7 +25,7 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
   const fridgeAccounts = user?.userFridges;
   return (
     <>
-      <div className="md:cursor-pointer max-md:text-white" onClick={handleOpen}>
+      <div className="cursor-pointer max-md:text-white" onClick={handleOpen}>
         <FaBars className="md:text-4xl max-md:text-3xl" />
       </div>
       <Overlay isOpen={isOpen} handleOpen={handleOpen} />
