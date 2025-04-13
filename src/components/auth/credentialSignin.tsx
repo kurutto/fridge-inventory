@@ -39,7 +39,7 @@ const CredentialSignin = () => {
       <Heading level={3} className="text-center">
         IDとパスワードでログイン
       </Heading>
-      <Box variant="spaceY" className="mx-auto md:max-w-xs">
+      <Box variant="spaceY" className="mx-auto sm:max-w-xs">
         {errors.root && <p>{errors.root.message}</p>}
         <Box variant="horizontally">
           <Label htmlFor="id" className="w-25">
