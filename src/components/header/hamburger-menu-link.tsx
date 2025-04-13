@@ -15,7 +15,7 @@ const HamburgerMenuLink = ({
   className,
   ...props
 }: HamburgerMenuLinkProps) => {
-  const baseStyle = "block md:hover:opacity-65 md:cursor-pointer";
+  const baseStyle = "block hover:opacity-65 cursor-pointer";
 
   return (
     <Link href={href} className={cn(baseStyle, className)} {...props}>

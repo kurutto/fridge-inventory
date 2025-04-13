@@ -10,7 +10,7 @@ interface MenuItemProps
 }
 const MenuItem = ({ href, children, className, ...props }: MenuItemProps) => {
   const baseStyle =
-    "md:hover:opacity-65 md:cursor-pointer md:transition-opacity";
+    "hover:opacity-65 cursor-pointer transition-opacity";
   const Tag: React.ElementType = href ? Link : "div";
   const tagProps = Tag === Link ? { href } : {};
 

@@ -18,8 +18,8 @@ interface HamburgerMenu {
 const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
   const { changeFridgeAccount } = useChangeFridgeAccount();
   const { isOpen, handleOpen } = useHandleOpen();
-  const handleAccountClick = (id: string) => {
-    changeFridgeAccount(id);
+  const handleAccountClick = (id: string,name:string) => {
+    changeFridgeAccount(id,name);
     handleOpen();
   };
   const fridgeAccounts = user?.userFridges;
@@ -62,7 +62,7 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
                   {fridgeAccounts.map((fridgeAccount, idx) => (
                     <HamburgerSubMenuItem
                       key={idx}
-                      onClick={() => handleAccountClick(fridgeAccount.fridgeId)}
+                      onClick={() => handleAccountClick(fridgeAccount.fridgeId,fridgeAccount.fridge.name)}
                     >
                       {fridgeAccount.fridge.name}
                     </HamburgerSubMenuItem>

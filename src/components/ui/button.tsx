@@ -26,7 +26,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const button = tv({
-    base: "cursor-pointer md:hover:opacity-90 transition",
+    base: "cursor-pointer hover:opacity-90 transition",
     variants: {
       variant: {
         base: "p-2.5 rounded-lg flex justify-center items-center gap-2",
@@ -48,7 +48,7 @@ const Button = ({
         destructive: cn(
           variant === "add"
             ? "text-destructive"
-            : "md:bg-secondary md:hover:bg-destructive md:hover:text-white md:hover:opacity-100  max-md:bg-destructive max-md:text-white"
+            : "hover:opacity-100 md:bg-secondary md:hover:bg-destructive md:hover:text-white  max-md:bg-destructive max-md:text-white"
         ),
       },
     },
