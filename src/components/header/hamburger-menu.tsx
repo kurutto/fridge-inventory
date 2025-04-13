@@ -11,7 +11,7 @@ import Overlay from "../ui/overlay";
 import CloseButton from "../ui/close-button";
 
 interface HamburgerMenu {
-  session?:SessionType | null;
+  session?: SessionType | null;
   user?: UserType;
 }
 
@@ -37,7 +37,16 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
       >
         <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
         <ul>
-          <HamburgerMenuItem href={session?.user?.fridgeId ? `/member/${session.user.fridgeId}`:session?.user?.fridgeId ? '/member/fridge-account':'/signin'} onClick={handleOpen}>
+          <HamburgerMenuItem
+            href={
+              session?.user?.fridgeId
+                ? `/member/${session.user.fridgeId}`
+                : session?.user?.fridgeId
+                ? "/member/fridge-account"
+                : "/signin"
+            }
+            onClick={handleOpen}
+          >
             トップページ
           </HamburgerMenuItem>
           {user && (
@@ -62,9 +71,9 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
               )}
             </HamburgerMenuItem>
           )}
-          {user?.fridgeId && (
+          {session?.user?.fridgeId && (
             <HamburgerMenuItem
-              href={`/member/${user?.fridgeId}/account`}
+              href={`/member/${session?.user?.fridgeId}/account`}
               onClick={handleOpen}
             >
               冷蔵庫アカウント管理
