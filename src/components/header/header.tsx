@@ -20,10 +20,7 @@ const Header = () => {
     fetchUserData();
   },[session])
   const fridgeId = session?.user.fridgeId;
-  const fridgeObj: UserFridgeType | undefined | null = user?.userFridges.find(
-    (userFridge) => userFridge.fridgeId === fridgeId
-  );
-  const fridgeName = fridgeObj?.fridge.name;
+  const fridgeName = session?.user.fridgeName;
   return (
     <header className="flex justify-between lg:pl-12 lg:py-9 md:py-7 md:pl-7 md:pr-7 md:shadow-[0_4px_10px_rgba(0,0,0,0.05)] max-md:bg-primary max-md:py-2.5 max-md:px-4">
       <h1 className="content-center">

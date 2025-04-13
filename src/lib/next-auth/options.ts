@@ -64,6 +64,9 @@ export const nextAuthOptions: NextAuthOptions = {
         if (session.fridgeId) {
           token.fridgeId = session.fridgeId;
         }
+        if (session.fridgeName) {
+          token.fridgeName = session.fridgeName;
+        }
         if (session.id) {
           token.sub = session.id;
         }
@@ -74,6 +77,9 @@ export const nextAuthOptions: NextAuthOptions = {
       // 初期セッション作成時 or token 再生成時に値がなければ埋める
       if (!token.fridgeId && session?.user?.fridgeId) {
         token.fridgeId = session.user.fridgeId;
+      }
+      if (!token.fridgeName && session?.user?.fridgeName) {
+        token.fridgeId = session.user.fridgeName;
       }
       if (!token.id && session?.user?.id) {
         token.sub = session.user.id;
@@ -90,6 +96,7 @@ export const nextAuthOptions: NextAuthOptions = {
       session.user.email = token.email;
       session.user.emailVerified = token.emailVerified as Date | null;
       session.user.fridgeId = token.fridgeId as string;
+      session.user.fridgeName = token.fridgeName as string;
       return session;
     },
   },

@@ -28,7 +28,7 @@ const AccountList = ({
           <Button
             color="outline"
             className="min-w-52 mx-auto"
-            onClick={() => changeFridgeAccount(fridgeAccount.fridgeId)}
+            onClick={() => changeFridgeAccount(fridgeAccount.fridgeId,fridgeAccount.fridge.name)}
           >
             {fridgeAccount.fridge.name}
           </Button>

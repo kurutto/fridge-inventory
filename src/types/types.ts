@@ -5,6 +5,7 @@ export interface UserType {
   emailVerified?: Date | null;
   image?: string | null;
   fridgeId?: string | null;
+  fridgeName?: string | null;
   userFridges: UserFridgeType[];
 }
 export interface SessionType {
