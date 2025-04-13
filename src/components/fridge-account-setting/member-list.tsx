@@ -8,9 +8,10 @@ import RemoveFromUserListButton from "./remove-from-member-button";
 interface UserListProps {
   fridgeId: string;
   users: UserFridgeType[];
+  currentUser: string;
 }
 
-const MemberList = ({ fridgeId, users }: UserListProps) => {
+const MemberList = ({ fridgeId, users, currentUser }: UserListProps) => {
   return (
     <Box variant="spaceY" className="mb-8">
       <Heading level={3}>メンバー一覧</Heading>
@@ -21,7 +22,7 @@ const MemberList = ({ fridgeId, users }: UserListProps) => {
             className="flex md:justify-between items-center"
           >
             ・{user.user.name}
-            <RemoveFromUserListButton fridgeId={fridgeId} user={user} />
+            {user.userId !== currentUser && <RemoveFromUserListButton fridgeId={fridgeId} user={user} />}
           </Li>
         ))}
       </List>

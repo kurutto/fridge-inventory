@@ -34,7 +34,11 @@ const FridgePage = async () => {
           <Heading level={2} className="justify-center">
             メンバー
           </Heading>
-          <MemberList fridgeId={fridgeId} users={users} />
+          <MemberList
+            fridgeId={fridgeId}
+            users={users}
+            currentUser={session.user.id}
+          />
           <MemberRegistration fridgeId={fridgeId} />
         </Box>
       </div>
