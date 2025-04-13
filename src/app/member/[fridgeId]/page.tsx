@@ -31,8 +31,8 @@ const FridgePage = async () => {
   const now = new Date();
   const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
   return (
-    <>
-      <Box variant="rounded">
+    <div className="w-full md:flex md:flex-wrap md:gap-x-11 md:gap-y-12 max-md:space-y-6">
+      <Box variant="rounded" className="md:order-1 md:flex-1">
         <div className="flex justify-between">
           <Heading level={2} icon={FaListUl}>
             買物リスト
@@ -45,7 +45,7 @@ const FridgePage = async () => {
           shoppingList={shoppingList}
         />
       </Box>
-      <Box variant="spaceY">
+      <Box variant="spaceY" className="md:order-3 md:w-full">
         <Heading outline={true} level={2} icon={FaCubesStacked}>
           <div className="flex justify-between items-center w-full">
             在庫管理
@@ -56,7 +56,7 @@ const FridgePage = async () => {
           <InventoryTable inventories={inventories} />
         </div>
       </Box>
-      <Box variant="rounded">
+      <Box variant="rounded" className="md:order-2 md:flex-1">
         <div className="flex justify-between">
           <Heading level={2} icon={FaBagShopping}>
             今日の購入品
@@ -72,7 +72,7 @@ const FridgePage = async () => {
           headingStyle="max-md:text-center"
         />
       </Box>
-    </>
+    </div>
   );
 };
 
