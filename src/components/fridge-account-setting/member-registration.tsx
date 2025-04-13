@@ -55,7 +55,7 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
       <Heading level={3}>メンバー登録</Heading>
       <div>
         <Label className="">ユーザー検索</Label>
-        <div>
+        <div className="flex">
           <Input type="text" placeholder="ユーザーID" ref={inputId}></Input>
           <Button color="secondary" onClick={handleSearch} className="ml-2">
             検索

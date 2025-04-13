@@ -37,7 +37,7 @@ const PurchasesPage = async () => {
   return (
     <>
     <Heading level={1} icon={FaFileLines}>購入履歴</Heading>
-    <Box variant="rounded" className="md:max-w-xl md:mx-auto">
+    <Box variant="roundedMaxMd" className="md:max-w-md md:mx-auto">
       <PurchasesList userId={userId} fridgeId={fridgeId} purchases={sortedPurchases} users={fridgeAccountUsers} />
     </Box>
     </>

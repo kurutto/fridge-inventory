@@ -105,10 +105,10 @@ const CredentialSignup = () => {
       <Heading level={3} className="text-center">
         IDとパスワードで作成
       </Heading>
-      <Box variant="spaceY" className="mx-auto md:max-w-sm">
+      <Box variant="spaceY" className="mx-auto sm:max-w-md">
         {errors.root && <p>{errors.root.message}</p>}
         <Box variant="horizontallyForm">
-          <Label htmlFor="id" className="md:w-30">
+          <Label htmlFor="id" className="sm:w-35">
             ID<span className="text-destructive">*</span>
           </Label>
           <div className="flex-1">
@@ -119,7 +119,7 @@ const CredentialSignup = () => {
           </div>
         </Box>
         <Box variant="horizontallyForm">
-          <Label htmlFor="name" className="md:w-30">
+          <Label htmlFor="name" className="sm:w-35">
             ユーザー名<span className="text-destructive">*</span>
           </Label>
           <div className="flex-1">
@@ -135,7 +135,7 @@ const CredentialSignup = () => {
           </div>
         </Box>
         <Box variant="horizontallyForm">
-          <Label htmlFor="email" className="md:w-30">
+          <Label htmlFor="email" className="sm:w-35">
             メールアドレス<span className="text-destructive">*</span>
           </Label>
           <div className="flex-1">
@@ -151,7 +151,7 @@ const CredentialSignup = () => {
           </div>
         </Box>
         <Box variant="horizontallyForm">
-          <Label htmlFor="password" className="md:w-30">
+          <Label htmlFor="password" className="sm:w-35">
             パスワード<span className="text-destructive">*</span>
           </Label>
           <div className="flex-1">
