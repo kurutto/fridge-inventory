@@ -1,16 +1,24 @@
-import { getServerSession } from "next-auth";
-import { nextAuthOptions } from "@/lib/next-auth/options";
+'use client'
+import { useSession } from "next-auth/react";
 import Logo from "@/assets/logo";
 import Menu from "./menu";
 import HamburgerMenu from "./hamburger-menu";
 import Link from "next/link";
 import HeaderFridgeAccount from "./header-fridge-account";
 import { getUser } from "@/lib/user";
-import { UserFridgeType } from "@/types/types";
+import { UserFridgeType, UserType } from "@/types/types";
+import { useEffect, useState } from "react";
 
-const Header = async () => {
-  const session = await getServerSession(nextAuthOptions);
-  const user = session ? await getUser(session.user.id) : undefined;
+const Header = () => {
+  const { data: session } = useSession();
+  const [user, setUser] = useState<UserType>();
+  useEffect(() => {
+    const fetchUserData = async() => {
+      const user = session ? await getUser(session.user.id) : undefined;
+      setUser(user);
+    }
+    fetchUserData();
+  },[session])
   const fridgeId = session?.user.fridgeId;
   const fridgeObj: UserFridgeType | undefined | null = user?.userFridges.find(
     (userFridge) => userFridge.fridgeId === fridgeId

@@ -7,6 +7,6 @@ export const useChangeFridgeAccount = () => {
   const changeFridgeAccount = async (fridgeId: string) => {
     await update({ fridgeId: fridgeId });
     router.push(`/member/${fridgeId}`);
-  }
-  return {changeFridgeAccount}
+  };
+  return { changeFridgeAccount };
 };
