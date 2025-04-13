@@ -53,10 +53,9 @@ const FridgePage = async () => {
           </div>
         </Heading>
         <div className="max-md:max-h-67 max-md:overflow-y-scroll">
-        <InventoryTable inventories={inventories} />
+          <InventoryTable inventories={inventories} />
         </div>
       </Box>
-
       <Box variant="rounded">
         <div className="flex justify-between">
           <Heading level={2} icon={FaBagShopping}>

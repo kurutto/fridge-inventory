@@ -2,6 +2,7 @@ import { PurchaseType, UserFridgeType } from "@/types/types";
 import { List, Li } from "../ui/list";
 import Heading from "../ui/heading";
 import RemovePurchaseButton from "./remove-purchase-button";
+import Paragraph from "../ui/paragraph";
 
 interface PurchaseListProps {
   userId: string;
@@ -20,11 +21,13 @@ const PurchaseList = ({
   users,
   headingStyle,
 }: PurchaseListProps) => {
+  const today = new Date()
   const datePurchases = purchases.filter(purchase => new Date(purchase.purchaseDate).toLocaleDateString() === date.toLocaleDateString())
 
   return (
     <>
-    {users.map(user => (
+    {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>今日の購入品は登録されていません</Paragraph> : 
+      users.map(user => (
       datePurchases.some(datePurchase => datePurchase.userId === user.userId) ? (
         <div key={user.userId}>
           <Heading level={3} className={headingStyle}>

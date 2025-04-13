@@ -13,6 +13,7 @@ import { InventoryType } from "@/types/types";
 import Button from "../ui/button";
 import { categories } from "@/constants/categories";
 import { cn } from "@/lib/utils";
+import Paragraph from "../ui/paragraph";
 
 interface InventoryTableProps
   extends Omit<React.ComponentPropsWithoutRef<"table">, "className"> {
@@ -92,6 +93,8 @@ const InventoryTable = ({
     setSortedInventories(newList);
   };
   return (
+    <>
+    {inventories.length === 0 ? <Paragraph className="px-4 py-2">在庫管理品は登録されていません</Paragraph>:
     <Table className={cn(baseStyle,className)} {...props}>
       <TableHead>
         <TableRow>
@@ -144,7 +147,8 @@ const InventoryTable = ({
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </Table>}
+    </>
   );
 };
 
