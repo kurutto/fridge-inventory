@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 import { useRouter } from "next/navigation";
 import Box from "../ui/box";
@@ -18,9 +18,7 @@ import { cn } from "@/lib/utils";
 import { getKana } from "@/lib/inventory";
 
 const formSchema = z.object({
-  category: z.string().min(1, {
-    message: "必須項目です",
-  }),
+  category: z.coerce.number(),
   name: z.string().min(1, {
     message: "必須項目です",
   }),
@@ -36,11 +34,6 @@ interface InventoryFormProps {
 const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const router = useRouter();
-  const [category, setCategory] = useState(inventory?.category || 0);
-  const [name, setName] = useState(inventory?.name || "");
-  const [remaining, setRemaining] = useState(
-    inventory?.remaining.toString() || "0"
-  );
   const {
     register,
     handleSubmit,
@@ -48,6 +41,11 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
     formState: { errors },
   } = useForm<formType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      category: inventory?.category || 0,
+      name: inventory?.name || "",
+      remaining: inventory?.remaining || 0,
+    },
   });
   const onSubmit = async (values: formType) => {
     try {
@@ -114,9 +112,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
             <div className="sm:flex-1">
               <Select
                 id="category"
-                value={category}
                 {...register("category")}
-                onChange={(e) => setCategory(Number(e.target.value))}
                 className="flex-1"
               >
                 {categories.map((category, idx) => (
@@ -138,9 +134,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               <Input
                 type="text"
                 id="name"
-                value={name}
                 {...register("name")}
-                onChange={(e) => setName(e.target.value)}
                 className="w-full"
               />
               {errors.name && (
@@ -156,9 +150,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
               <Input
                 type="text"
                 id="remaining"
-                value={remaining}
                 {...register("remaining")}
-                onChange={(e) => setRemaining(e.target.value)}
                 className="w-36"
               />
               {errors.remaining && (
