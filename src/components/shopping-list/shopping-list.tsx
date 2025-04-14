@@ -17,7 +17,7 @@ const ShoppingList = async ({
   return (
     <>
       {shoppingList.length === 0 ? (
-        <Paragraph>買物リストは登録されていません</Paragraph>
+        <Paragraph>右上の「＋」ボタンを押してショッピングリストを追加してください。</Paragraph>
       ) : (
         <List space="none" className="leading-[1.1] -mt-2.5">
           {shoppingList.map((item, idx) => (

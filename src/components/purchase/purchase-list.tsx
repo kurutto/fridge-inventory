@@ -26,7 +26,7 @@ const PurchaseList = ({
 
   return (
     <>
-    {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>今日の購入品は登録されていません</Paragraph> : 
+    {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>右上の「＋」ボタンを押して購入品を追加してください。</Paragraph> : 
       users.map(user => (
       datePurchases.some(datePurchase => datePurchase.userId === user.id) ? (
         <div key={user.id}>
