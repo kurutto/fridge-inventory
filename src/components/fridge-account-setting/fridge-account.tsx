@@ -9,6 +9,7 @@ import Button from "../ui/button";
 import { FridgeType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
   id: z
@@ -36,6 +37,7 @@ interface FridgeAccountProps {
   fridgeAccount: FridgeType;
 }
 const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
+  const {update} = useSession()
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
   const {
@@ -97,86 +99,116 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
       alert(`サーバーエラーが発生しました`);
     }
   };
+  
+  const handleDelete = async () => {
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeAccount.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    await update({fridgeId:null,fridgeName:null});
+    router.refresh();
+    router.push('/member/fridge-account')
+  };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="md:space-y-7 max-md:space-y-5"
-    >
-      <div>
-        <Label className="font-bold" htmlFor="id">
-          冷蔵庫アカウントID
-        </Label>
-        {isEdit ? (
-          <div>
-            <Input type="text" id="id" {...register("id")} className="w-full" />
-            {errors.id && (
-              <Paragraph variant="error">{errors.id.message}</Paragraph>
-            )}
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="md:space-y-7 max-md:space-y-5"
+      >
+        <div>
+          <Label className="font-bold" htmlFor="id">
+            冷蔵庫アカウントID
+          </Label>
+          {isEdit ? (
+            <div>
+              <Input
+                type="text"
+                id="id"
+                {...register("id")}
+                className="w-full"
+              />
+              {errors.id && (
+                <Paragraph variant="error">{errors.id.message}</Paragraph>
+              )}
+            </div>
+          ) : (
+            <Paragraph>{fridgeAccount.id}</Paragraph>
+          )}
+        </div>
+        <div>
+          <Label className="font-bold" htmlFor="name">
+            冷蔵庫アカウント名
+          </Label>
+          {isEdit ? (
+            <div>
+              <Input
+                type="text"
+                id="name"
+                {...register("name")}
+                className="w-full"
+              />
+              {errors.name && (
+                <Paragraph variant="error">{errors.name.message}</Paragraph>
+              )}
+            </div>
+          ) : (
+            <Paragraph>{fridgeAccount.name}</Paragraph>
+          )}
+        </div>
+        <div>
+          <Label className="font-bold">冷蔵庫アカウントの説明</Label>
+          {isEdit ? (
+            <div>
+              <Input
+                type="text"
+                id="description"
+                {...register("description")}
+                className="w-full"
+              />
+            </div>
+          ) : (
+            <Paragraph>{fridgeAccount.description}</Paragraph>
+          )}
+        </div>
+        {isEdit && (
+          <div className="flex gap-4 justify-center">
+            <Button type="submit" color="outline" className="w-30">
+              送信
+            </Button>
+            <Button
+              type="button"
+              color="secondary"
+              className="w-30"
+              onClick={handleCancel}
+            >
+              キャンセル
+            </Button>
           </div>
-        ) : (
-          <Paragraph>{fridgeAccount.id}</Paragraph>
         )}
-      </div>
-      <div>
-        <Label className="font-bold" htmlFor="name">
-          冷蔵庫アカウント名
-        </Label>
-        {isEdit ? (
-          <div>
-            <Input
-              type="text"
-              id="name"
-              {...register("name")}
-              className="w-full"
-            />
-            {errors.name && (
-              <Paragraph variant="error">{errors.name.message}</Paragraph>
-            )}
-          </div>
-        ) : (
-          <Paragraph>{fridgeAccount.name}</Paragraph>
-        )}
-      </div>
-      <div>
-        <Label className="font-bold">冷蔵庫アカウントの説明</Label>
-        {isEdit ? (
-          <div>
-            <Input
-              type="text"
-              id="description"
-              {...register("description")}
-              className="w-full"
-            />
-          </div>
-        ) : (
-          <Paragraph>{fridgeAccount.description}</Paragraph>
-        )}
-      </div>
-      {isEdit ? (
+      </form>
+      {!isEdit && (
         <div className="flex gap-4 justify-center">
-          <Button type="submit" color="primary" className="w-30">
-            送信
+          <Button
+            type="button"
+            color="outline"
+            className="w-30"
+            onClick={() => setIsEdit(true)}
+          >
+            編集
           </Button>
           <Button
             type="button"
-            color="secondary"
+            color="destructive"
             className="w-30"
-            onClick={handleCancel}
+            onClick={handleDelete}
           >
-            キャンセル
+            削除
           </Button>
         </div>
-      ) : (
-        <Button
-          type="button"
-          color="primary"
-          className="block mx-auto w-45"
-          onClick={() => setIsEdit(true)}
-        >
-          編集
-        </Button>
       )}
-    </form>
+    </>
   );
 };
 

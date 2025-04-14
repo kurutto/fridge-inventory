@@ -57,3 +57,17 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const fridgeId = req.url.split("fridge/")[1];
+    await prisma.fridge.delete({
+      where: {
+        id: fridgeId,
+      },
+    });
+    return NextResponse.json({ message: "Success" }, { status: 201 });
+  } catch (err) {
+    return NextResponse.json(err);
+  }
+}

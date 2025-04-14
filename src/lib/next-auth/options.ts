@@ -61,31 +61,29 @@ export const nextAuthOptions: NextAuthOptions = {
       }
       //update() が呼ばれたときの処理
       if (trigger === "update" && session) {
-        if (session.fridgeId) {
-          token.fridgeId = session.fridgeId;
+        if ("fridgeId" in session) {
+          if (session.fridgeId === null || session.fridgeId === undefined) {
+            delete token.fridgeId;
+          } else {
+            token.fridgeId = session.fridgeId;
+          }
         }
-        if (session.fridgeName) {
-          token.fridgeName = session.fridgeName;
+
+        if ("fridgeName" in session) {
+          if (session.fridgeName === null || session.fridgeName === undefined) {
+            delete token.fridgeName;
+          } else {
+            token.fridgeName = session.fridgeName;
+          }
         }
-        if (session.id) {
+
+        if ("id" in session && session.id !== undefined) {
           token.sub = session.id;
         }
-        if (session.name) {
+
+        if ("name" in session && session.name !== undefined) {
           token.name = session.name;
         }
-      }
-      // 初期セッション作成時 or token 再生成時に値がなければ埋める
-      if (!token.fridgeId && session?.user?.fridgeId) {
-        token.fridgeId = session.user.fridgeId;
-      }
-      if (!token.fridgeName && session?.user?.fridgeName) {
-        token.fridgeId = session.user.fridgeName;
-      }
-      if (!token.id && session?.user?.id) {
-        token.sub = session.user.id;
-      }
-      if (!token.name && session?.user?.name) {
-        token.name = session.user.name;
       }
       return token;
     },

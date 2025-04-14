@@ -37,7 +37,7 @@ const Button = ({
         photo:
           "w-14 h-14 rounded-full flex items-center justify-center text-2xl",
         angle: "text-sm",
-        text:"hover:underline hover:underline-offset-4"
+        text: "hover:underline hover:underline-offset-4",
       },
       color: {
         primary: cn(
