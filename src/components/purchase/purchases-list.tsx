@@ -1,4 +1,4 @@
-import { PurchaseType, UserFridgeType } from "@/types/types";
+import { PurchasesUserType, PurchaseType } from "@/types/types";
 import React from "react";
 import Heading from "../ui/heading";
 import PurchaseList from "./purchase-list";
@@ -7,7 +7,7 @@ interface PurchasesListProps {
   userId: string;
   fridgeId: string;
   purchases: PurchaseType[];
-  users: UserFridgeType[];
+  users: PurchasesUserType[];
 }
 const PurchasesList = ({
   userId,
@@ -33,7 +33,7 @@ const PurchasesList = ({
     } else {
       return 0;
     }
-  })
+  });
   return (
     <>
       {sortedDates.map((date, idx) => (

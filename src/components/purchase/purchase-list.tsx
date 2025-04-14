@@ -1,4 +1,4 @@
-import { PurchaseType, UserFridgeType } from "@/types/types";
+import { PurchasesUserType, PurchaseType } from "@/types/types";
 import { List, Li } from "../ui/list";
 import Heading from "../ui/heading";
 import RemovePurchaseButton from "./remove-purchase-button";
@@ -9,7 +9,7 @@ interface PurchaseListProps {
   fridgeId: string;
   date:Date;
   purchases: PurchaseType[];
-  users: UserFridgeType[]
+  users: PurchasesUserType[]
   headingStyle:string;
 }
 
@@ -28,18 +28,18 @@ const PurchaseList = ({
     <>
     {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>今日の購入品は登録されていません</Paragraph> : 
       users.map(user => (
-      datePurchases.some(datePurchase => datePurchase.userId === user.userId) ? (
-        <div key={user.userId}>
+      datePurchases.some(datePurchase => datePurchase.userId === user.id) ? (
+        <div key={user.id}>
           <Heading level={3} className={headingStyle}>
-            {user.user.name}
+            {user.name}
           </Heading>
           <List className="mt-2.5">
             {datePurchases.map(
               (purchase) =>
-                purchase.userId === user.userId && (
+                purchase.userId === user.id && (
                   <Li key={purchase.id} className="relative pr-4 pt-3">
                     ・{purchase.name}
-                    {user.userId === userId && (
+                    {user.id === userId && (
                       <RemovePurchaseButton
                         fridgeId={fridgeId}
                         purchaseId={purchase.id}
