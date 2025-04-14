@@ -6,7 +6,7 @@ import HamburgerMenu from "./hamburger-menu";
 import Link from "next/link";
 import HeaderFridgeAccount from "./header-fridge-account";
 import { getUser } from "@/lib/user";
-import { UserFridgeType, UserType } from "@/types/types";
+import { UserType } from "@/types/types";
 import { useEffect, useState } from "react";
 
 const Header = () => {

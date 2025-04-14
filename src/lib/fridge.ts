@@ -1,4 +1,4 @@
-import { FridgeType, UserFridgeType } from "@/types/types";
+import { FridgeType } from "@/types/types";
 
 export const getFridgeAccount = async (
   fridgeId: string
