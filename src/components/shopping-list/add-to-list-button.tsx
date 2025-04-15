@@ -1,16 +1,16 @@
 "use client";
 import { useContext } from "react";
-import Button, { ButtonProps } from "../ui/button";
+import Button from "../ui/button";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 
-const AddToListButton = ({ ...props }: ButtonProps) => {
+const AddToListButton = () => {
   const { handleItemOpen } = useContext<ModalContextType>(ModalContext);
   return (
     <Button
       variant="add"
       color="primary"
       onClick={() => handleItemOpen(0)}
-      {...props}
+      aria-label="買物リスト追加"
     />
   );
 };

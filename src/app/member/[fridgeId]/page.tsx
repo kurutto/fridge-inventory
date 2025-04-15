@@ -37,7 +37,7 @@ const FridgePage = async () => {
           <Heading level={2} icon={FaListUl}>
             買物リスト
           </Heading>
-          <AddToListButton aria-label="買物リスト追加" />
+          <AddToListButton />
         </div>
         <ShoppingList
           userId={userId}
@@ -49,7 +49,7 @@ const FridgePage = async () => {
         <Heading outline={true} level={2} icon={FaCubesStacked}>
           <div className="flex justify-between items-center w-full">
             在庫管理
-            <AddInventoryButton aria-label="在庫管理品追加" />
+            <AddInventoryButton />
           </div>
         </Heading>
         <div className="max-md:max-h-67 max-md:overflow-y-scroll">
@@ -61,7 +61,7 @@ const FridgePage = async () => {
           <Heading level={2} icon={FaBagShopping}>
             今日の購入品
           </Heading>
-          <AddPurchaseButton aria-label="購入品追加" />
+          <AddPurchaseButton />
         </div>
         <PurchaseList
           userId={userId}
