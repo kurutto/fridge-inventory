@@ -16,14 +16,11 @@ const PurchasesList = ({
   users,
 }: PurchasesListProps) => {
   const dates: Date[] = [];
-  purchases.forEach((purchase, idx) => {
-    if (
-      idx === 0 ||
-      purchase.purchaseDate !== purchases[idx - 1].purchaseDate
-    ) {
+  purchases.forEach((purchase) => {
+    if(!dates.some(date => date === purchase.purchaseDate)){
       dates.push(purchase.purchaseDate);
     }
-  });
+  })
   const sortedDates = [...dates];
   sortedDates.sort((first, second) => {
     if (first > second) {
