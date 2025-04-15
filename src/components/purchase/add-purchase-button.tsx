@@ -3,10 +3,7 @@ import React, { useContext } from "react";
 import Button, { ButtonProps } from "../ui/button";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 
-interface AddPurchaseButtonProps extends Omit<ButtonProps, "className"> {
-  className?: string;
-}
-const AddPurchaseButton = ({ className, ...props }: AddPurchaseButtonProps) => {
+const AddPurchaseButton = ({ ...props }: ButtonProps) => {
   const { handleItemOpen } = useContext<ModalContextType>(ModalContext);
   return (
     <Button
