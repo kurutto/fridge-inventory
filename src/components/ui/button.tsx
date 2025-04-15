@@ -33,11 +33,10 @@ const Button = ({
       variant: {
         base: " flex justify-center items-center gap-2",
         add: "",
-        delete: "leading-none p-3",
-        photo:
-          "w-14 h-14 rounded-full flex items-center justify-center text-2xl",
-        angle: "text-sm",
-        text: "hover:underline hover:underline-offset-4",
+        delete: "leading-none",
+        photo: "rounded-full flex items-center justify-center",
+        angle: "",
+        text: "md:hover:underline md:hover:underline-offset-4 max-md:underline max-md:underline-offset-4",
       },
       color: {
         primary: cn(
@@ -54,12 +53,15 @@ const Button = ({
       size: {
         base: cn(
           variant === "base" && "p-2.5 rounded-lg ",
-          variant === "add" && "md:text-[40px] max-md:text-4xl"
+          variant === "add" && "md:text-[40px] max-md:text-4xl",
+          variant === "delete" && "p-3",
+          variant === "photo" && "w-14 h-14 text-2xl",
+          variant === "angle" && "text-sm"
         ),
         small: cn(
           variant === "base" &&
             "md:p-2 md:rounded-lg max-md:p-1.5 max-md:rounded-md max-md:text-sm",
-          variant === "add" && "text-xl align-middle px-1 -mt-1"
+          variant === "add" && "text-xl align-middle px-1 -mt-1 cursor-default hover:opacity-100",
         ),
       },
     },
@@ -76,7 +78,10 @@ const Button = ({
   });
   return (
     <button
-      className={cn(button({ variant: variant, color: color, size:size }), className)}
+      className={cn(
+        button({ variant: variant, color: color, size: size }),
+        className
+      )}
       {...props}
     >
       {variant === "base" || variant === "text" ? (

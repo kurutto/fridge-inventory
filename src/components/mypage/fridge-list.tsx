@@ -26,9 +26,15 @@ const FridgeList = ({
 
   return (
     <>
-    {fridgeAccounts.length === 0 ? 
-      <Paragraph>冷蔵庫アカウントは登録されていません。<Link href="/member/fridge-account">冷蔵庫アカウント登録</Link>から登録してください。</Paragraph>
-      :(
+      {fridgeAccounts.length === 0 ? (
+        <Paragraph>
+          冷蔵庫アカウントは登録されていません。
+          <Button variant="text">
+            <Link href="/member/fridge-account">冷蔵庫アカウント作成</Link>
+          </Button>
+          から登録してください。
+        </Paragraph>
+      ) : (
         <List className={cn(baseStyle, className)} {...props}>
           {fridgeAccounts.map((fridgeAccount, idx) => (
             <Li key={idx}>
@@ -36,7 +42,12 @@ const FridgeList = ({
               <Button
                 variant="text"
                 className="pb-1.5"
-                onClick={() => changeFridgeAccount(fridgeAccount.fridgeId,fridgeAccount.fridge.name)}
+                onClick={() =>
+                  changeFridgeAccount(
+                    fridgeAccount.fridgeId,
+                    fridgeAccount.fridge.name
+                  )
+                }
               >
                 {fridgeAccount.fridge.name}
               </Button>
@@ -45,9 +56,7 @@ const FridgeList = ({
             </Li>
           ))}
         </List>
-
-      )
-    }
+      )}
     </>
   );
 };
