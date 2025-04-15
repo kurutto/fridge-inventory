@@ -76,13 +76,19 @@ export const nextAuthOptions: NextAuthOptions = {
             token.fridgeName = session.fridgeName;
           }
         }
-
-        if ("id" in session && session.id !== undefined) {
-          token.sub = session.id;
+        if ("id" in session) {
+          if (session.id === null || session.id === undefined) {
+            delete token.sub;
+          } else {
+            token.sub = session.id;
+          }
         }
-
-        if ("name" in session && session.name !== undefined) {
-          token.name = session.name;
+        if ("name" in session) {
+          if (session.name === null || session.name === undefined) {
+            delete token.name;
+          } else {
+            token.name = session.name;
+          }
         }
       }
       return token;

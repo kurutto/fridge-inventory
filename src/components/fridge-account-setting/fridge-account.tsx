@@ -37,7 +37,7 @@ interface FridgeAccountProps {
   fridgeAccount: FridgeType;
 }
 const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
-  const {update} = useSession()
+  const { update } = useSession();
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
   const {
@@ -99,7 +99,6 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
       alert(`サーバーエラーが発生しました`);
     }
   };
-  
   const handleDelete = async () => {
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeAccount.id}`,
@@ -107,9 +106,9 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
         method: "DELETE",
       }
     );
-    await update({fridgeId:null,fridgeName:null});
+    await update({ fridgeId: null, fridgeName: null });
     router.refresh();
-    router.push('/member/fridge-account')
+    router.push("/member/fridge-account");
   };
   return (
     <>

@@ -52,3 +52,21 @@ export async function GET(req: Request) {
     return NextResponse.json(err);
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const userId = req.url.split("user/")[1];
+    await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    return NextResponse.json({ message: "Success" }, { status: 201 });
+  } catch (err) {
+    console.error("DELETE Error:", err);
+    return NextResponse.json(
+      { message: "データの削除に失敗しました。" },
+      { status: 500 }
+    );
+  }
+}
