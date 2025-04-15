@@ -100,7 +100,7 @@ const InventoryTable = ({
             variant="add"
             size="small"
             color="primary"
-            aria-label="在庫管理品追加"
+            aria-label="在庫管理追加"
           />
           ボタンを押して在庫管理品を追加してください。
         </Paragraph>
