@@ -100,6 +100,10 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
     }
   };
   const handleDelete = async () => {
+    const confirmed = confirm(
+      `${fridgeAccount.name}アカウントを削除しますか？一度削除するとデータは復元できません。`
+    );
+    if (!confirmed) return;
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeAccount.id}`,
       {
