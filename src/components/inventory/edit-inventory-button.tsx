@@ -8,7 +8,7 @@ const EditInventoryButton = ({ inventory }: { inventory: InventoryType }) => {
   const { handleItemOpen } = useContext<ModalContextType>(ModalContext);
   return (
     <Button
-      variant="small"
+      size="small"
       color="secondary"
       className="sm:w-20 max-sm:w-11"
       onClick={() => handleItemOpen(1, inventory)}

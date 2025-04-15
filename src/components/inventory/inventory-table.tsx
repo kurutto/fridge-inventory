@@ -96,7 +96,7 @@ const InventoryTable = ({
     <>
       {inventories.length === 0 ? (
         <Paragraph className="px-4 py-2">
-          右上の「＋」ボタンを押して在庫管理品を追加してください。
+          右上の<Button variant="add" className="text-s" />ボタンを押して在庫管理品を追加してください。
         </Paragraph>
       ) : (
         <Table className={cn(baseStyle, className)} {...props}>

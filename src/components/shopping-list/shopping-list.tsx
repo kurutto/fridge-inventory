@@ -2,6 +2,7 @@ import { ShoppingListType } from "@/types/types";
 import { List, Li } from "../ui/list";
 import RemoveFromListButton from "./remove-from-list-button";
 import Paragraph from "../ui/paragraph";
+import Button from "../ui/button";
 
 interface ShoppingListProps {
   userId: string;
@@ -17,7 +18,7 @@ const ShoppingList = async ({
   return (
     <>
       {shoppingList.length === 0 ? (
-        <Paragraph>右上の「＋」ボタンを押してショッピングリストを追加してください。</Paragraph>
+        <Paragraph>右上の<Button variant="add" size="small" color="primary" />ボタンを押してショッピングリストを追加してください。</Paragraph>
       ) : (
         <List space="none" className="leading-[1.1] -mt-2.5">
           {shoppingList.map((item, idx) => (

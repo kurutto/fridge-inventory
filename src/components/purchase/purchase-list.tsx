@@ -3,6 +3,7 @@ import { List, Li } from "../ui/list";
 import Heading from "../ui/heading";
 import RemovePurchaseButton from "./remove-purchase-button";
 import Paragraph from "../ui/paragraph";
+import Button from "../ui/button";
 
 interface PurchaseListProps {
   userId: string;
@@ -26,7 +27,7 @@ const PurchaseList = ({
 
   return (
     <>
-    {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>右上の「＋」ボタンを押して購入品を追加してください。</Paragraph> : 
+    {(date.toLocaleDateString() === today.toLocaleDateString() && datePurchases.length === 0) ? <Paragraph>右上の<Button variant="add" size="small" color="primary" />ボタンを押して購入品を追加してください。</Paragraph> : 
       users.map(user => (
       datePurchases.some(datePurchase => datePurchase.userId === user.id) ? (
         <div key={user.id}>

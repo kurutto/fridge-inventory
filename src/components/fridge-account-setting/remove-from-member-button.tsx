@@ -30,7 +30,7 @@ const RemoveFromMemberListButton = ({
   return (
     <Button
       color="secondary"
-      variant="small"
+      size="small"
       onClick={() => handleDelete(user)}
       className="max-md:ml-4"
     >

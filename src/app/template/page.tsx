@@ -46,7 +46,7 @@ export default function Page() {
       </div>
       <div className="space-x-4 space-y-4">
         <Heading level={3}>smallボタン</Heading>
-        <Button variant="small" color="secondary">
+        <Button size="small" color="secondary">
           テスト
         </Button>
       </div>
@@ -121,7 +121,7 @@ export default function Page() {
             <TableData>品名</TableData>
             <TableData className="text-center">1</TableData>
             <TableData className="text-center">
-              <Button variant="small" color="secondary" className="w-20">
+              <Button size="small" color="secondary" className="w-20">
                 編集
               </Button>
             </TableData>
@@ -130,7 +130,7 @@ export default function Page() {
             <TableData>品名</TableData>
             <TableData className="text-center">1</TableData>
             <TableData className="text-center">
-              <Button variant="small" color="secondary" className="w-20">
+              <Button size="small" color="secondary" className="w-20">
                 編集
               </Button>
             </TableData>
@@ -139,7 +139,7 @@ export default function Page() {
             <TableData>品名</TableData>
             <TableData className="text-center">1</TableData>
             <TableData className="text-center">
-              <Button variant="small" color="secondary" className="w-20">
+              <Button size="small" color="secondary" className="w-20">
                 編集
               </Button>
             </TableData>
