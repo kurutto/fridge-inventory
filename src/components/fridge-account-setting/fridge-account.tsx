@@ -177,7 +177,7 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
         </div>
         {isEdit && (
           <div className="flex gap-4 justify-center">
-            <Button type="submit" color="outline" className="w-30">
+            <Button type="submit" color="primary" className="w-30">
               送信
             </Button>
             <Button
