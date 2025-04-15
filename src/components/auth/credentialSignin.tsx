@@ -39,13 +39,13 @@ const CredentialSignin = () => {
       <Heading level={3} className="text-center">
         IDとパスワードでログイン
       </Heading>
-      <Box variant="spaceY" className="mx-auto md:max-w-sm">
+      <Box variant="spaceY" className="mx-auto sm:max-w-xs">
         {errors.root && <p>{errors.root.message}</p>}
         <Box variant="horizontally">
-          <Label htmlFor="id" className="w-30">
+          <Label htmlFor="id" className="w-25">
             ID
           </Label>
-          <div>
+          <div className="flex-1">
             <Input type="text" id="id" {...register("id")} className="w-full" />
             {errors.id && (
               <Paragraph variant="error">{errors.id.message}</Paragraph>
@@ -53,10 +53,10 @@ const CredentialSignin = () => {
           </div>
         </Box>
         <Box variant="horizontally">
-          <Label htmlFor="password" className="w-30">
+          <Label htmlFor="password" className="w-25">
             パスワード
           </Label>
-          <div>
+          <div className="flex-1">
             <Input
               type="password"
               id="password"

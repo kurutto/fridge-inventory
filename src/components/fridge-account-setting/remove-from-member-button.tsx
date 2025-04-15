@@ -15,7 +15,10 @@ const RemoveFromMemberListButton = ({
 }: RemoveFromUserListButtonProps) => {
   const router = useRouter();
   const handleDelete = async (user: UserFridgeType) => {
-    confirm(`${user.user.name}をアカウントから削除しますか？`);
+    const confirmed = confirm(
+      `${user.user.name}をアカウントから削除しますか？`
+    );
+    if (!confirmed) return;
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/account/${user.userId}`,
       {
@@ -27,7 +30,7 @@ const RemoveFromMemberListButton = ({
   return (
     <Button
       color="secondary"
-      variant="small"
+      size="small"
       onClick={() => handleDelete(user)}
       className="max-md:ml-4"
     >

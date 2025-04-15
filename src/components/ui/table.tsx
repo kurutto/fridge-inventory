@@ -15,7 +15,7 @@ interface TableHeadProps
 }
 const TableHead = ({ className, ...props }: TableHeadProps) => {
   const baseStyle =
-    "md:bg-secondary max-md:border-x-5 max-md:border-x-white max-md:border-b-5 max-md:border-b-slight-gray max-md:text-gray max-md:bg-white";
+    "md:bg-secondary [&_tr]:max-md:border-b-5 [&_tr]:max-md:border-b-slight-gray max-md:text-gray max-md:bg-white max-md:sticky top-0";
   return <thead className={cn(baseStyle, className)} {...props} />;
 };
 
@@ -25,7 +25,7 @@ interface TableBodyProps
 }
 const TableBody = ({ className, ...props }: TableBodyProps) => {
   const baseStyle =
-    "max-md:border-x-white max-md:border-x-5 max-md:bg-white [&_tr]:md:border-b-2 [&_tr]:md:border-dashed [&_tr]:md:border-secondary";
+    "max-md:bg-white [&_tr]:md:border-b-2 [&_tr]:md:border-dashed [&_tr]:md:border-secondary";
   return <tbody className={cn(baseStyle, className)} {...props} />;
 };
 
@@ -43,7 +43,8 @@ interface TableHeaderProps
   className?: string;
 }
 const TableHeader = ({ className, ...props }: TableHeaderProps) => {
-  const baseStyle = "font-bold md:py-3.5 md:px-2.5 max-md:p-1";
+  const baseStyle =
+    "font-bold md:py-3.5 md:px-2.5 max-md:p-1.5 max-md:first:pl-3 max-md:last:pl-3";
   return <th className={cn(baseStyle, className)} {...props} />;
 };
 
@@ -52,7 +53,7 @@ interface TableDataProps
   className?: string;
 }
 const TableData = ({ className, ...props }: TableDataProps) => {
-  const baseStyle = "md:py-3.5 md:px-2.5 max-md:p-1";
+  const baseStyle = "md:py-3.5 md:px-2.5 max-md:py-1.5 max-md:px-2";
   return <td className={cn(baseStyle, className)} {...props} />;
 };
 

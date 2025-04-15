@@ -14,9 +14,12 @@ const RemovePurchaseButton = ({
 }: RemovePurchaseButtonProps) => {
   const router = useRouter();
   const handleDelete = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/purchase/${purchaseId}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/purchase/${purchaseId}`,
+      {
+        method: "DELETE",
+      }
+    );
     router.refresh();
   };
   return (
@@ -24,6 +27,7 @@ const RemovePurchaseButton = ({
       variant="delete"
       onClick={handleDelete}
       className="absolute top-0 right-0"
+      aria-label="購入品削除"
     />
   );
 };

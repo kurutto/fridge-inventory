@@ -11,9 +11,9 @@ import AddInventoryButton from "@/components/inventory/add-inventory-button";
 import { getInventories } from "@/lib/inventory";
 import { getShoppingList } from "@/lib/shopping-list";
 import AddPurchaseButton from "@/components/purchase/add-purchase-button";
-import { getPurchases } from "@/lib/purchase";
+import { getPurchases, getPurchasesUsers } from "@/lib/purchase";
 import PurchaseList from "@/components/purchase/purchase-list";
-import { getFridgeAccountUsers } from "@/lib/fridge";
+import { PurchasesUserType } from "@/types/types";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);
@@ -29,15 +29,15 @@ const FridgePage = async () => {
   const inventories = await getInventories(fridgeId);
   const purchases = await getPurchases(fridgeId);
   const now = new Date();
-  const fridgeAccountUsers = await getFridgeAccountUsers(fridgeId);
+  const purchasesUsers: PurchasesUserType[] = getPurchasesUsers(purchases);
   return (
-    <>
-      <Box variant="rounded">
+    <div className="w-full md:flex md:flex-wrap md:gap-x-11 md:gap-y-12 max-md:space-y-6">
+      <Box variant="rounded" className="md:order-1 md:flex-1">
         <div className="flex justify-between">
           <Heading level={2} icon={FaListUl}>
             買物リスト
           </Heading>
-          <AddToListButton />
+          <AddToListButton aria-label="買物リスト追加" />
         </div>
         <ShoppingList
           userId={userId}
@@ -45,33 +45,34 @@ const FridgePage = async () => {
           shoppingList={shoppingList}
         />
       </Box>
-      <Box variant="spaceY">
+      <Box variant="spaceY" className="md:order-3 md:w-full">
         <Heading outline={true} level={2} icon={FaCubesStacked}>
           <div className="flex justify-between items-center w-full">
             在庫管理
-            <AddInventoryButton />
+            <AddInventoryButton aria-label="在庫管理品追加" />
           </div>
         </Heading>
-        <InventoryTable inventories={inventories} />
+        <div className="max-md:max-h-67 max-md:overflow-y-scroll">
+          <InventoryTable inventories={inventories} />
+        </div>
       </Box>
-
-      <Box variant="rounded">
+      <Box variant="rounded" className="md:order-2 md:flex-1">
         <div className="flex justify-between">
           <Heading level={2} icon={FaBagShopping}>
             今日の購入品
           </Heading>
-          <AddPurchaseButton />
+          <AddPurchaseButton aria-label="購入品追加" />
         </div>
         <PurchaseList
           userId={userId}
           fridgeId={fridgeId}
           date={now}
           purchases={purchases}
-          users={fridgeAccountUsers}
+          users={purchasesUsers}
           headingStyle="max-md:text-center"
         />
       </Box>
-    </>
+    </div>
   );
 };
 

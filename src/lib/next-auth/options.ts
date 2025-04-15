@@ -61,25 +61,35 @@ export const nextAuthOptions: NextAuthOptions = {
       }
       //update() が呼ばれたときの処理
       if (trigger === "update" && session) {
-        if (session.fridgeId) {
-          token.fridgeId = session.fridgeId;
+        if ("fridgeId" in session) {
+          if (session.fridgeId === null || session.fridgeId === undefined) {
+            delete token.fridgeId;
+          } else {
+            token.fridgeId = session.fridgeId;
+          }
         }
-        if (session.id) {
-          token.sub = session.id;
+
+        if ("fridgeName" in session) {
+          if (session.fridgeName === null || session.fridgeName === undefined) {
+            delete token.fridgeName;
+          } else {
+            token.fridgeName = session.fridgeName;
+          }
         }
-        if (session.name) {
-          token.name = session.name;
+        if ("id" in session) {
+          if (session.id === null || session.id === undefined) {
+            delete token.sub;
+          } else {
+            token.sub = session.id;
+          }
         }
-      }
-      // 初期セッション作成時 or token 再生成時に値がなければ埋める
-      if (!token.fridgeId && session?.user?.fridgeId) {
-        token.fridgeId = session.user.fridgeId;
-      }
-      if (!token.id && session?.user?.id) {
-        token.sub = session.user.id;
-      }
-      if (!token.name && session?.user?.name) {
-        token.name = session.user.name;
+        if ("name" in session) {
+          if (session.name === null || session.name === undefined) {
+            delete token.name;
+          } else {
+            token.name = session.name;
+          }
+        }
       }
       return token;
     },
@@ -90,6 +100,7 @@ export const nextAuthOptions: NextAuthOptions = {
       session.user.email = token.email;
       session.user.emailVerified = token.emailVerified as Date | null;
       session.user.fridgeId = token.fridgeId as string;
+      session.user.fridgeName = token.fridgeName as string;
       return session;
     },
   },

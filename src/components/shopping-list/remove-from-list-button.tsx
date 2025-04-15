@@ -14,9 +14,12 @@ const RemoveFromListButton = ({
 }: RemoveFromListButtonProps) => {
   const router = useRouter();
   const handleDelete = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shipping-list/${listItemId}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listItemId}`,
+      {
+        method: "DELETE",
+      }
+    );
     router.refresh();
   };
   return (
@@ -24,6 +27,7 @@ const RemoveFromListButton = ({
       variant="delete"
       onClick={handleDelete}
       className="absolute top-0 right-0"
+      aria-label="買物リストから削除"
     />
   );
 };

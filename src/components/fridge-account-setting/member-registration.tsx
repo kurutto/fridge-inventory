@@ -55,7 +55,7 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
       <Heading level={3}>メンバー登録</Heading>
       <div>
         <Label className="">ユーザー検索</Label>
-        <div>
+        <div className="flex">
           <Input type="text" placeholder="ユーザーID" ref={inputId}></Input>
           <Button color="secondary" onClick={handleSearch} className="ml-2">
             検索
@@ -70,7 +70,7 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
             ) : (
               <Box variant="horizontally" className="items-center mt-4">
                 <Paragraph>{user.name}</Paragraph>
-                <Button variant="small" color="secondary" onClick={handleAdd}>
+                <Button size="small" color="secondary" onClick={handleAdd}>
                   追加
                 </Button>
               </Box>

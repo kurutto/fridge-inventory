@@ -1,4 +1,4 @@
-import { PurchaseType, UserFridgeType } from "@/types/types";
+import { PurchasesUserType, PurchaseType } from "@/types/types";
 import React from "react";
 import Heading from "../ui/heading";
 import PurchaseList from "./purchase-list";
@@ -7,7 +7,7 @@ interface PurchasesListProps {
   userId: string;
   fridgeId: string;
   purchases: PurchaseType[];
-  users: UserFridgeType[];
+  users: PurchasesUserType[];
 }
 const PurchasesList = ({
   userId,
@@ -16,14 +16,11 @@ const PurchasesList = ({
   users,
 }: PurchasesListProps) => {
   const dates: Date[] = [];
-  purchases.forEach((purchase, idx) => {
-    if (
-      idx === 0 ||
-      purchase.purchaseDate !== purchases[idx - 1].purchaseDate
-    ) {
+  purchases.forEach((purchase) => {
+    if(!dates.some(date => date === purchase.purchaseDate)){
       dates.push(purchase.purchaseDate);
     }
-  });
+  })
   const sortedDates = [...dates];
   sortedDates.sort((first, second) => {
     if (first > second) {
@@ -33,7 +30,7 @@ const PurchasesList = ({
     } else {
       return 0;
     }
-  })
+  });
   return (
     <>
       {sortedDates.map((date, idx) => (

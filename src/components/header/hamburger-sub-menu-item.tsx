@@ -21,7 +21,7 @@ const HamburgerSubMenuItem = ({
 
   return (
     <li className={cn(baseStyle, className)} {...props}>
-      <Tag className="md:hover:opacity-65 md:cursor-pointer" {...tagProps}>
+      <Tag className="hover:opacity-65 cursor-pointer" {...tagProps}>
         -&nbsp;{children}
       </Tag>
     </li>

@@ -24,11 +24,11 @@ const AccountList = ({
   return (
     <ul className={cn(baseStyle, className)} {...props}>
       {fridgeAccounts.map((fridgeAccount, idx) => (
-        <li className="text-center" key={idx}>
+        <li key={idx}>
           <Button
             color="outline"
-            className="min-w-52"
-            onClick={() => changeFridgeAccount(fridgeAccount.fridgeId)}
+            className="min-w-52 mx-auto"
+            onClick={() => changeFridgeAccount(fridgeAccount.fridgeId,fridgeAccount.fridge.name)}
           >
             {fridgeAccount.fridge.name}
           </Button>

@@ -5,7 +5,11 @@ export interface UserType {
   emailVerified?: Date | null;
   image?: string | null;
   fridgeId?: string | null;
+  fridgeName?: string | null;
   userFridges: UserFridgeType[];
+}
+export interface SessionType {
+  user: UserType;
 }
 export interface FridgeType {
   id: string;
@@ -62,9 +66,13 @@ export interface PurchaseType {
     name: string;
   };
 }
+export interface PurchasesUserType {
+  id: string;
+  name: string;
+}
 export interface UserFridgeType {
   fridgeId: string;
   userId: string;
   user: UserType;
-  fridge:FridgeType;
+  fridge: FridgeType;
 }

@@ -96,71 +96,102 @@ const UserAccount = ({ user }: UserAccountProps) => {
       alert(`サーバーエラーが発生しました`);
     }
   };
+
+  const handleDelete = async () => {
+    const confirmed = confirm(
+      `${user.name}アカウントを削除しますか？一度削除するとデータは復元できません。`
+    );
+    if (!confirmed) return;
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.id}`, {
+      method: "DELETE",
+    });
+    await update({ id: null, name: null, fridgeId: null, fridgeName: null });
+    router.refresh();
+    router.push("/signup");
+  };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="md:space-y-7 max-md:space-y-5"
-    >
-      <div>
-        <Label className="font-bold" htmlFor="id">
-          ユーザーID
-        </Label>
-        {isEdit ? (
-          <div>
-            <Input type="text" id="id" {...register("id")} className="w-full" />
-            {errors.id && (
-              <Paragraph variant="error">{errors.id.message}</Paragraph>
-            )}
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="md:space-y-7 max-md:space-y-5"
+      >
+        <div>
+          <Label className="font-bold" htmlFor="id">
+            ユーザーID
+          </Label>
+          {isEdit ? (
+            <div>
+              <Input
+                type="text"
+                id="id"
+                {...register("id")}
+                className="w-full"
+              />
+              {errors.id && (
+                <Paragraph variant="error">{errors.id.message}</Paragraph>
+              )}
+            </div>
+          ) : (
+            <Paragraph>{user.id}</Paragraph>
+          )}
+        </div>
+        <div>
+          <Label className="font-bold" htmlFor="name">
+            ユーザー名
+          </Label>
+          {isEdit ? (
+            <div>
+              <Input
+                type="text"
+                id="name"
+                {...register("name")}
+                className="w-full"
+              />
+              {errors.name && (
+                <Paragraph variant="error">{errors.name.message}</Paragraph>
+              )}
+            </div>
+          ) : (
+            <Paragraph>{user.name}</Paragraph>
+          )}
+        </div>
+        {isEdit && (
+          <div className="flex gap-4 justify-center">
+            <Button type="submit" color="primary" className="w-30">
+              送信
+            </Button>
+            <Button
+              type="button"
+              color="secondary"
+              className="w-30"
+              onClick={handleCancel}
+            >
+              キャンセル
+            </Button>
           </div>
-        ) : (
-          <Paragraph>{user.id}</Paragraph>
         )}
-      </div>
-      <div>
-        <Label className="font-bold" htmlFor="name">
-          ユーザー名
-        </Label>
-        {isEdit ? (
-          <div>
-            <Input
-              type="text"
-              id="name"
-              {...register("name")}
-              className="w-full"
-            />
-            {errors.name && (
-              <Paragraph variant="error">{errors.name.message}</Paragraph>
-            )}
-          </div>
-        ) : (
-          <Paragraph>{user.name}</Paragraph>
-        )}
-      </div>
-      {isEdit ? (
+      </form>
+      {!isEdit && (
         <div className="flex gap-4 justify-center">
-          <Button type="submit" color="primary" className="w-30">
-            送信
+          <Button
+            type="button"
+            color="outline"
+            className="w-30"
+            onClick={() => setIsEdit(true)}
+          >
+            編集
           </Button>
           <Button
             type="button"
-            color="secondary"
+            color="destructive"
             className="w-30"
-            onClick={handleCancel}
+            onClick={handleDelete}
           >
-            キャンセル
+            削除
           </Button>
         </div>
-      ) : (
-        <Button
-          type="button"
-          color="primary"
-          className="block mx-auto w-45"
-          onClick={() => setIsEdit(true)}
-        >
-          編集
-        </Button>
       )}
-    </form>
+    </>
   );
 };
 
