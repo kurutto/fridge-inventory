@@ -18,7 +18,16 @@ const ShoppingList = async ({
   return (
     <>
       {shoppingList.length === 0 ? (
-        <Paragraph>右上の<Button variant="add" size="small" color="primary" />ボタンを押してショッピングリストを追加してください。</Paragraph>
+        <Paragraph>
+          右上の
+          <Button
+            variant="add"
+            size="small"
+            color="primary"
+            aria-label="買物リスト追加"
+          />
+          ボタンを押してショッピングリストを追加してください。
+        </Paragraph>
       ) : (
         <List space="none" className="leading-[1.1] -mt-2.5">
           {shoppingList.map((item, idx) => (

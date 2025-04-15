@@ -8,7 +8,7 @@ import {
   FaArrowUp,
 } from "react-icons/fa6";
 
-interface ButtonProps
+export interface ButtonProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
   variant?: "base" | "add" | "delete" | "photo" | "angle" | "text";
   angle?: "up" | "down";
@@ -61,7 +61,8 @@ const Button = ({
         small: cn(
           variant === "base" &&
             "md:p-2 md:rounded-lg max-md:p-1.5 max-md:rounded-md max-md:text-sm",
-          variant === "add" && "text-xl align-middle px-1 -mt-1 cursor-default hover:opacity-100",
+          variant === "add" &&
+            "text-xl align-middle px-1 -mt-1 cursor-default hover:opacity-100"
         ),
       },
     },
