@@ -19,16 +19,6 @@ const PurchasesPage = async () => {
     redirect("/fridge-account");
   }
   const purchases = await getPurchases(fridgeId);
-  const sortedPurchases: PurchaseType[] = [...purchases];
-  sortedPurchases.sort((first, second) => {
-    if (first.purchaseDate > second.purchaseDate) {
-      return -1;
-    } else if (second.purchaseDate > first.purchaseDate) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
   const users: PurchasesUserType[] = getPurchasesUsers(purchases);
   return (
     <>
@@ -39,7 +29,7 @@ const PurchasesPage = async () => {
         <PurchasesList
           userId={userId}
           fridgeId={fridgeId}
-          purchases={sortedPurchases}
+          purchases={purchases}
           users={users}
         />
       </Box>
