@@ -19,7 +19,6 @@ const ShoppingList = async ({
     <>
       {shoppingList.length === 0 ? (
         <Paragraph>
-          右上の
           <Button
             variant="add"
             size="small"

@@ -34,7 +34,6 @@ const PurchaseList = ({
       {date.toLocaleDateString() === today.toLocaleDateString() &&
       datePurchases.length === 0 ? (
         <Paragraph>
-          右上の
           <Button
             variant="add"
             size="small"
