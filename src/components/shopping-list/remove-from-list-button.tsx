@@ -27,6 +27,7 @@ const RemoveFromListButton = ({
       variant="delete"
       onClick={handleDelete}
       className="absolute top-0 right-0"
+      aria-label="買物リストから削除"
     />
   );
 };
