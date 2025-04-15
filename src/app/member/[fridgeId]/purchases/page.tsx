@@ -6,7 +6,7 @@ import { nextAuthOptions } from "@/lib/next-auth/options";
 import Heading from "@/components/ui/heading";
 import { FaFileLines } from "react-icons/fa6";
 import Box from "@/components/ui/box";
-import { PurchasesUserType, PurchaseType } from "@/types/types";
+import { PurchasesUserType } from "@/types/types";
 
 const PurchasesPage = async () => {
   const session = await getServerSession(nextAuthOptions);
