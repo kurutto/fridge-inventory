@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useSession } from "next-auth/react";
 import Logo from "@/assets/logo";
 import Menu from "./menu";
@@ -13,12 +13,12 @@ const Header = () => {
   const { data: session } = useSession();
   const [user, setUser] = useState<UserType>();
   useEffect(() => {
-    const fetchUserData = async() => {
+    const fetchUserData = async () => {
       const user = session ? await getUser(session.user.id) : undefined;
       setUser(user);
-    }
+    };
     fetchUserData();
-  },[session])
+  }, [session]);
   const fridgeId = session?.user.fridgeId;
   const fridgeName = session?.user.fridgeName;
   return (
@@ -27,7 +27,7 @@ const Header = () => {
         <Link href="/">
           <Logo
             className="lg:w-9 lg:h-9 md:w-8 md:h-8 md:fill-primary max-md:w-5 max-md:h-5 max-md:fill-white"
-            aria-label="FIショッピングリスト"
+            aria-label="FI買物リスト"
           />
         </Link>
       </h1>

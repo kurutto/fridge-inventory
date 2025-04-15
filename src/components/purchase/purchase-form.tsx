@@ -178,9 +178,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
           </Box>
           {inventories.length > 0 && (
             <Box variant="horizontally" className="items-center">
-              <Label htmlFor="inventoryCheck">
-                在庫管理品に追加
-              </Label>
+              <Label htmlFor="inventoryCheck">在庫管理に追加</Label>
               <Input
                 type="checkbox"
                 id="inventoryCheck"
