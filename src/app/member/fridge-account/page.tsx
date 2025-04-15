@@ -11,7 +11,7 @@ const page = async () => {
   const user = await getUser(session!.user.id);
   return (
     <>
-      <Heading level={1}>FIショッピングリスト</Heading>
+      <Heading level={1}>FI買物リスト</Heading>
       {user.userFridges.length > 0 && (
         <>
           <AccountList fridgeAccounts={user.userFridges} />
