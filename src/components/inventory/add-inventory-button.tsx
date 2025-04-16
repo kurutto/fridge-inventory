@@ -1,16 +1,16 @@
 "use client";
 import React, { useContext } from "react";
-import Button, { ButtonProps } from "../ui/button";
+import Button from "../ui/button";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 
-const AddInventoryButton = ({ ...props }: ButtonProps) => {
+const AddInventoryButton = () => {
   const { handleItemOpen } = useContext<ModalContextType>(ModalContext);
   return (
     <Button
       variant="add"
       color="primary"
       onClick={() => handleItemOpen(1)}
-      {...props}
+      aria-label="在庫管理追加"
     />
   );
 };

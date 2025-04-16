@@ -8,7 +8,7 @@ import {
   FaArrowUp,
 } from "react-icons/fa6";
 
-export interface ButtonProps
+interface ButtonProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
   variant?: "base" | "add" | "delete" | "photo" | "angle" | "text";
   angle?: "up" | "down";
