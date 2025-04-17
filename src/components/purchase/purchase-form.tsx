@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useContext, useEffect, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
@@ -24,6 +24,8 @@ interface PurchaseFormProps {
 const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const router = useRouter();
+  const pathname = usePathname();
+  const [isAdded, setIsAdded] = useState("");
   const [inventoryCheck, setInventoryCheck] = useState(false);
   const [inventories, setInventories] = useState<InventoryType[]>([]);
   useEffect(() => {
@@ -119,7 +121,17 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
       } else {
         reset();
         router.refresh();
-        handleOpen();
+        if (
+          pathname.split(`${fridgeId}/`)[1] &&
+          pathname.split(`${fridgeId}/`)[1] !== "purchases"
+        ) {
+          setIsAdded(`${values.name}が追加されました`);
+          setTimeout(() => {
+            handleOpen();
+          }, 1500);
+        } else {
+          handleOpen();
+        }
       }
     } catch (err) {
       console.error("Fetch failed:", err);
@@ -131,6 +143,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
       <Heading level={2} className="justify-center mb-8">
         購入品追加
       </Heading>
+      {isAdded && <Paragraph className="text-center">{isAdded}</Paragraph>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
           <Box variant="horizontally">
