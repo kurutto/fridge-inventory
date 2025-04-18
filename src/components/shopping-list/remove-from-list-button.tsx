@@ -38,9 +38,11 @@ const RemoveFromListButton = ({
       <Button
         variant="delete"
         onClick={() => {
-          session?.user.deleteConfirm === true
-            ? handleOpen()
-            : handleDelete(false);
+          if (session?.user.deleteConfirm === true) {
+            handleOpen();
+          } else {
+            handleDelete(false);
+          }
         }}
         className="absolute top-0 right-0"
         aria-label="買物リストから削除"
