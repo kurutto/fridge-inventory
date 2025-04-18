@@ -43,6 +43,7 @@ export const nextAuthOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, trigger, user, session }) {
       if (trigger === "signIn") {
+        token.deleteConfirm = true;
         if (user) {
           token.sub = user.id;
           token.name = user.name;
@@ -61,21 +62,6 @@ export const nextAuthOptions: NextAuthOptions = {
       }
       //update() が呼ばれたときの処理
       if (trigger === "update" && session) {
-        if ("fridgeId" in session) {
-          if (session.fridgeId === null || session.fridgeId === undefined) {
-            delete token.fridgeId;
-          } else {
-            token.fridgeId = session.fridgeId;
-          }
-        }
-
-        if ("fridgeName" in session) {
-          if (session.fridgeName === null || session.fridgeName === undefined) {
-            delete token.fridgeName;
-          } else {
-            token.fridgeName = session.fridgeName;
-          }
-        }
         if ("id" in session) {
           if (session.id === null || session.id === undefined) {
             delete token.sub;
@@ -90,6 +76,37 @@ export const nextAuthOptions: NextAuthOptions = {
             token.name = session.name;
           }
         }
+        if ("email" in session) {
+          if (session.email === null || session.email === undefined) {
+            delete token.email;
+          } else {
+            token.email = session.email;
+          }
+        }
+        if ("fridgeId" in session) {
+          if (session.fridgeId === null || session.fridgeId === undefined) {
+            delete token.fridgeId;
+          } else {
+            token.fridgeId = session.fridgeId;
+          }
+        }
+        if ("fridgeName" in session) {
+          if (session.fridgeName === null || session.fridgeName === undefined) {
+            delete token.fridgeName;
+          } else {
+            token.fridgeName = session.fridgeName;
+          }
+        }
+        if ("deleteConfirm" in session) {
+          if (
+            session.deleteConfirm === null ||
+            session.deleteConfirm === undefined
+          ) {
+            delete token.deleteConfirm;
+          } else {
+            token.deleteConfirm = session.deleteConfirm;
+          }
+        }
       }
       return token;
     },
@@ -101,6 +118,7 @@ export const nextAuthOptions: NextAuthOptions = {
       session.user.emailVerified = token.emailVerified as Date | null;
       session.user.fridgeId = token.fridgeId as string;
       session.user.fridgeName = token.fridgeName as string;
+      session.user.deleteConfirm = (token.deleteConfirm ?? true) as boolean;
       return session;
     },
   },

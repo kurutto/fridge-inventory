@@ -60,7 +60,7 @@ const PurchaseList = ({
                         {user.id === userId && (
                           <RemovePurchaseButton
                             fridgeId={fridgeId}
-                            purchaseId={purchase.id}
+                            purchase={purchase}
                           />
                         )}
                       </Li>

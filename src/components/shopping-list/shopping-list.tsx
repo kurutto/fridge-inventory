@@ -56,7 +56,7 @@ const ShoppingList = async ({
               {item.userId === userId && (
                 <RemoveFromListButton
                   fridgeId={fridgeId}
-                  listItemId={item.id}
+                  listItem={item}
                 />
               )}
             </Li>

@@ -7,6 +7,7 @@ export interface UserType {
   fridgeId?: string | null;
   fridgeName?: string | null;
   userFridges: UserFridgeType[];
+  deleteConfirm: boolean;
 }
 export interface SessionType {
   user: UserType;

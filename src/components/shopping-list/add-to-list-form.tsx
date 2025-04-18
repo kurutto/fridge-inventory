@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
@@ -27,7 +27,9 @@ interface AddToListFormProps {
 
 const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
+  const [isAdded, setIsAdded] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -62,9 +64,15 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
         alert(errData.message);
       } else {
         reset();
-        router.push(`/member/${fridgeId}`);
         router.refresh();
-        handleOpen();
+        if (pathname.split(`${fridgeId}/`)[1]) {
+          setIsAdded(`${values.name}が追加されました`);
+          setTimeout(() => {
+            handleOpen();
+          }, 1500);
+        } else {
+          handleOpen();
+        }
       }
     } catch (err) {
       console.error("Fetch failed:", err);
@@ -76,6 +84,8 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
       <Heading level={2} className="justify-center mb-8">
         買物リスト追加
       </Heading>
+      {isAdded && <Paragraph className="text-center">{isAdded}</Paragraph>}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box variant="spaceY">
           <Box variant="horizontally">

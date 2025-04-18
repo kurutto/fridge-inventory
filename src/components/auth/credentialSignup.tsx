@@ -174,8 +174,12 @@ const CredentialSignup = () => {
       >
         新規作成
       </Button>
-      {sendMessage && <p>{sendMessage}</p>}
-      {responseMessage && <p>{responseMessage}</p>}
+      {sendMessage && (
+        <Paragraph className="text-center">{sendMessage}</Paragraph>
+      )}
+      {responseMessage && (
+        <Paragraph className="text-center">{responseMessage}</Paragraph>
+      )}
     </form>
   );
 };

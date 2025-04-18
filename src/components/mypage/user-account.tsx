@@ -1,4 +1,5 @@
 "use client";
+import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,6 +11,7 @@ import Button from "../ui/button";
 import { UserType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
+import DeleteConfirm from "../confirm/delete-confirm";
 
 const formSchema = z.object({
   id: z
@@ -36,7 +38,11 @@ interface UserAccountProps {
   user: UserType;
 }
 const UserAccount = ({ user }: UserAccountProps) => {
-  const { update } = useSession();
+  const { update, data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
   const {
@@ -98,14 +104,18 @@ const UserAccount = ({ user }: UserAccountProps) => {
   };
 
   const handleDelete = async () => {
-    const confirmed = confirm(
-      `${user.name}アカウントを削除しますか？一度削除するとデータは復元できません。`
-    );
-    if (!confirmed) return;
+    signOut();
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.id}`, {
       method: "DELETE",
     });
-    await update({ id: null, name: null, fridgeId: null, fridgeName: null });
+    await update({
+      id: null,
+      name: null,
+      email: null,
+      fridgeId: null,
+      fridgeName: null,
+      deleteConfirm: null,
+    });
     router.refresh();
     router.push("/signup");
   };
@@ -185,12 +195,21 @@ const UserAccount = ({ user }: UserAccountProps) => {
             type="button"
             color="destructive"
             className="w-30"
-            onClick={handleDelete}
+            onClick={
+              session?.user.deleteConfirm === true ? handleOpen : handleDelete
+            }
           >
             削除
           </Button>
         </div>
       )}
+      <DeleteConfirm
+        isOpen={isOpen}
+        handleOpen={handleOpen}
+        confirmText={`${user.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
+        hideNextTime={false}
+        handleDelete={handleDelete}
+      />
     </>
   );
 };

@@ -31,7 +31,7 @@ const Button = ({
     base: "cursor-pointer hover:opacity-90 transition",
     variants: {
       variant: {
-        base: " flex justify-center items-center gap-2",
+        base: " flex justify-center items-center gap-2 text-base",
         add: "",
         delete: "leading-none",
         photo: "rounded-full flex items-center justify-center",

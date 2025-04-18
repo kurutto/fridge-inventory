@@ -91,8 +91,14 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
           alert(errData.message);
         }
       } else {
+        await update({ fridgeId: values.id, fridgeName: values.name });
         setIsEdit(false);
+        if(values.id){
+          router.refresh();
+          router.push(`/member/${values.id}/account`);
+        }else{
         router.refresh();
+      }
       }
     } catch (err) {
       console.error("Fetch failed:", err);
