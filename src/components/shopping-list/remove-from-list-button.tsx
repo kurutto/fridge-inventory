@@ -31,6 +31,7 @@ const RemoveFromListButton = ({
     if (data) {
       await update({ deleteConfirm: false });
     }
+    setIsOpen(false);
     router.refresh();
   };
   return (
