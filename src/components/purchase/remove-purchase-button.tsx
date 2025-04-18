@@ -31,6 +31,7 @@ const RemovePurchaseButton = ({
     if (data) {
       await update({ deleteConfirm: false });
     }
+    setIsOpen(false);
     router.refresh();
   };
   return (
@@ -38,9 +39,9 @@ const RemovePurchaseButton = ({
       <Button
         variant="delete"
         onClick={() => {
-          if(session?.user.deleteConfirm === true){
-            handleOpen()
-          }else{
+          if (session?.user.deleteConfirm === true) {
+            handleOpen();
+          } else {
             handleDelete(false);
           }
         }}

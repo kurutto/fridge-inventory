@@ -28,6 +28,7 @@ const RemoveFromMemberListButton = ({
         method: "DELETE",
       }
     );
+    setIsOpen(false);
     router.refresh();
   };
   return (

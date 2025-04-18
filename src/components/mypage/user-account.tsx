@@ -116,6 +116,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
       fridgeName: null,
       deleteConfirm: null,
     });
+    setIsOpen(false);
     router.refresh();
     router.push("/signup");
   };
