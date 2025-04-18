@@ -9,7 +9,7 @@ interface DeleteConfirmProps {
   handleOpen: () => void;
   confirmText: string;
   hideNextTime: boolean;
-  handleDelete: (data: boolean) => void;
+  handleDelete: (data: boolean | null) => Promise<void>;
 }
 const DeleteConfirm = ({
   isOpen,
@@ -36,7 +36,7 @@ const DeleteConfirm = ({
       <div className="flex gap-4 justify-center">
         <Button
           color="primary"
-          onClick={() => handleDelete(inputRef?.current ? inputRef?.current.checked : false )}
+          onClick={() => handleDelete(inputRef?.current ? inputRef?.current.checked : null )}
           className="w-30"
         >
           OK

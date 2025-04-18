@@ -21,7 +21,7 @@ const RemoveFromListButton = ({
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
-  const handleDelete = async (data: boolean) => {
+  const handleDelete = async (data: boolean | null) => {
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listItem.id}`,
       {

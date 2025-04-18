@@ -103,7 +103,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
     }
   };
 
-  const handleDelete = async (data: boolean) => {
+  const handleDelete = async () => {
     signOut();
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.id}`, {
       method: "DELETE",
@@ -195,11 +195,9 @@ const UserAccount = ({ user }: UserAccountProps) => {
             type="button"
             color="destructive"
             className="w-30"
-            onClick={() => {
-              session?.user.deleteConfirm === true
-                ? handleOpen()
-                : handleDelete(false);
-            }}
+            onClick={
+              session?.user.deleteConfirm === true ? handleOpen : handleDelete
+            }
           >
             削除
           </Button>

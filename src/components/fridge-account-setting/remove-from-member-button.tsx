@@ -21,7 +21,7 @@ const RemoveFromMemberListButton = ({
     setIsOpen((prev) => !prev);
   };
   const router = useRouter();
-  const handleDelete = async (data: boolean) => {
+  const handleDelete = async () => {
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/account/${user.userId}`,
       {
@@ -35,21 +35,19 @@ const RemoveFromMemberListButton = ({
       <Button
         color="secondary"
         size="small"
-        onClick={() => {
-          session?.user.deleteConfirm === true
-            ? handleOpen()
-            : handleDelete(false);
-        }}
+        onClick={
+          session?.user.deleteConfirm === true ? handleOpen : handleDelete
+        }
         className="max-md:ml-4"
       >
         削除
       </Button>
       <DeleteConfirm
-      isOpen={isOpen}
-      handleOpen={handleOpen}
-      confirmText={`${user.user.name}をアカウントから削除しますか？`}
-      hideNextTime={false}
-      handleDelete={handleDelete}
+        isOpen={isOpen}
+        handleOpen={handleOpen}
+        confirmText={`${user.user.name}をアカウントから削除しますか？`}
+        hideNextTime={false}
+        handleDelete={handleDelete}
       />
     </>
   );
