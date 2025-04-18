@@ -1,34 +1,58 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import DeleteConfirm from "../confirm/delete-confirm";
+import { PurchaseType } from "@/types/types";
 
 interface RemovePurchaseButtonProps {
   fridgeId: string;
-  purchaseId: string;
+  purchase: PurchaseType;
 }
 
 const RemovePurchaseButton = ({
   fridgeId,
-  purchaseId,
+  purchase,
 }: RemovePurchaseButtonProps) => {
+  const { update, data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   const router = useRouter();
-  const handleDelete = async () => {
+  const handleDelete = async (data: boolean) => {
     await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/purchase/${purchaseId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/purchase/${purchase.id}`,
       {
         method: "DELETE",
       }
     );
+    if (data) {
+      await update({ deleteConfirm: false });
+    }
     router.refresh();
   };
   return (
-    <Button
-      variant="delete"
-      onClick={handleDelete}
-      className="absolute top-0 right-0"
-      aria-label="購入品削除"
-    />
+    <>
+      <Button
+        variant="delete"
+        onClick={() => {
+          session?.user.deleteConfirm === true
+            ? handleOpen()
+            : handleDelete(false);
+        }}
+        className="absolute top-0 right-0"
+        aria-label="購入品削除"
+      />
+      <DeleteConfirm
+        isOpen={isOpen}
+        handleOpen={handleOpen}
+        confirmText={`${purchase.name}を削除しても良いですか？`}
+        hideNextTime={true}
+        handleDelete={handleDelete}
+      />
+    </>
   );
 };
 

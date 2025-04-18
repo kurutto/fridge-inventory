@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../ui/button";
 import { UserFridgeType } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import DeleteConfirm from "../confirm/delete-confirm";
 
 interface RemoveFromUserListButtonProps {
   fridgeId: string;
@@ -13,12 +15,13 @@ const RemoveFromMemberListButton = ({
   fridgeId,
   user,
 }: RemoveFromUserListButtonProps) => {
+  const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   const router = useRouter();
-  const handleDelete = async (user: UserFridgeType) => {
-    const confirmed = confirm(
-      `${user.user.name}をアカウントから削除しますか？`
-    );
-    if (!confirmed) return;
+  const handleDelete = async (data: boolean) => {
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/account/${user.userId}`,
       {
@@ -28,14 +31,27 @@ const RemoveFromMemberListButton = ({
     router.refresh();
   };
   return (
-    <Button
-      color="secondary"
-      size="small"
-      onClick={() => handleDelete(user)}
-      className="max-md:ml-4"
-    >
-      削除
-    </Button>
+    <>
+      <Button
+        color="secondary"
+        size="small"
+        onClick={() => {
+          session?.user.deleteConfirm === true
+            ? handleOpen()
+            : handleDelete(false);
+        }}
+        className="max-md:ml-4"
+      >
+        削除
+      </Button>
+      <DeleteConfirm
+      isOpen={isOpen}
+      handleOpen={handleOpen}
+      confirmText={`${user.user.name}をアカウントから削除しますか？`}
+      hideNextTime={false}
+      handleDelete={handleDelete}
+      />
+    </>
   );
 };
 
