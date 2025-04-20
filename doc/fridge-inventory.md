@@ -67,6 +67,7 @@ erDiagram
         string id PK "ID"
         string fridge_id FK "冷蔵庫ID:fridges.id"
         string name "品名"
+        string kana "カナ"
         int remaining "残数"
         datetime created_at "作成日時"
         datetime updated_at "更新日時"
