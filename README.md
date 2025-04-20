@@ -30,18 +30,18 @@ password:123qweasd
 - 「在庫管理」の登録・編集・削除
 - 「購入品」の登録・削除
 
-4.冷蔵庫アカウントの管理
-冷蔵庫アカウント管理画面で以下の操作が行えます：
+  4.冷蔵庫アカウントの管理
+  冷蔵庫アカウント管理画面で以下の操作が行えます：
 
 - 冷蔵庫アカウントの ID や名称、概要を編集
 - 他のユーザーを冷蔵庫アカウントに登録
 
-5.ユーザーアカウントの編集
-ユーザー ID や名称の編集が行えます。
+  5.ユーザーアカウントの編集
+  ユーザー ID や名称の編集が行えます。
 
 ## 構成・デザイン
 
-https://www.figma.com/design/cuPqO3vASUV9tXxA2tcgJo/FI%E8%B2%B7%E7%89%A9%E3%83%AA%E3%82%B9%E3%83%88-v1?node-id=63-197&t=faiV3VE85CXtmQ9f-1
+https://www.figma.com/design/cuPqO3vASUV9tXxA2tcgJo/FI%E8%B2%B7%E7%89%A9%E3%83%AA%E3%82%B9%E3%83%88-v1?node-id=0-1&t=faiV3VE85CXtmQ9f-1
 
 ## ER 図
 
