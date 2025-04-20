@@ -186,9 +186,9 @@ erDiagram
 - @eslint/eslintrc: ^3
 - Tailwind CSS (PostCSS plugin): ^4
 - Prisma CLI: ^6.4.1
-- @types/\*（型定義）
-- @types/react: ^19.0.12
-- @types/react-dom: ^19
-- @types/node: ^20
-- @types/jsonwebtoken: ^9.0.9
-- @types/nodemailer: ^6.4.17
+- @types/\*（型定義）  
+  @types/react: ^19.0.12  
+  @types/react-dom: ^19  
+  @types/node: ^20  
+  @types/jsonwebtoken: ^9.0.9  
+  @types/nodemailer: ^6.4.17
