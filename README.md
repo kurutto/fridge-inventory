@@ -41,7 +41,7 @@ password:123qweasd
 
 ## 構成・デザイン
 
-https://www.figma.com/design/cuPqO3vASUV9tXxA2tcgJo/FI%E8%B2%B7%E7%89%A9%E3%83%AA%E3%82%B9%E3%83%88-v1?node-id=0-1&t=dYz9Rb6wzmPRqFq9-1
+https://www.figma.com/design/cuPqO3vASUV9tXxA2tcgJo/FI%E8%B2%B7%E7%89%A9%E3%83%AA%E3%82%B9%E3%83%88-v1
 
 ## ER 図
 
