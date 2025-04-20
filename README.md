@@ -142,53 +142,53 @@ erDiagram
 
 ### フレームワーク・ライブラリ
 
-・Next.js: 15.2.1
-・React: 19.0.0
-・TypeScript: ^5
+- Next.js: 15.2.1
+- React: 19.0.0
+- TypeScript: ^5
 
 ### フロントエンド
 
-・Tailwind CSS: ^4
-・tailwind-merge: ^3.0.2
-・tailwind-variants: ^1.0.0
-・clsx: ^2.1.1
-・react-hook-form: ^7.54.2
-・@hookform/resolvers: ^4.1.3
-・zod: ^3.24.2
-・react-icons: ^5.5.0
-・react-spinners: ^0.15.0
+- Tailwind CSS: ^4
+- tailwind-merge: ^3.0.2
+- tailwind-variants: ^1.0.0
+- clsx: ^2.1.1
+- react-hook-form: ^7.54.2
+- @hookform/resolvers: ^4.1.3
+- zod: ^3.24.2
+- react-icons: ^5.5.0
+- react-spinners: ^0.15.0
 
 ### 認証・認可
 
-・next-auth: ^4.24.11
-・@next-auth/prisma-adapter: ^1.0.7
-・jsonwebtoken: ^9.0.2
+- next-auth: ^4.24.11
+- @next-auth/prisma-adapter: ^1.0.7
+- jsonwebtoken: ^9.0.2
 
 ### データベース関連
 
-・Prisma Client: ^6.4.1
-・@neondatabase/serverless: ^0.10.4
-・@paralleldrive/cuid2: ^2.2.2
-・bcryptjs: ^3.0.2
+- Prisma Client: ^6.4.1
+- @neondatabase/serverless: ^0.10.4
+- @paralleldrive/cuid2: ^2.2.2
+- bcryptjs: ^3.0.2
 
 ### メール送信
 
-・nodemailer: ^6.10.0
+- nodemailer: ^6.10.0
 
 ### 外部 API
 
-・Yahoo JAPAN API
+- Yahoo JAPAN API
 
 ### 開発用ツール
 
-・ESLint: ^9
-・eslint-config-next: 15.2.1
-・@eslint/eslintrc: ^3
-・Tailwind CSS (PostCSS plugin): ^4
-・Prisma CLI: ^6.4.1
-・@types/\*（型定義）
-・@types/react: ^19.0.12
-・@types/react-dom: ^19
-・@types/node: ^20
-・@types/jsonwebtoken: ^9.0.9
-・@types/nodemailer: ^6.4.17
+- ESLint: ^9
+- eslint-config-next: 15.2.1
+- @eslint/eslintrc: ^3
+- Tailwind CSS (PostCSS plugin): ^4
+- Prisma CLI: ^6.4.1
+- @types/\*（型定義）
+- @types/react: ^19.0.12
+- @types/react-dom: ^19
+- @types/node: ^20
+- @types/jsonwebtoken: ^9.0.9
+- @types/nodemailer: ^6.4.17
