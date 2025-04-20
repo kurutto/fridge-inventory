@@ -16,5 +16,5 @@ export default async function FridgeLayout({
     redirect("/member/fridge-account");
   }
 
-  return { children };
+  return <>{children}</>;
 }
