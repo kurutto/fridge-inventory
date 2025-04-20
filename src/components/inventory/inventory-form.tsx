@@ -79,7 +79,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
       } else {
         reset();
         router.refresh();
-        if (pathname.split(`${fridgeId}/`)[1]) {
+        if (pathname.split(`${fridgeId}/`)[1] || pathname.split('member/')[1]) {
           setIsAdded(`${values.name}が追加されました`);
           setTimeout(() => {
             handleOpen();

@@ -2,6 +2,7 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/lib/next-auth/options";
 import { redirect } from "next/navigation";
+import FridgeModal from "@/components/fridge/fridge-modal";
 
 export default async function RootLayout({
   children,
@@ -13,5 +14,11 @@ export default async function RootLayout({
     redirect("/signin");
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {session.user.fridgeId && <FridgeModal userId={session.user.id} fridgeId={session.user.fridgeId} />}
+      
+    </>
+    )
 }

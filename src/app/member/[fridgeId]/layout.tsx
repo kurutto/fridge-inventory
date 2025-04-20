@@ -21,7 +21,6 @@ export default async function FridgeLayout({
   return (
     <>
       {children}
-      <FridgeModal userId={session.user.id} fridgeId={fridgeId} />
       <BottomMenu
         fridgeId={fridgeId}
         className="md:hidden fixed bottom-0 left-0 w-full"
