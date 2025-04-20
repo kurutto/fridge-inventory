@@ -122,8 +122,9 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
         reset();
         router.refresh();
         if (
-          pathname.split(`${fridgeId}/`)[1] &&
-          pathname.split(`${fridgeId}/`)[1] !== "purchases"
+          (pathname.split(`${fridgeId}/`)[1] &&
+            pathname.split(`${fridgeId}/`)[1] !== "purchases") ||
+          pathname.split("member/")[1]
         ) {
           setIsAdded(`${values.name}が追加されました`);
           setTimeout(() => {
