@@ -9,7 +9,6 @@ import Label from "../ui/label";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
-import { putData } from "@/lib/put-data";
 import { postData } from "@/lib/post-data";
 
 interface UserRegistrationProps {

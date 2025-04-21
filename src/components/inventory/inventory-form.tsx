@@ -58,34 +58,36 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
       kanaObj.furigana ? kanaObj.furigana : kanaObj.surface
     );
     const kana = kanaArr.join("");
-    inventory
-      ? updateItem(
-          `/fridge/${fridgeId}/inventory`,
-          {
-            fridgeId: fridgeId,
-            inventoryId: inventory?.id,
-            category: Number(values.category),
-            name: values.name,
-            kana: kana,
-            amount: values.remaining,
-          },
-          reset,
-          handleOpen
-        )
-      : createItem(
-          `/fridge/${fridgeId}/inventory`,
-          {
-            fridgeId: fridgeId,
-            category: Number(values.category),
-            name: values.name,
-            kana: kana,
-            amount: values.remaining,
-          },
-          reset,
-          fridgeId,
-          values.name,
-          handleOpen
-        );
+    if (inventory) {
+      updateItem(
+        `/fridge/${fridgeId}/inventory`,
+        {
+          fridgeId: fridgeId,
+          inventoryId: inventory?.id,
+          category: Number(values.category),
+          name: values.name,
+          kana: kana,
+          amount: values.remaining,
+        },
+        reset,
+        handleOpen
+      );
+    } else {
+      createItem(
+        `/fridge/${fridgeId}/inventory`,
+        {
+          fridgeId: fridgeId,
+          category: Number(values.category),
+          name: values.name,
+          kana: kana,
+          amount: values.remaining,
+        },
+        reset,
+        fridgeId,
+        values.name,
+        handleOpen
+      );
+    }
   };
 
   const handleDelete = async () => {
