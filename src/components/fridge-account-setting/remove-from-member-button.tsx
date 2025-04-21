@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
 import Button from "../ui/button";
 import { UserFridgeType } from "@/types/types";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import DeleteConfirm from "../confirm/delete-confirm";
+import useDeleteData from "@/hooks/use-delete-data-from-modal";
+import { useHandleOpen } from "@/hooks/use-handle-open";
 
 interface RemoveFromUserListButtonProps {
   fridgeId: string;
@@ -15,30 +14,17 @@ const RemoveFromMemberListButton = ({
   fridgeId,
   user,
 }: RemoveFromUserListButtonProps) => {
-  const { data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const router = useRouter();
+  const { deleteItem } = useDeleteData();
+  const { isOpen, handleOpen } = useHandleOpen();
   const handleDelete = async () => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/account/${user.userId}`,
-      {
-        method: "DELETE",
-      }
-    );
-    setIsOpen(false);
-    router.refresh();
+    await deleteItem(`/fridge/${fridgeId}/account/${user.userId}`, handleOpen);
   };
   return (
     <>
       <Button
         color="secondary"
         size="small"
-        onClick={
-          session?.user.deleteConfirm === true ? handleOpen : handleDelete
-        }
+        onClick={handleOpen}
         className="max-md:ml-4"
       >
         削除

@@ -1,0 +1,41 @@
+import { postData } from "@/lib/post-data";
+import { dataType } from "@/types/types";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+
+const useCreateData = () => {
+  const router = useRouter();
+  const [isAdded, setIsAdded] = useState("");
+  const pathname = usePathname();
+  const createItem = async (
+    fetchPath: string,
+    data: dataType,
+    reset: () => void,
+    fridgeId: string,
+    postName: string,
+    handleOpen: () => void
+  ) => {
+    try {
+      await postData(fetchPath, data);
+      reset();
+      router.refresh();
+      if (
+        pathname.split(`${fridgeId}/`)[1] ||
+        (pathname.split("member/")[1] &&
+          pathname.split("member/")[1] !== fridgeId)
+      ) {
+        setIsAdded(`${postName}が追加されました`);
+        setTimeout(() => {
+          handleOpen();
+        }, 1500);
+      } else {
+        handleOpen();
+      }
+    } catch (err) {
+      console.error("Fetch failed:", err);
+      alert(`サーバーエラーが発生しました`);
+    }
+  };
+  return { isAdded, createItem };
+};
+export default useCreateData;

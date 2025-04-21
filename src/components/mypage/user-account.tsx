@@ -12,6 +12,8 @@ import { UserType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
 import DeleteConfirm from "../confirm/delete-confirm";
+import { putData } from "@/lib/put-data";
+import { deleteData } from "@/lib/delete-data";
 
 const formSchema = z.object({
   id: z
@@ -67,20 +69,11 @@ const UserAccount = ({ user }: UserAccountProps) => {
   };
   const onSubmit = async (values: formType) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/${user.id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            userId: user.id,
-            id: values.id,
-            name: values.name,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await putData(`/user/${user.id}`, {
+        userId: user.id,
+        id: values.id,
+        name: values.name,
+      });
       const data = await res.json();
       if (!res.ok) {
         if (data.errorId === "INVALID_ID") {
@@ -105,17 +98,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
 
   const handleDelete = async () => {
     signOut();
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${user.id}`, {
-      method: "DELETE",
-    });
-    await update({
-      id: null,
-      name: null,
-      email: null,
-      fridgeId: null,
-      fridgeName: null,
-      deleteConfirm: null,
-    });
+    await deleteData(`/user/${user.id}`);
     setIsOpen(false);
     router.refresh();
     router.push("/signup");

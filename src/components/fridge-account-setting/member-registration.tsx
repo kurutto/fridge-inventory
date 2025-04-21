@@ -9,6 +9,8 @@ import Label from "../ui/label";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
+import { putData } from "@/lib/put-data";
+import { postData } from "@/lib/post-data";
 
 interface UserRegistrationProps {
   fridgeId: string;
@@ -24,27 +26,13 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
   };
   const handleAdd = async () => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/account`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            userId: user!.id,
-            fridgeId: fridgeId,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!res.ok) {
-        const errData = await res.json();
-        alert(errData.message);
-      } else {
-        setUser(undefined);
-        inputId.current!.value = "";
-        router.refresh();
-      }
+      await postData(`/fridge/${fridgeId}/account`, {
+        userId: user!.id,
+        fridgeId: fridgeId,
+      });
+      setUser(undefined);
+      inputId.current!.value = "";
+      router.refresh();
     } catch (err) {
       console.error("Fetch failed:", err);
       alert(`サーバーエラーが発生しました`);
