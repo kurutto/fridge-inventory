@@ -10,6 +10,10 @@ import { FridgeType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
 import { useSession } from "next-auth/react";
+import { putData } from "@/lib/put-data";
+import DeleteConfirm from "../confirm/delete-confirm";
+import { useHandleOpen } from "@/hooks/use-handle-open";
+import { deleteData } from "@/lib/delete-data";
 
 const formSchema = z.object({
   id: z
@@ -39,6 +43,7 @@ interface FridgeAccountProps {
 const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
   const { update } = useSession();
   const router = useRouter();
+  const { isOpen, handleOpen } = useHandleOpen();
   const [isEdit, setIsEdit] = useState(false);
   const {
     register,
@@ -64,19 +69,13 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
   };
   const onSubmit = async (values: formType) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeAccount.id}`,
+      const res = await putData(
+        `/fridge/${fridgeAccount.id}`,
         {
-          method: "PUT",
-          body: JSON.stringify({
-            fridgeId: fridgeAccount.id,
-            id: values.id,
-            name: values.name,
-            description: values.description,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
+          fridgeId: fridgeAccount.id,
+          id: values.id,
+          name: values.name,
+          description: values.description,
         }
       );
       const data = await res.json();
@@ -93,12 +92,12 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
       } else {
         await update({ fridgeId: values.id, fridgeName: values.name });
         setIsEdit(false);
-        if(values.id){
+        if (values.id) {
           router.refresh();
           router.push(`/member/${values.id}/account`);
-        }else{
-        router.refresh();
-      }
+        } else {
+          router.refresh();
+        }
       }
     } catch (err) {
       console.error("Fetch failed:", err);
@@ -106,16 +105,7 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
     }
   };
   const handleDelete = async () => {
-    const confirmed = confirm(
-      `${fridgeAccount.name}アカウントを削除しますか？一度削除するとデータは復元できません。`
-    );
-    if (!confirmed) return;
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeAccount.id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    await deleteData(`/fridge/${fridgeAccount.id}`);
     await update({ fridgeId: null, fridgeName: null });
     router.refresh();
     router.push("/member/fridge-account");
@@ -217,6 +207,14 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
           </Button>
         </div>
       )}
+
+      <DeleteConfirm
+        isOpen={isOpen}
+        handleOpen={handleOpen}
+        confirmText={`${fridgeAccount.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
+        hideNextTime={false}
+        handleDelete={handleDelete}
+      />
     </>
   );
 };

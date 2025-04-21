@@ -21,7 +21,6 @@ import { useHandleOpen } from "@/hooks/use-handle-open";
 
 export default function Page() {
   const { isOpen, handleOpen } = useHandleOpen();
-  // const session = await getServerSession(nextAuthOptions);
   return (
     <>
       <Heading level={1} icon={FaBagShopping}>

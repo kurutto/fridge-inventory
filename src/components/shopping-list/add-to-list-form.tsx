@@ -1,15 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useState } from "react";
-import { ModalContext, ModalContextType } from "@/context/modal-context";
-import { useRouter, usePathname } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
 import Input from "../ui/input";
 import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
+import useCreateData from "@/hooks/use-create-data-from-modal";
+import { useContext } from "react";
+import { ModalContext, ModalContextType } from "@/context/modal-context";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -26,10 +26,8 @@ interface AddToListFormProps {
 }
 
 const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
+  const { isAdded, createItem } = useCreateData();
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
-  const [isAdded, setIsAdded] = useState("");
-  const router = useRouter();
-  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -42,42 +40,20 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            userId: userId,
-            fridgeId: fridgeId,
-            name: values.name,
-            amount: values.amount,
-            dueDate: new Date(values.dueDate),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!res.ok) {
-        const errData = await res.json();
-        alert(errData.message);
-      } else {
-        reset();
-        router.refresh();
-        if (pathname.split(`${fridgeId}/`)[1] || pathname.split("member/")[1]) {
-          setIsAdded(`${values.name}が追加されました`);
-          setTimeout(() => {
-            handleOpen();
-          }, 1500);
-        } else {
-          handleOpen();
-        }
-      }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
-    }
+    await createItem(
+      `/fridge/${fridgeId}/shopping-list`,
+      {
+        userId: userId,
+        fridgeId: fridgeId,
+        name: values.name,
+        amount: values.amount,
+        dueDate: new Date(values.dueDate),
+      },
+      reset,
+      fridgeId,
+      values.name,
+      handleOpen
+    );
   };
   return (
     <>

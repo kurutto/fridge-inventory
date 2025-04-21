@@ -2,9 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useState } from "react";
-import { ModalContext, ModalContextType } from "@/context/modal-context";
-import { useRouter, usePathname } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
@@ -16,6 +13,11 @@ import { categories } from "@/constants/categories";
 import { InventoryType, KanaDataType } from "@/types/types";
 import { cn } from "@/lib/utils";
 import { getKana } from "@/lib/inventory";
+import { useContext } from "react";
+import { ModalContext, ModalContextType } from "@/context/modal-context";
+import useDeleteData from "@/hooks/use-delete-data-from-modal";
+import useUpdateData from "@/hooks/use-update-data-from-fridge-modal";
+import useCreateData from "@/hooks/use-create-data-from-modal";
 
 const formSchema = z.object({
   category: z.coerce.number(),
@@ -33,9 +35,9 @@ interface InventoryFormProps {
 
 const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
-  const [isAdded, setIsAdded] = useState("");
-  const router = useRouter();
-  const pathname = usePathname();
+  const { isAdded, createItem } = useCreateData();
+  const { updateItem } = useUpdateData();
+  const { deleteItem } = useDeleteData();
   const {
     register,
     handleSubmit,
@@ -49,64 +51,49 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
       remaining: inventory?.remaining || 0,
     },
   });
+
   const onSubmit = async (values: formType) => {
-    try {
-      const kanaData = await getKana(fridgeId, values.name);
-      const kanaArr = kanaData.result.word.map((kanaObj: KanaDataType) =>
-        kanaObj.furigana ? kanaObj.furigana : kanaObj.surface
-      );
-      const kana = kanaArr.join("");
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory`,
+    const kanaData = await getKana(fridgeId, values.name);
+    const kanaArr = kanaData.result.word.map((kanaObj: KanaDataType) =>
+      kanaObj.furigana ? kanaObj.furigana : kanaObj.surface
+    );
+    const kana = kanaArr.join("");
+    if (inventory) {
+      updateItem(
+        `/fridge/${fridgeId}/inventory`,
         {
-          method: inventory ? "PUT" : "POST",
-          body: JSON.stringify({
-            fridgeId: fridgeId,
-            inventoryId: inventory?.id,
-            category: Number(values.category),
-            name: values.name,
-            kana: kana,
-            amount: values.remaining,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+          fridgeId: fridgeId,
+          inventoryId: inventory?.id,
+          category: Number(values.category),
+          name: values.name,
+          kana: kana,
+          amount: values.remaining,
+        },
+        reset,
+        handleOpen
       );
-      if (!res.ok) {
-        const errData = await res.json();
-        alert(errData.message);
-      } else {
-        reset();
-        router.refresh();
-        if (pathname.split(`${fridgeId}/`)[1] || pathname.split('member/')[1]) {
-          setIsAdded(`${values.name}が追加されました`);
-          setTimeout(() => {
-            handleOpen();
-          }, 1500);
-        } else {
-          handleOpen();
-        }
-      }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+    } else {
+      createItem(
+        `/fridge/${fridgeId}/inventory`,
+        {
+          fridgeId: fridgeId,
+          category: Number(values.category),
+          name: values.name,
+          kana: kana,
+          amount: values.remaining,
+        },
+        reset,
+        fridgeId,
+        values.name,
+        handleOpen
+      );
     }
   };
 
   const handleDelete = async () => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory/${
-        inventory!.id
-      }`,
-      {
-        method: "DELETE",
-      }
-    );
-    reset();
-    router.refresh();
-    handleOpen();
+    deleteItem(`/fridge/${fridgeId}/inventory/${inventory!.id}`, handleOpen);
   };
+
   return (
     <>
       <Heading level={2} className="justify-center mb-8">

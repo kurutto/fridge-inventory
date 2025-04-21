@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
 import Button from "../ui/button";
-import { useRouter } from "next/navigation";
 import DeleteConfirm from "../confirm/delete-confirm";
 import { useSession } from "next-auth/react";
 import { ShoppingListType } from "@/types/types";
+import useDeleteDataRemoveButton from "@/hooks/use-dalete-data-from-remove-button";
 
 interface RemoveFromListButtonProps {
   fridgeId: string;
@@ -15,24 +14,13 @@ const RemoveFromListButton = ({
   fridgeId,
   listItem,
 }: RemoveFromListButtonProps) => {
-  const { update, data: session } = useSession();
-  const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const handleDelete = async (data: boolean | null) => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/shopping-list/${listItem.id}`,
-      {
-        method: "DELETE",
-      }
+  const { data: session } = useSession();
+  const { isOpen, handleOpen, deleteItem } = useDeleteDataRemoveButton();
+  const handleDelete = async (nextTimeHideConfirm: boolean | null) => {
+    await deleteItem(
+      `/fridge/${fridgeId}/shopping-list/${listItem.id}`,
+      nextTimeHideConfirm
     );
-    if (data) {
-      await update({ deleteConfirm: false });
-    }
-    setIsOpen(false);
-    router.refresh();
   };
   return (
     <>
@@ -42,7 +30,7 @@ const RemoveFromListButton = ({
           if (session?.user.deleteConfirm === true) {
             handleOpen();
           } else {
-            handleDelete(false);
+            handleDelete(null);
           }
         }}
         className="absolute top-0 right-0"

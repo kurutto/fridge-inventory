@@ -3,8 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useContext, useEffect, useState } from "react";
-import { ModalContext, ModalContextType } from "@/context/modal-context";
-import { useRouter, usePathname } from "next/navigation";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
@@ -15,6 +13,9 @@ import Select from "../ui/select";
 import { categories } from "@/constants/categories";
 import { InventoryType } from "@/types/types";
 import { getInventories } from "@/lib/inventory";
+import { postData } from "@/lib/post-data";
+import useCreateData from "@/hooks/use-create-data-from-modal";
+import { ModalContext, ModalContextType } from "@/context/modal-context";
 
 interface PurchaseFormProps {
   userId: string;
@@ -23,9 +24,7 @@ interface PurchaseFormProps {
 
 const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
-  const router = useRouter();
-  const pathname = usePathname();
-  const [isAdded, setIsAdded] = useState("");
+  const { isAdded, createItem } = useCreateData();
   const [inventoryCheck, setInventoryCheck] = useState(false);
   const [inventories, setInventories] = useState<InventoryType[]>([]);
   useEffect(() => {
@@ -67,77 +66,38 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
-    try {
-      if (inventoryCheck && inventories.length > 0) {
-        const targetInventory = inventories?.filter(
-          (inventory) => inventory.id === values.inventoryId
-        );
-        const amount =
-          targetInventory && targetInventory[0]?.remaining + values.amount;
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/inventory`,
-            {
-              method: "PUT",
-              body: JSON.stringify({
-                fridgeId: fridgeId,
-                inventoryId: values.inventoryId,
-                amount: amount,
-              }),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          if (!res.ok) {
-            const errData = await res.json();
-            alert(errData.message);
-          }
-        } catch (err) {
-          console.error("Fetch failed:", err);
-          alert(`サーバーエラーが発生しました`);
-        }
-      }
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/fridge/${fridgeId}/purchase`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            userId: userId,
-            fridgeId: fridgeId,
-            inventoryId: inventoryCheck ? values.inventoryId : null,
-            name: values.name,
-            category: Number(values.category),
-            date: new Date(values.date),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+    if (inventoryCheck && inventories.length > 0) {
+      const targetInventory = inventories?.filter(
+        (inventory) => inventory.id === values.inventoryId
       );
-      if (!res.ok) {
-        const errData = await res.json();
-        alert(errData.message);
-      } else {
-        reset();
-        router.refresh();
-        if (
-          (pathname.split(`${fridgeId}/`)[1] &&
-            pathname.split(`${fridgeId}/`)[1] !== "purchases") ||
-          pathname.split("member/")[1]
-        ) {
-          setIsAdded(`${values.name}が追加されました`);
-          setTimeout(() => {
-            handleOpen();
-          }, 1500);
-        } else {
-          handleOpen();
-        }
+      const amount =
+        targetInventory && targetInventory[0]?.remaining + values.amount;
+      try {
+        await postData(`/fridge/${fridgeId}/inventory`, {
+          fridgeId: fridgeId,
+          inventoryId: values.inventoryId,
+          amount: amount,
+        });
+      } catch (err) {
+        console.error("Fetch failed:", err);
+        alert(`サーバーエラーが発生しました`);
       }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
     }
+    createItem(
+      `/fridge/${fridgeId}/purchase`,
+      {
+        userId: userId,
+        fridgeId: fridgeId,
+        inventoryId: inventoryCheck ? values.inventoryId : null,
+        name: values.name,
+        category: Number(values.category),
+        date: new Date(values.date),
+      },
+      reset,
+      fridgeId,
+      values.name,
+      handleOpen
+    );
   };
   return (
     <>
