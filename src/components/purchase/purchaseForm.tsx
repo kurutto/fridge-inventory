@@ -49,7 +49,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
   } = useForm<formType>({
     resolver: zodResolver(formSchema(inventoryCheck)),
     defaultValues: {
-      category: "1",
+      category: "0",
       date: new Date().toISOString().split("T")[0],
       amount: 0,
     },
