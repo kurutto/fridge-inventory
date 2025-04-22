@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import Box from "../ui/box";
 import Button from "../ui/button";
 import Heading from "../ui/heading";
@@ -11,31 +11,10 @@ import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import Select from "../ui/select";
 import { categories } from "@/constants/categories";
-import { InventoryType } from "@/types/types";
-import { getInventories } from "@/lib/inventory";
-import { useCreateData } from "@/hooks/useCreateDataFromModal";
-import { ModalContext, ModalContextType } from "@/context/modalContext";
-import { putData } from "@/lib/putData";
+import useAddPurchase from "./hooks/useAddPurchase";
 
-interface PurchaseFormProps {
-  userId: string;
-  fridgeId: string;
-}
-
-const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
-  const { handleOpen } = useContext<ModalContextType>(ModalContext);
-  const { isAdded, createItem } = useCreateData();
-  const [inventoryCheck, setInventoryCheck] = useState(false);
-  const [inventories, setInventories] = useState<InventoryType[]>([]);
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getInventories(fridgeId);
-      setInventories(data);
-    };
-    getData();
-  }, []);
-
-  const formSchema = z.object({
+export const formSchema = (inventoryCheck: boolean) =>
+  z.object({
     name: z.string().min(1, {
       message: "必須項目です",
     }),
@@ -51,7 +30,16 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     amount: z.coerce.number({ message: "半角整数で入力してください" }),
   });
 
-  type formType = z.infer<typeof formSchema>;
+export type formType = z.infer<ReturnType<typeof formSchema>>;
+
+interface PurchaseFormProps {
+  userId: string;
+  fridgeId: string;
+}
+
+const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
+  const { isAdded, inventories, addPurchase } = useAddPurchase(fridgeId);
+  const [inventoryCheck, setInventoryCheck] = useState(false);
 
   const {
     register,
@@ -59,7 +47,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     reset,
     formState: { errors },
   } = useForm<formType>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formSchema(inventoryCheck)),
     defaultValues: {
       category: "1",
       date: new Date().toISOString().split("T")[0],
@@ -67,42 +55,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
-    //選択された在庫管理品の数量を取得、入力値をプラスして合計を算出する
-    if (inventoryCheck && inventories.length > 0) {
-      const targetInventory = inventories.filter(
-        (inventory) => inventory.id === values.inventoryId
-      );
-      const amount =
-        targetInventory && targetInventory[0]?.remaining + values.amount;
-
-      //算出された値をデータベースに格納する
-      try {
-        await putData(`/fridge/${fridgeId}/inventory`, {
-          fridgeId: fridgeId,
-          inventoryId: values.inventoryId,
-          amount: amount,
-        });
-      } catch (err) {
-        console.error("Fetch failed:", err);
-        alert(`サーバーエラーが発生しました`);
-      }
-    }
-    //新規購入品をデータベースに格納する
-    createItem(
-      `/fridge/${fridgeId}/purchase`,
-      {
-        userId: userId,
-        fridgeId: fridgeId,
-        inventoryId: inventoryCheck ? values.inventoryId : null,
-        name: values.name,
-        category: Number(values.category),
-        date: new Date(values.date),
-      },
-      reset,
-      fridgeId,
-      values.name,
-      handleOpen
-    );
+    addPurchase(inventoryCheck, values, reset, userId);
   };
   return (
     <>
