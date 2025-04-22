@@ -13,7 +13,6 @@ import Select from "../ui/select";
 import { categories } from "@/constants/categories";
 import { InventoryType } from "@/types/types";
 import { getInventories } from "@/lib/inventory";
-import { postData } from "@/lib/postData";
 import { useCreateData } from "@/hooks/useCreateDataFromModal";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 import { putData } from "@/lib/putData";
@@ -62,7 +61,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
   } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      category:"1",
+      category: "1",
       date: new Date().toISOString().split("T")[0],
       amount: 0,
     },
