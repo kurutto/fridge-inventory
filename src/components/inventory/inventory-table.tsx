@@ -1,5 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { InventoryType } from "@/types/types";
+import { categories } from "@/constants/categories";
+import { cn } from "@/lib/utils";
+import { useHandleSort } from "./hooks/use-handle-sort";
+import Paragraph from "../ui/paragraph";
+import Button from "../ui/button";
+import EditInventoryButton from "./edit-inventory-button";
 import {
   Table,
   TableBody,
@@ -8,13 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import EditInventoryButton from "./edit-inventory-button";
-import { InventoryType } from "@/types/types";
-import Button from "../ui/button";
-import { categories } from "@/constants/categories";
-import { cn } from "@/lib/utils";
-import Paragraph from "../ui/paragraph";
-import { useHandleSort } from "./hooks/use-handle-sort";
 
 interface InventoryTableProps
   extends Omit<React.ComponentPropsWithoutRef<"table">, "className"> {
@@ -34,7 +33,7 @@ const InventoryTable = ({
     handleSortNameAscending,
     handleSortNameDescending,
   } = useHandleSort(inventories);
-  
+
   return (
     <>
       {inventories.length === 0 ? (
