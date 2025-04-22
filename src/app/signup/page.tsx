@@ -15,13 +15,12 @@ const Signup = async () => {
 
   return (
     <>
-        <Heading level={1}>アカウント作成</Heading>
-        <OauthSignin className="md:mb-12 mx-auto" />
-        <Paragraph color="gray" className="text-center">or</Paragraph>
-      <Box
-        variant="rounded"
-        className="md:mx-auto md:max-w-lg"
-      >
+      <Heading level={1}>アカウント作成</Heading>
+      <OauthSignin className="md:mb-12 mx-auto" />
+      <Paragraph color="gray" className="text-center">
+        or
+      </Paragraph>
+      <Box variant="rounded" className="md:mx-auto md:max-w-lg">
         <CredentialSignup />
       </Box>
     </>

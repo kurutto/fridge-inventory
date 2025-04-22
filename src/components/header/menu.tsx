@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
-import { useMenuItems } from "@/hooks/use-menu-items";
-import MenuItem from "./menu-item";
+import { useMenuItems } from "@/hooks/useMenuItems";
+import MenuItem from "./menuItem";
 
 interface MenuProps extends Omit<ComponentPropsWithoutRef<"ul">, "className"> {
   fridgeId: string;

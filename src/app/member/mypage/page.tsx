@@ -3,9 +3,9 @@ import { nextAuthOptions } from "@/lib/next-auth/options";
 import { getUser } from "@/lib/user";
 import Heading from "@/components/ui/heading";
 import { redirect } from "next/navigation";
-import UserAccount from "@/components/mypage/user-account";
+import UserAccount from "@/components/mypage/userAccount";
 import Box from "@/components/ui/box";
-import FridgeList from "@/components/mypage/fridge-list";
+import FridgeList from "@/components/mypage/fridgeList";
 
 const MyPage = async () => {
   const session = await getServerSession(nextAuthOptions);

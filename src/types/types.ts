@@ -77,7 +77,9 @@ export interface UserFridgeType {
   user: UserType;
   fridge: FridgeType;
 }
-
-export interface dataType {
+export interface DataType {
   [key: string]: string | number | boolean | Date | undefined | null;
+}
+export interface SessionUpdateDataType {
+  [key: string]: string;
 }

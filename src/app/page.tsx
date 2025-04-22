@@ -10,8 +10,8 @@ export default async function Page() {
     redirect("/member/fridge-account");
   } else if (session.user.fridgeId) {
     redirect(`/member/${session.user.fridgeId}`);
-  }else{
-    redirect('/api/auth/signout');
+  } else {
+    redirect("/api/auth/signout");
   }
 
   return (

@@ -4,15 +4,15 @@ import { redirect } from "next/navigation";
 import Box from "@/components/ui/box";
 import Heading from "@/components/ui/heading";
 import { FaListUl, FaCubesStacked, FaBagShopping } from "react-icons/fa6";
-import AddToListButton from "@/components/shopping-list/add-to-list-button";
-import ShoppingList from "@/components/shopping-list/shopping-list";
-import InventoryTable from "@/components/inventory/inventory-table";
-import AddInventoryButton from "@/components/inventory/add-inventory-button";
+import AddToListButton from "@/components/shopping-list/addToListButton";
+import ShoppingList from "@/components/shopping-list/shoppingList";
+import InventoryTable from "@/components/inventory/inventoryTable";
+import AddInventoryButton from "@/components/inventory/addInventoryButton";
 import { getInventories } from "@/lib/inventory";
-import { getShoppingList } from "@/lib/shopping-list";
-import AddPurchaseButton from "@/components/purchase/add-purchase-button";
+import { getShoppingList } from "@/lib/shoppingList";
+import AddPurchaseButton from "@/components/purchase/addPurchaseButton";
 import { getPurchases, getPurchasesUsers } from "@/lib/purchase";
-import PurchaseList from "@/components/purchase/purchase-list";
+import PurchaseList from "@/components/purchase/purchaseList";
 import { PurchasesUserType } from "@/types/types";
 
 const FridgePage = async () => {
