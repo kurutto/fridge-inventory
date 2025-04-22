@@ -3,7 +3,7 @@ import { DataType } from "@/types/types";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const useCreateData = () => {
+export const useCreateDataFromModal = () => {
   const router = useRouter();
   const [isAdded, setIsAdded] = useState("");
   const pathname = usePathname();

@@ -7,7 +7,7 @@ import Heading from "../ui/heading";
 import Input from "../ui/input";
 import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
-import { useCreateData } from "@/hooks/useCreateDataFromModal";
+import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 import { useContext } from "react";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 
@@ -26,7 +26,7 @@ interface AddToListFormProps {
 }
 
 const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
-  const { isAdded, createItem } = useCreateData();
+  const { isAdded, createItem } = useCreateDataFromModal();
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const {
     register,

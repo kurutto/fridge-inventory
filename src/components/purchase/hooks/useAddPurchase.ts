@@ -3,13 +3,13 @@ import { InventoryType } from "@/types/types";
 import { useContext, useEffect, useState } from "react";
 import { formType } from "../purchaseForm";
 import { putData } from "@/lib/putData";
-import { useCreateData } from "@/hooks/useCreateDataFromModal";
+import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 
 export const useAddPurchase = (fridgeId: string) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const [inventories, setInventories] = useState<InventoryType[]>([]);
-  const { isAdded, createItem } = useCreateData();
+  const { isAdded, createItem } = useCreateDataFromModal();
 
   useEffect(() => {
     const getData = async () => {

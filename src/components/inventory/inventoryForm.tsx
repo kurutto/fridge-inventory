@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { getKana } from "@/lib/inventory";
 import { useContext } from "react";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
-import { useDeleteData } from "@/hooks/useDeleteDataFromModal";
-import { useUpdateData } from "@/hooks/useUpdateDataFromModal";
-import { useCreateData } from "@/hooks/useCreateDataFromModal";
+import { useDeleteDataFromModal } from "@/hooks/useDeleteDataFromModal";
+import { useUpdateDataFromModal } from "@/hooks/useUpdateDataFromModal";
+import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 
 const formSchema = z.object({
   category: z.coerce.number(),
@@ -35,9 +35,9 @@ interface InventoryFormProps {
 
 const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
-  const { isAdded, createItem } = useCreateData();
-  const { updateItem } = useUpdateData();
-  const { deleteItem } = useDeleteData();
+  const { isAdded, createItem } = useCreateDataFromModal();
+  const { updateItem } = useUpdateDataFromModal();
+  const { deleteItem } = useDeleteDataFromModal();
   const {
     register,
     handleSubmit,

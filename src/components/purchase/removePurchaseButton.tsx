@@ -3,7 +3,7 @@ import Button from "../ui/button";
 import { useSession } from "next-auth/react";
 import DeleteConfirm from "../confirm/deleteConfirm";
 import { PurchaseType } from "@/types/types";
-import { useDeleteDataRemoveButton } from "@/hooks/useDeleteDataFromRemoveButton";
+import { useDeleteDataFromRemoveButton } from "@/hooks/useDeleteDataFromRemoveButton";
 
 interface RemovePurchaseButtonProps {
   fridgeId: string;
@@ -15,7 +15,7 @@ const RemovePurchaseButton = ({
   purchase,
 }: RemovePurchaseButtonProps) => {
   const { data: session } = useSession();
-  const { isOpen, handleOpen, deleteItem } = useDeleteDataRemoveButton();
+  const { isOpen, handleOpen, deleteItem } = useDeleteDataFromRemoveButton();
   const handleDelete = async (nextTimeHideConfirm: boolean | null) => {
     deleteItem(
       `/fridge/${fridgeId}/purchase/${purchase.id}`,
