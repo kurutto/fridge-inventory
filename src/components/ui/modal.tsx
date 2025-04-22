@@ -11,6 +11,7 @@ interface ModalProps
   boxW?: string;
   children: React.ReactNode;
   className?: string;
+  closeButton?:boolean;
 }
 
 const Modal = ({
@@ -19,6 +20,7 @@ const Modal = ({
   boxW,
   children,
   className,
+  closeButton = true,
   ...props
 }: ModalProps) => {
   const baseStyle = cn(
@@ -34,10 +36,10 @@ const Modal = ({
     <div className={cn(baseStyle, className)} {...props}>
       <Overlay isOpen={isOpen} handleOpen={handleOpen} />
       <Box variant="rounded" className={boxStyle}>
-        <CloseButton
+        {closeButton && <CloseButton
           handleOpen={handleOpen}
           className="ml-auto md:-mr-4 md:-mt-4 mb-0"
-        />
+        />}
         {children}
       </Box>
     </div>

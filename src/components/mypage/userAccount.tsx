@@ -1,5 +1,4 @@
 "use client";
-import { signOut } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -7,13 +6,11 @@ import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import Button from "../ui/button";
 import { UserType } from "@/types/types";
-import { useRouter } from "next/navigation";
 import Input from "../ui/input";
-import DeleteConfirm from "../confirm/deleteConfirm";
-import { deleteData } from "@/lib/deleteData";
-import { useHandleOpen } from "@/hooks/useHandleOpen";
 import { useHandleEdit } from "@/hooks/useHandleEdit";
 import { useUpdateAccount } from "@/hooks/useUpdateAccount";
+import AccountDeleteButton from "./accountDeleteButton";
+import Toast from "../toast/toast";
 
 const formSchema = z.object({
   id: z
@@ -40,10 +37,8 @@ interface UserAccountProps {
   user: UserType;
 }
 const UserAccount = ({ user }: UserAccountProps) => {
-  const { isOpen, handleOpen } = useHandleOpen();
-  const { isEdit, handleEdit } = useHandleEdit();
-  const { updateAccount } = useUpdateAccount();
-  const router = useRouter();
+  const { updateAccount, isOpen, handleOpen, isEdit, handleEdit } =
+    useUpdateAccount();
   const {
     register,
     handleSubmit,
@@ -73,18 +68,10 @@ const UserAccount = ({ user }: UserAccountProps) => {
         name: values.name,
       },
       setError,
-      handleEdit,
-      { id: values.id, name: values.name }
+      { id: values.id, name: values.name },
     );
   };
 
-  const handleDelete = async () => {
-    signOut();
-    await deleteData(`/user/${user.id}`);
-    handleOpen(false);
-    router.refresh();
-    router.push("/signup");
-  };
   return (
     <>
       <form
@@ -157,22 +144,13 @@ const UserAccount = ({ user }: UserAccountProps) => {
           >
             編集
           </Button>
-          <Button
-            type="button"
-            color="destructive"
-            className="w-30"
-            onClick={() => handleOpen()}
-          >
-            削除
-          </Button>
+          <AccountDeleteButton user={user} />
         </div>
       )}
-      <DeleteConfirm
+      <Toast
         isOpen={isOpen}
         handleOpen={handleOpen}
-        confirmText={`${user.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
-        hideNextTime={false}
-        handleDelete={handleDelete}
+        toastText="アカウント情報が変更されました"
       />
     </>
   );

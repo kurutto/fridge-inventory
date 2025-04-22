@@ -2,10 +2,14 @@ import { putData } from "@/lib/putData";
 import { DataType, SessionUpdateDataType } from "@/types/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useHandleOpen } from "./useHandleOpen";
+import { useHandleEdit } from "./useHandleEdit";
 
 export const useUpdateAccount = () => {
-  const router = useRouter();
   const { update } = useSession();
+  const { isOpen, handleOpen } = useHandleOpen();
+  const { isEdit, handleEdit } = useHandleEdit();
+  const router = useRouter();
   const updateAccount = async (
     fetchPath: string,
     data: DataType,
@@ -13,7 +17,6 @@ export const useUpdateAccount = () => {
       name: "id",
       error: { type: string; message?: string | undefined }
     ) => void,
-    handleEdit: (edit: boolean) => void,
     sessionUpdateData: SessionUpdateDataType,
     fridgeAccount = false
   ) => {
@@ -33,15 +36,19 @@ export const useUpdateAccount = () => {
       } else {
         handleEdit(false);
         await update(sessionUpdateData);
+        router.refresh();
         if (fridgeAccount && data.id) {
           router.push(`/member/${data.id}/account`);
         }
-        router.refresh();
+        handleOpen(true);
+        setTimeout(() => {
+          handleOpen(false);
+        }, 2000);
       }
     } catch (err) {
       console.error("Fetch failed:", err);
       alert(`サーバーエラーが発生しました`);
     }
   };
-  return { updateAccount };
+  return { updateAccount, isOpen, handleOpen, isEdit, handleEdit };
 };

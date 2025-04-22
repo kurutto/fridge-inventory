@@ -6,14 +6,10 @@ import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import Button from "../ui/button";
 import { FridgeType } from "@/types/types";
-import { useRouter } from "next/navigation";
 import Input from "../ui/input";
-import { useSession } from "next-auth/react";
-import DeleteConfirm from "../confirm/deleteConfirm";
-import { useHandleOpen } from "@/hooks/useHandleOpen";
-import { deleteData } from "@/lib/deleteData";
 import { useUpdateAccount } from "@/hooks/useUpdateAccount";
-import { useHandleEdit } from "@/hooks/useHandleEdit";
+import AccountDeleteButton from "./accountDeleteButton";
+import Toast from "../toast/toast";
 
 const formSchema = z.object({
   id: z
@@ -37,15 +33,14 @@ const formSchema = z.object({
 });
 
 type formType = z.infer<typeof formSchema>;
+
 interface FridgeAccountProps {
   fridgeAccount: FridgeType;
 }
+
 const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
-  const { update } = useSession();
-  const router = useRouter();
-  const { isOpen, handleOpen } = useHandleOpen();
-  const { updateAccount } = useUpdateAccount();
-  const { isEdit, handleEdit } = useHandleEdit();
+  const { updateAccount, isOpen, handleOpen, isEdit, handleEdit } =
+    useUpdateAccount();
   const {
     register,
     handleSubmit,
@@ -78,17 +73,11 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
         description: values.description,
       },
       setError,
-      handleOpen,
       { fridgeId: values.id, fridgeName: values.name },
       true
     );
   };
-  const handleDelete = async () => {
-    await deleteData(`/fridge/${fridgeAccount.id}`);
-    await update({ fridgeId: null, fridgeName: null });
-    router.refresh();
-    router.push("/member/fridge-account");
-  };
+
   return (
     <>
       <form
@@ -176,23 +165,13 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
           >
             編集
           </Button>
-          <Button
-            type="button"
-            color="destructive"
-            className="w-30"
-            onClick={() => handleOpen()}
-          >
-            削除
-          </Button>
+          <AccountDeleteButton fridgeAccount={fridgeAccount} />
         </div>
       )}
-
-      <DeleteConfirm
+      <Toast
         isOpen={isOpen}
         handleOpen={handleOpen}
-        confirmText={`${fridgeAccount.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
-        hideNextTime={false}
-        handleDelete={handleDelete}
+        toastText="アカウント情報が変更されました"
       />
     </>
   );
