@@ -2,7 +2,7 @@
 import Button from "../ui/button";
 import { UserFridgeType } from "@/types/types";
 import DeleteConfirm from "../confirm/deleteConfirm";
-import { useDeleteData } from "@/hooks/useDeleteDataFromModal";
+import { useDeleteDataFromModal } from "@/hooks/useDeleteDataFromModal";
 import { useHandleOpen } from "@/hooks/useHandleOpen";
 
 interface RemoveFromUserListButtonProps {
@@ -14,7 +14,7 @@ const RemoveFromMemberListButton = ({
   fridgeId,
   user,
 }: RemoveFromUserListButtonProps) => {
-  const { deleteItem } = useDeleteData();
+  const { deleteItem } = useDeleteDataFromModal();
   const { isOpen, handleOpen } = useHandleOpen();
   const handleDelete = async () => {
     await deleteItem(`/fridge/${fridgeId}/account/${user.userId}`, handleOpen);

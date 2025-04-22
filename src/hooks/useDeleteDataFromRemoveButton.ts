@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-export const useDeleteDataRemoveButton = () => {
+export const useDeleteDataFromRemoveButton = () => {
   const { update } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => {

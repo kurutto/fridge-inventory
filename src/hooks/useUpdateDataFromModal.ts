@@ -2,7 +2,7 @@ import { putData } from "@/lib/putData";
 import { DataType } from "@/types/types";
 import { useRouter } from "next/navigation";
 
-export const useUpdateData = () => {
+export const useUpdateDataFromModal = () => {
   const router = useRouter();
   const updateItem = async (
     fetchPath: string,
