@@ -14,7 +14,7 @@ import { categories } from "@/constants/categories";
 import { InventoryType } from "@/types/types";
 import { getInventories } from "@/lib/inventory";
 import { postData } from "@/lib/post-data";
-import useCreateData from "@/hooks/use-create-data-from-modal";
+import {useCreateData} from "@/hooks/use-create-data-from-modal";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 
 interface PurchaseFormProps {
@@ -66,12 +66,15 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
+    //選択された在庫管理品の数量を取得、入力値をプラスして合計を算出する
     if (inventoryCheck && inventories.length > 0) {
-      const targetInventory = inventories?.filter(
+      const targetInventory = inventories.filter(
         (inventory) => inventory.id === values.inventoryId
       );
       const amount =
         targetInventory && targetInventory[0]?.remaining + values.amount;
+
+      //算出された値をデータベースに格納する
       try {
         await postData(`/fridge/${fridgeId}/inventory`, {
           fridgeId: fridgeId,
@@ -83,6 +86,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
         alert(`サーバーエラーが発生しました`);
       }
     }
+    //新規購入品をデータベースに格納する
     createItem(
       `/fridge/${fridgeId}/purchase`,
       {

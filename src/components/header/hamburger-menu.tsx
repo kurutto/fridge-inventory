@@ -25,7 +25,7 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
   const fridgeAccounts = user?.userFridges;
   return (
     <>
-      <div className="cursor-pointer max-md:text-white" onClick={handleOpen}>
+      <div className="cursor-pointer max-md:text-white" onClick={()=>handleOpen()}>
         <FaBars className="md:text-4xl max-md:text-3xl" />
       </div>
       <Overlay isOpen={isOpen} handleOpen={handleOpen} />
@@ -45,7 +45,7 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
                 ? "/member/fridge-account"
                 : "/signin"
             }
-            onClick={handleOpen}
+            onClick={()=>handleOpen()}
           >
             トップページ
           </HamburgerMenuItem>
@@ -53,7 +53,7 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
             <HamburgerMenuItem>
               <HamburgerMenuLink
                 href="/member/fridge-account"
-                onClick={handleOpen}
+                onClick={()=>handleOpen()}
               >
                 冷蔵庫アカウント作成・切替
               </HamburgerMenuLink>
@@ -79,26 +79,26 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
           {session?.user?.fridgeId && (
             <HamburgerMenuItem
               href={`/member/${session?.user?.fridgeId}/account`}
-              onClick={handleOpen}
+              onClick={()=>handleOpen()}
             >
               冷蔵庫アカウント管理
             </HamburgerMenuItem>
           )}
           {user ? (
             <>
-              <HamburgerMenuItem href="/member/mypage" onClick={handleOpen}>
+              <HamburgerMenuItem href="/member/mypage" onClick={()=>handleOpen()}>
                 マイページ
               </HamburgerMenuItem>
-              <HamburgerMenuItem href="/api/auth/signout" onClick={handleOpen}>
+              <HamburgerMenuItem href="/api/auth/signout" onClick={()=>handleOpen()}>
                 ログアウト
               </HamburgerMenuItem>
             </>
           ) : (
             <>
-              <HamburgerMenuItem href="/signin" onClick={handleOpen}>
+              <HamburgerMenuItem href="/signin" onClick={()=>handleOpen()}>
                 ログイン
               </HamburgerMenuItem>
-              <HamburgerMenuItem href="/signup" onClick={handleOpen}>
+              <HamburgerMenuItem href="/signup" onClick={()=>handleOpen()}>
                 アカウント作成
               </HamburgerMenuItem>
             </>

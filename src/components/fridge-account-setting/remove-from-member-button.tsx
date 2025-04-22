@@ -2,7 +2,7 @@
 import Button from "../ui/button";
 import { UserFridgeType } from "@/types/types";
 import DeleteConfirm from "../confirm/delete-confirm";
-import useDeleteData from "@/hooks/use-delete-data-from-modal";
+import {useDeleteData} from "@/hooks/use-delete-data-from-modal";
 import { useHandleOpen } from "@/hooks/use-handle-open";
 
 interface RemoveFromUserListButtonProps {
@@ -24,7 +24,7 @@ const RemoveFromMemberListButton = ({
       <Button
         color="secondary"
         size="small"
-        onClick={handleOpen}
+        onClick={()=>handleOpen()}
         className="max-md:ml-4"
       >
         削除

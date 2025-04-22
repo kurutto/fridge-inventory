@@ -3,7 +3,7 @@ import Button from "../ui/button";
 import DeleteConfirm from "../confirm/delete-confirm";
 import { useSession } from "next-auth/react";
 import { ShoppingListType } from "@/types/types";
-import useDeleteDataRemoveButton from "@/hooks/use-dalete-data-from-remove-button";
+import {useDeleteDataRemoveButton} from "@/hooks/use-dalete-data-from-remove-button";
 
 interface RemoveFromListButtonProps {
   fridgeId: string;

@@ -11,7 +11,11 @@ interface CloseButtonProps
 const CloseButton = ({ className, handleOpen, ...props }: CloseButtonProps) => {
   const baseStyle = "w-fit md:cursor-pointer";
   return (
-    <div className={cn(baseStyle, className)} onClick={handleOpen} {...props}>
+    <div
+      className={cn(baseStyle, className)}
+      onClick={()=>handleOpen()}
+      {...props}
+    >
       <FaXmark className="md:text-4xl max-md:text-3xl" />
     </div>
   );

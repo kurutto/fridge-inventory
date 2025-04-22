@@ -1,7 +1,5 @@
 "use client";
 import { signOut } from "next-auth/react";
-import { useSession } from "next-auth/react";
-import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,8 +10,10 @@ import { UserType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
 import DeleteConfirm from "../confirm/delete-confirm";
-import { putData } from "@/lib/put-data";
 import { deleteData } from "@/lib/delete-data";
+import { useHandleOpen } from "@/hooks/use-handle-open";
+import { useHandleEdit } from "@/hooks/use-handle-edit";
+import { useUpdateAccount } from "@/hooks/use-update-account";
 
 const formSchema = z.object({
   id: z
@@ -40,13 +40,10 @@ interface UserAccountProps {
   user: UserType;
 }
 const UserAccount = ({ user }: UserAccountProps) => {
-  const { update, data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { isOpen, handleOpen } = useHandleOpen();
+  const { isEdit, handleEdit } = useHandleEdit();
+  const { updateAccount } = useUpdateAccount();
   const router = useRouter();
-  const [isEdit, setIsEdit] = useState(false);
   const {
     register,
     handleSubmit,
@@ -65,41 +62,26 @@ const UserAccount = ({ user }: UserAccountProps) => {
       id: user.id,
       name: user.name || undefined,
     });
-    setIsEdit(false);
+    handleEdit(false);
   };
   const onSubmit = async (values: formType) => {
-    try {
-      const res = await putData(`/user/${user.id}`, {
+    updateAccount(
+      `/user/${user.id}`,
+      {
         userId: user.id,
         id: values.id,
         name: values.name,
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        if (data.errorId === "INVALID_ID") {
-          setError("id", {
-            type: "server",
-            message: "このIDはすでに使われています",
-          });
-        } else {
-          const errData = await res.json();
-          alert(errData.message);
-        }
-      } else {
-        setIsEdit(false);
-        await update({ id: values.id, name: values.name });
-        router.refresh();
-      }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
-    }
+      },
+      setError,
+      handleEdit,
+      { id: values.id, name: values.name }
+    );
   };
 
   const handleDelete = async () => {
     signOut();
     await deleteData(`/user/${user.id}`);
-    setIsOpen(false);
+    handleOpen(false);
     router.refresh();
     router.push("/signup");
   };
@@ -171,7 +153,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
             type="button"
             color="outline"
             className="w-30"
-            onClick={() => setIsEdit(true)}
+            onClick={() => handleEdit(true)}
           >
             編集
           </Button>
@@ -179,9 +161,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
             type="button"
             color="destructive"
             className="w-30"
-            onClick={
-              session?.user.deleteConfirm === true ? handleOpen : handleDelete
-            }
+            onClick={() => handleOpen()}
           >
             削除
           </Button>

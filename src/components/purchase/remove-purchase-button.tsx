@@ -3,7 +3,7 @@ import Button from "../ui/button";
 import { useSession } from "next-auth/react";
 import DeleteConfirm from "../confirm/delete-confirm";
 import { PurchaseType } from "@/types/types";
-import useDeleteDataRemoveButton from "@/hooks/use-dalete-data-from-remove-button";
+import {useDeleteDataRemoveButton} from "@/hooks/use-dalete-data-from-remove-button";
 
 interface RemovePurchaseButtonProps {
   fridgeId: string;
@@ -38,7 +38,7 @@ const RemovePurchaseButton = ({
       />
       <DeleteConfirm
         isOpen={isOpen}
-        handleOpen={handleOpen}
+        handleOpen={()=>handleOpen()}
         confirmText={`${purchase.name}を削除しても良いですか？`}
         hideNextTime={true}
         handleDelete={handleDelete}

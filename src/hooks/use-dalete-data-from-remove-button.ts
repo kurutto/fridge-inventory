@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-const useDeleteDataRemoveButton = () => {
+export const useDeleteDataRemoveButton = () => {
   const { update } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => {
@@ -23,5 +23,3 @@ const useDeleteDataRemoveButton = () => {
   };
   return { isOpen, handleOpen, deleteItem };
 };
-
-export default useDeleteDataRemoveButton;

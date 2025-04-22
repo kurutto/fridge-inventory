@@ -1,12 +1,12 @@
 import { putData } from "@/lib/put-data";
-import { dataType } from "@/types/types";
+import { DataType } from "@/types/types";
 import { useRouter } from "next/navigation";
 
-const useUpdateData = () => {
+export const useUpdateData = () => {
   const router = useRouter();
   const updateItem = async (
     fetchPath: string,
-    data: dataType,
+    data: DataType,
     reset: () => void,
     handleOpen:() => void
   ) => {
@@ -26,4 +26,3 @@ const useUpdateData = () => {
   };
   return { updateItem };
 };
-export default useUpdateData;

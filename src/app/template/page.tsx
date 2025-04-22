@@ -186,10 +186,10 @@ export default function Page() {
       <Heading level={2} outline={true}>
         modal
       </Heading>
-      <Button onClick={handleOpen} color="primary">
+      <Button onClick={()=>handleOpen()} color="primary">
         モーダルオープン
       </Button>
-      <Modal isOpen={isOpen} handleOpen={handleOpen}>
+      <Modal isOpen={isOpen} handleOpen={()=>handleOpen()}>
         <Paragraph>テストです。</Paragraph>
       </Modal>
     </>

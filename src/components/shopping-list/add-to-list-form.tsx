@@ -7,7 +7,7 @@ import Heading from "../ui/heading";
 import Input from "../ui/input";
 import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
-import useCreateData from "@/hooks/use-create-data-from-modal";
+import {useCreateData} from "@/hooks/use-create-data-from-modal";
 import { useContext } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
 

@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,10 +9,11 @@ import { FridgeType } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Input from "../ui/input";
 import { useSession } from "next-auth/react";
-import { putData } from "@/lib/put-data";
 import DeleteConfirm from "../confirm/delete-confirm";
 import { useHandleOpen } from "@/hooks/use-handle-open";
 import { deleteData } from "@/lib/delete-data";
+import { useUpdateAccount } from "@/hooks/use-update-account";
+import { useHandleEdit } from "@/hooks/use-handle-edit";
 
 const formSchema = z.object({
   id: z
@@ -44,7 +44,8 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
   const { update } = useSession();
   const router = useRouter();
   const { isOpen, handleOpen } = useHandleOpen();
-  const [isEdit, setIsEdit] = useState(false);
+  const { updateAccount } = useUpdateAccount();
+  const { isEdit, handleEdit } = useHandleEdit();
   const {
     register,
     handleSubmit,
@@ -65,44 +66,22 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
       name: fridgeAccount.name,
       description: fridgeAccount.description,
     });
-    setIsEdit(false);
+    handleEdit(false);
   };
   const onSubmit = async (values: formType) => {
-    try {
-      const res = await putData(
-        `/fridge/${fridgeAccount.id}`,
-        {
-          fridgeId: fridgeAccount.id,
-          id: values.id,
-          name: values.name,
-          description: values.description,
-        }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        if (data.errorId === "INVALID_ID") {
-          setError("id", {
-            type: "server",
-            message: "このIDはすでに使われています",
-          });
-        } else {
-          const errData = await res.json();
-          alert(errData.message);
-        }
-      } else {
-        await update({ fridgeId: values.id, fridgeName: values.name });
-        setIsEdit(false);
-        if (values.id) {
-          router.refresh();
-          router.push(`/member/${values.id}/account`);
-        } else {
-          router.refresh();
-        }
-      }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
-    }
+    updateAccount(
+      `/fridge/${fridgeAccount.id}`,
+      {
+        fridgeId: fridgeAccount.id,
+        id: values.id,
+        name: values.name,
+        description: values.description,
+      },
+      setError,
+      handleOpen,
+      { fridgeId: values.id, fridgeName: values.name },
+      true
+    );
   };
   const handleDelete = async () => {
     await deleteData(`/fridge/${fridgeAccount.id}`);
@@ -193,7 +172,7 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
             type="button"
             color="outline"
             className="w-30"
-            onClick={() => setIsEdit(true)}
+            onClick={() => handleEdit(true)}
           >
             編集
           </Button>
@@ -201,7 +180,7 @@ const FridgeAccount = ({ fridgeAccount }: FridgeAccountProps) => {
             type="button"
             color="destructive"
             className="w-30"
-            onClick={handleDelete}
+            onClick={() => handleOpen()}
           >
             削除
           </Button>

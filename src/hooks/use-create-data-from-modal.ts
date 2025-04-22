@@ -1,15 +1,15 @@
 import { postData } from "@/lib/post-data";
-import { dataType } from "@/types/types";
+import { DataType } from "@/types/types";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const useCreateData = () => {
+export const useCreateData = () => {
   const router = useRouter();
   const [isAdded, setIsAdded] = useState("");
   const pathname = usePathname();
   const createItem = async (
     fetchPath: string,
-    data: dataType,
+    data: DataType,
     reset: () => void,
     fridgeId: string,
     postName: string,
@@ -38,4 +38,3 @@ const useCreateData = () => {
   };
   return { isAdded, createItem };
 };
-export default useCreateData;

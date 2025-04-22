@@ -15,12 +15,14 @@ const PurchasesList = ({
   purchases,
   users,
 }: PurchasesListProps) => {
+  //購入履歴の中から日付を取り出す
   const dates: Date[] = [];
   purchases.forEach((purchase) => {
     if(!dates.some(date => date === purchase.purchaseDate)){
       dates.push(purchase.purchaseDate);
     }
   })
+  //取り出した日付を若い順に並べる
   const sortedDates = [...dates];
   sortedDates.sort((first, second) => {
     if (first > second) {

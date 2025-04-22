@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { getKana } from "@/lib/inventory";
 import { useContext } from "react";
 import { ModalContext, ModalContextType } from "@/context/modal-context";
-import useDeleteData from "@/hooks/use-delete-data-from-modal";
-import useUpdateData from "@/hooks/use-update-data-from-fridge-modal";
-import useCreateData from "@/hooks/use-create-data-from-modal";
+import {useDeleteData} from "@/hooks/use-delete-data-from-modal";
+import {useUpdateData} from "@/hooks/use-update-data-from-modal";
+import {useCreateData} from "@/hooks/use-create-data-from-modal";
 
 const formSchema = z.object({
   category: z.coerce.number(),

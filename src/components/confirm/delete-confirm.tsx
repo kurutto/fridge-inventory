@@ -41,7 +41,7 @@ const DeleteConfirm = ({
         >
           OK
         </Button>
-        <Button color="secondary" onClick={handleOpen} className="w-30">
+        <Button color="secondary" onClick={()=>handleOpen()} className="w-30">
           キャンセル
         </Button>
       </div>

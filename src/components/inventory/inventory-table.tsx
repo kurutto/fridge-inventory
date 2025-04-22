@@ -14,6 +14,7 @@ import Button from "../ui/button";
 import { categories } from "@/constants/categories";
 import { cn } from "@/lib/utils";
 import Paragraph from "../ui/paragraph";
+import { useHandleSort } from "./hooks/use-handle-sort";
 
 interface InventoryTableProps
   extends Omit<React.ComponentPropsWithoutRef<"table">, "className"> {
@@ -26,72 +27,14 @@ const InventoryTable = ({
   ...props
 }: InventoryTableProps) => {
   const baseStyle = "";
-  const [sortedInventories, setSortedInventories] =
-    useState<InventoryType[]>(inventories);
-  useEffect(() => {
-    setSortedInventories(inventories);
-  }, [inventories]);
-
-  const handleSortRemainingAscending = () => {
-    const newList = [...inventories];
-    newList.sort((first, second) => {
-      if (first.remaining > second.remaining) {
-        return -1;
-      } else if (second.remaining > first.remaining) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    setSortedInventories(newList);
-  };
-  const handleSortRemainingDescending = () => {
-    const newList = [...inventories];
-    newList.sort((first, second) => {
-      if (first.remaining < second.remaining) {
-        return -1;
-      } else if (second.remaining < first.remaining) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    setSortedInventories(newList);
-  };
-  const handleSortNameAscending = () => {
-    const newList = [...inventories];
-    newList.sort((first, second) => {
-      if (
-        first.kana.localeCompare(second.kana, "ja", { sensitivity: "base" }) > 0
-      ) {
-        return -1;
-      } else if (
-        first.kana.localeCompare(second.kana, "ja", { sensitivity: "base" }) < 0
-      ) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    setSortedInventories(newList);
-  };
-  const handleSortNameDescending = () => {
-    const newList = [...inventories];
-    newList.sort((first, second) => {
-      if (
-        first.kana.localeCompare(second.kana, "ja", { sensitivity: "base" }) > 0
-      ) {
-        return 1;
-      } else if (
-        first.kana.localeCompare(second.kana, "ja", { sensitivity: "base" }) < 0
-      ) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-    setSortedInventories(newList);
-  };
+  const {
+    sortedInventories,
+    handleSortRemainingAscending,
+    handleSortRemainingDescending,
+    handleSortNameAscending,
+    handleSortNameDescending,
+  } = useHandleSort(inventories);
+  
   return (
     <>
       {inventories.length === 0 ? (

@@ -1,8 +1,6 @@
-interface dataType{
-  [key: string]: string | number | boolean | Date | undefined | null
+import { DataType } from "@/types/types";
 
-}
-export const postData = async(fetchPath:string,data:dataType) => {
+export const postData = async(fetchPath:string,data:DataType) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}${fetchPath}`,
     {
