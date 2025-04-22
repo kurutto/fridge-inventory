@@ -6,7 +6,7 @@
 ## デモ
 
 https://fridge-inventory-tau.vercel.app/  
-ID:demoUser01
+ID:demoUser01  
 password:demopassword
 
 ## 利用シーン
