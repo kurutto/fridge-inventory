@@ -3,7 +3,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { NextAuthProvider } from "@/lib/next-auth/provider";
 import Header from "@/components/header/header";
-import { ModalContextProvider } from "@/context/modal-context";
+import { ModalContextProvider } from "@/context/modalContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",

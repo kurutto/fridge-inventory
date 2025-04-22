@@ -2,9 +2,9 @@
 import { useSession } from "next-auth/react";
 import Logo from "@/assets/logo";
 import Menu from "./menu";
-import HamburgerMenu from "./hamburger-menu";
+import HamburgerMenu from "./hamburgerMenu";
 import Link from "next/link";
-import HeaderFridgeAccount from "./header-fridge-account";
+import HeaderFridgeAccount from "./headerFridgeAccount";
 import { getUser } from "@/lib/user";
 import { UserType } from "@/types/types";
 import { useEffect, useState } from "react";

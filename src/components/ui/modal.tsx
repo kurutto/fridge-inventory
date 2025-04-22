@@ -2,7 +2,7 @@ import React from "react";
 import Overlay from "./overlay";
 import Box from "./box";
 import { cn } from "@/lib/utils";
-import CloseButton from "./close-button";
+import CloseButton from "./closeButton";
 
 interface ModalProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "className"> {

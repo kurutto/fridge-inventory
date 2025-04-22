@@ -17,7 +17,7 @@ import Box from "@/components/ui/box";
 import Paragraph from "@/components/ui/paragraph";
 import { List, Li } from "@/components/ui/list";
 import Modal from "@/components/ui/modal";
-import { useHandleOpen } from "@/hooks/use-handle-open";
+import { useHandleOpen } from "@/hooks/useHandleOpen";
 
 export default function Page() {
   const { isOpen, handleOpen } = useHandleOpen();
@@ -186,10 +186,10 @@ export default function Page() {
       <Heading level={2} outline={true}>
         modal
       </Heading>
-      <Button onClick={()=>handleOpen()} color="primary">
+      <Button onClick={() => handleOpen()} color="primary">
         モーダルオープン
       </Button>
-      <Modal isOpen={isOpen} handleOpen={()=>handleOpen()}>
+      <Modal isOpen={isOpen} handleOpen={() => handleOpen()}>
         <Paragraph>テストです。</Paragraph>
       </Modal>
     </>

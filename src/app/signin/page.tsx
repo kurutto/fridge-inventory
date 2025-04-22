@@ -17,13 +17,12 @@ const SignIn = async () => {
   }
   return (
     <>
-        <Heading level={1}>ログイン</Heading>
-        <OauthSignin className="md:mb-12 mx-auto" />
-        <Paragraph color="gray" className="text-center">or</Paragraph>
-      <Box
-        variant="rounded"
-        className="md:mx-auto md:max-w-md"
-      >
+      <Heading level={1}>ログイン</Heading>
+      <OauthSignin className="md:mb-12 mx-auto" />
+      <Paragraph color="gray" className="text-center">
+        or
+      </Paragraph>
+      <Box variant="rounded" className="md:mx-auto md:max-w-md">
         <CredentialSignin />
         <Button variant="text" className="mx-auto block">
           <Link href="/signup">アカウント作成はこちら</Link>

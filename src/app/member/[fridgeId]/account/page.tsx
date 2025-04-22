@@ -5,9 +5,9 @@ import Box from "@/components/ui/box";
 import Heading from "@/components/ui/heading";
 import { getFridgeAccount } from "@/lib/fridge";
 import { UserFridgeType } from "@/types/types";
-import MemberList from "@/components/fridge-account-setting/member-list";
-import MemberRegistration from "@/components/fridge-account-setting/member-registration";
-import FridgeAccount from "@/components/fridge-account-setting/fridge-account";
+import MemberList from "@/components/fridgeAccountSetting/memberList";
+import MemberRegistration from "@/components/fridgeAccountSetting/memberRegistration";
+import FridgeAccount from "@/components/fridgeAccountSetting/fridgeAccount";
 
 const FridgePage = async () => {
   const session = await getServerSession(nextAuthOptions);

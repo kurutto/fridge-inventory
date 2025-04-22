@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import PurchasesList from "@/components/purchase/purchases-list";
+import PurchaseLists from "@/components/purchase/purchaseLists";
 import { getPurchases, getPurchasesUsers } from "@/lib/purchase";
 import { redirect } from "next/navigation";
 import { nextAuthOptions } from "@/lib/next-auth/options";
@@ -26,7 +26,7 @@ const PurchasesPage = async () => {
         購入履歴
       </Heading>
       <Box variant="roundedMaxMd" className="md:max-w-md md:mx-auto">
-        <PurchasesList
+        <PurchaseLists
           userId={userId}
           fridgeId={fridgeId}
           purchases={purchases}
