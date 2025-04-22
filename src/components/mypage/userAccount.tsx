@@ -7,7 +7,6 @@ import Paragraph from "../ui/paragraph";
 import Button from "../ui/button";
 import { UserType } from "@/types/types";
 import Input from "../ui/input";
-import { useHandleEdit } from "@/hooks/useHandleEdit";
 import { useUpdateAccount } from "@/hooks/useUpdateAccount";
 import AccountDeleteButton from "./accountDeleteButton";
 import Toast from "../toast/toast";
@@ -68,7 +67,7 @@ const UserAccount = ({ user }: UserAccountProps) => {
         name: values.name,
       },
       setError,
-      { id: values.id, name: values.name },
+      { id: values.id, name: values.name }
     );
   };
 

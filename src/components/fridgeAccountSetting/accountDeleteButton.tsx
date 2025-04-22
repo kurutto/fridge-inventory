@@ -1,11 +1,11 @@
 import React from "react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useHandleOpen } from "@/hooks/useHandleOpen";
 import { deleteData } from "@/lib/deleteData";
 import { useRouter } from "next/navigation";
 import DeleteConfirm from "../confirm/deleteConfirm";
 import Button from "../ui/button";
-import { FridgeType, UserType } from "@/types/types";
+import { FridgeType } from "@/types/types";
 
 interface AccountDeleteButtonProps {
   fridgeAccount: FridgeType;
@@ -15,11 +15,11 @@ const AccountDeleteButton = ({ fridgeAccount }: AccountDeleteButtonProps) => {
   const { isOpen, handleOpen } = useHandleOpen();
   const router = useRouter();
   const handleDelete = async () => {
-      await deleteData(`/fridge/${fridgeAccount.id}`);
-      await update({ fridgeId: null, fridgeName: null });
-      router.refresh();
-      router.push("/member/fridge-account");
-    };
+    await deleteData(`/fridge/${fridgeAccount.id}`);
+    await update({ fridgeId: null, fridgeName: null });
+    router.refresh();
+    router.push("/member/fridge-account");
+  };
   return (
     <>
       <Button
@@ -30,7 +30,7 @@ const AccountDeleteButton = ({ fridgeAccount }: AccountDeleteButtonProps) => {
       >
         削除
       </Button>
-      
+
       <DeleteConfirm
         isOpen={isOpen}
         handleOpen={handleOpen}
