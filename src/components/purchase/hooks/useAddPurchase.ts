@@ -6,7 +6,7 @@ import { putData } from "@/lib/putData";
 import { useCreateData } from "@/hooks/useCreateDataFromModal";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 
-const useAddPurchase = (fridgeId: string) => {
+export const useAddPurchase = (fridgeId: string) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const [inventories, setInventories] = useState<InventoryType[]>([]);
   const { isAdded, createItem } = useCreateData();
@@ -66,5 +66,3 @@ const useAddPurchase = (fridgeId: string) => {
 
   return { isAdded, inventories, addPurchase };
 };
-
-export default useAddPurchase;

@@ -11,7 +11,7 @@ import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import Select from "../ui/select";
 import { categories } from "@/constants/categories";
-import useAddPurchase from "./hooks/useAddPurchase";
+import { useAddPurchase } from "./hooks/useAddPurchase";
 
 export const formSchema = (inventoryCheck: boolean) =>
   z.object({
