@@ -48,7 +48,7 @@ const PurchaseList = ({
             (datePurchase) => datePurchase.userId === user.id
           ) ? (
             <div key={user.id}>
-              <Heading level={3} className={headingStyle}>
+              <Heading level={4} className={headingStyle}>
                 {user.name}
               </Heading>
               <List className="mt-2.5">

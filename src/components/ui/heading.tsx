@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 interface headingProps
   extends Omit<React.ComponentPropsWithoutRef<"h1">, "className"> {
-  level?: 1 | 2 | 3;
+  level?: 1 | 2 | 3 |4;
   icon?: React.ElementType;
   outline?: boolean;
   children: React.ReactNode;
@@ -26,7 +26,8 @@ const Heading = ({
         outline &&
           "bg-white rounded-2xl md:py-5 md:px-7 md:shadow-pc max-md:py-3.5 max-md:px-3.5 max-md:shadow-sp"
       ),
-    level === 3 && "font-bold md:text-lg max-md:text-base"
+    level === 3 && "font-bold md:text-lg max-md:text-base",
+    level === 4 && "font-bold text-base"
   );
   const iconStyle = cn(
     level === 1 && "md:text-3xl max-md:text-2xl",

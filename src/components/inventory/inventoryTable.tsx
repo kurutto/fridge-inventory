@@ -57,12 +57,14 @@ const InventoryTable = ({
                   variant="angle"
                   angle="up"
                   onClick={handleSortNameAscending}
+                  aria-label="降順にソート"
                 />
                 <Button
                   variant="angle"
                   angle="down"
                   onClick={handleSortNameDescending}
                   className="ml-2"
+                  aria-label="昇順にソート"
                 />
               </TableHeader>
               <TableHeader className="sm:w-20 max-sm:w-15">
@@ -72,12 +74,14 @@ const InventoryTable = ({
                   variant="angle"
                   angle="up"
                   onClick={handleSortRemainingAscending}
+                  aria-label="降順にソート"
                 />
                 <Button
                   variant="angle"
                   angle="down"
                   onClick={handleSortRemainingDescending}
                   className="ml-2"
+                  aria-label="昇順にソート"
                 />
               </TableHeader>
               <TableHeader className="w-10"></TableHeader>

@@ -26,7 +26,7 @@ const Header = () => {
       <h1 className="content-center">
         <Link href="/">
           <Logo
-            className="lg:w-9 lg:h-9 md:w-8 md:h-8 md:fill-primary max-md:w-5 max-md:h-5 max-md:fill-white"
+            className="lg:w-9 lg:h-9 md:w-8 md:h-8 md:fill-primary max-md:w-5.5 max-md:h-5.5 max-md:fill-white"
             aria-label="FI買物リスト"
           />
         </Link>

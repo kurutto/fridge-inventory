@@ -34,7 +34,7 @@ const AccountDeleteButton = ({ fridgeAccount }: AccountDeleteButtonProps) => {
       <DeleteConfirm
         isOpen={isOpen}
         handleOpen={handleOpen}
-        confirmText={`${fridgeAccount.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
+        confirmText={`${fridgeAccount.name}アカウントを削除しますか？\n一度削除するとデータは復元できません。`}
         hideNextTime={false}
         handleDelete={handleDelete}
       />

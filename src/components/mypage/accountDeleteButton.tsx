@@ -33,7 +33,7 @@ const AccountDeleteButton = ({ user }: AccountDeleteButtonProps) => {
       <DeleteConfirm
         isOpen={isOpen}
         handleOpen={handleOpen}
-        confirmText={`${user.name}アカウントを削除しますか？一度削除するとデータは復元できません。`}
+        confirmText={`${user.name}アカウントを削除しますか？\n一度削除するとデータは復元できません。`}
         hideNextTime={false}
         handleDelete={handleDelete}
       />

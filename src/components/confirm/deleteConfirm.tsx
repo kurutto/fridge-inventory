@@ -26,7 +26,7 @@ const DeleteConfirm = ({
       boxW="w-lg"
       className="text-center"
     >
-      <Paragraph>{confirmText}</Paragraph>
+      <Paragraph className="whitespace-pre-wrap">{confirmText}</Paragraph>
       {hideNextTime && (
         <Label className="align-middle">
           <Input type="checkbox" ref={inputRef} className="mr-2" />
@@ -35,13 +35,15 @@ const DeleteConfirm = ({
       )}
       <div className="flex gap-4 justify-center">
         <Button
-          color="primary"
-          onClick={() => handleDelete(inputRef?.current ? inputRef?.current.checked : null )}
+          color="outline"
+          onClick={() =>
+            handleDelete(inputRef?.current ? inputRef?.current.checked : null)
+          }
           className="w-30"
         >
           OK
         </Button>
-        <Button color="secondary" onClick={()=>handleOpen()} className="w-30">
+        <Button color="secondary" onClick={() => handleOpen()} className="w-30">
           キャンセル
         </Button>
       </div>
