@@ -11,7 +11,8 @@ interface BottomMenuProps
 }
 const BottomMenu = ({ fridgeId, className, ...props }: BottomMenuProps) => {
   const { menuItems } = useMenuItems(fridgeId);
-  const baseStyle = "grid grid-cols-4 bg-white z-25";
+  const baseStyle =
+    "grid grid-cols-4 bg-white z-25 shadow-[0_-5px_7px_rgba(0,0,0,0.05)]";
   return (
     <>
       <ul className={cn(baseStyle, className)} {...props}>

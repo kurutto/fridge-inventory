@@ -22,7 +22,7 @@ const BottomMenuItem = ({
 
   return (
     <li className={cn(baseStyle, className)} {...props}>
-      <Tag className="block py-2 text-center" {...tagProps}>
+      <Tag className="block py-2 text-center cursor-pointer" {...tagProps}>
         <div className="w-fit mx-auto">
           <Icon className="text-xl" />
         </div>

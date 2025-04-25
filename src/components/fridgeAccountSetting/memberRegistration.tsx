@@ -39,7 +39,7 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
   };
   return (
     <div className="space-y-2">
-      <Heading level={3}>メンバー登録</Heading>
+      <Heading level={4}>メンバー登録</Heading>
       <div>
         <Label className="">ユーザー検索</Label>
         <div className="flex">

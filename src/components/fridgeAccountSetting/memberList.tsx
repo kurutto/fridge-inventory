@@ -14,7 +14,7 @@ interface UserListProps {
 const MemberList = ({ fridgeId, users, currentUser }: UserListProps) => {
   return (
     <Box variant="spaceY" className="mb-8">
-      <Heading level={3}>メンバー一覧</Heading>
+      <Heading level={4}>メンバー一覧</Heading>
       <List>
         {users.map((user) => (
           <Li
