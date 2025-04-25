@@ -35,7 +35,7 @@ const Header = () => {
         {fridgeId && fridgeName ? (
           <>
             <Menu fridgeId={fridgeId} />
-            <HeaderFridgeAccount fridgeName={fridgeName} />
+            <HeaderFridgeAccount fridgeId={fridgeId} fridgeName={fridgeName} />
           </>
         ) : null}
         <HamburgerMenu session={session} user={user} />

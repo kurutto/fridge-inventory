@@ -108,60 +108,66 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
             </Label>
             <Input type="date" id="date" {...register("date")} />
           </Box>
-          {inventories.length > 0 && (
-            <Box variant="horizontally" className="items-center">
-              <Label htmlFor="inventoryCheck">在庫管理に追加</Label>
-              <Input
-                type="checkbox"
-                id="inventoryCheck"
-                checked={inventoryCheck}
-                onChange={() => setInventoryCheck((prev) => !prev)}
-              />
-            </Box>
-          )}
+          <Box variant="horizontally" className="items-center">
+            <Label htmlFor="inventoryCheck">在庫管理に追加</Label>
+            <Input
+              type="checkbox"
+              id="inventoryCheck"
+              checked={inventoryCheck}
+              onChange={() => setInventoryCheck((prev) => !prev)}
+            />
+          </Box>
 
-          <>
-            <Box
-              variant="horizontally"
-              className={inventoryCheck ? "" : "hidden"}
-            >
-              <Label htmlFor="inventoryId" className="sm:w-20">
-                在庫管理名
-              </Label>
-              <div>
-                <Select
-                  id="inventoryId"
-                  {...register("inventoryId")}
-                  className="flex-1"
-                >
-                  {inventories?.map((inventory, idx) => (
-                    <option value={inventory.id} key={idx}>
-                      {inventory.name}({categories[inventory.category]})
-                    </option>
-                  ))}
-                </Select>
-              </div>
-            </Box>
-            <Box
-              variant="horizontally"
-              className={inventoryCheck ? "" : "hidden"}
-            >
-              <Label htmlFor="amount" className="w-20">
-                追加数量<span className="text-destructive pl-0.5">*</span>
-              </Label>
-              <div className="flex-1">
-                <Input
-                  type="text"
-                  id="amount"
-                  {...register("amount")}
-                  className="w-36"
-                />
-                {errors.amount && (
-                  <Paragraph variant="error">{errors.amount.message}</Paragraph>
-                )}
-              </div>
-            </Box>
-          </>
+          {inventories.length === 0 ? (
+            <Paragraph className={inventoryCheck ? "" : "hidden"}>
+              在庫管理品がありません。先に在庫管理登録を行なってください。
+            </Paragraph>
+          ) : (
+            <>
+              <Box
+                variant="horizontally"
+                className={inventoryCheck ? "" : "hidden"}
+              >
+                <Label htmlFor="inventoryId" className="sm:w-20">
+                  在庫管理名
+                </Label>
+                <div>
+                  <Select
+                    id="inventoryId"
+                    {...register("inventoryId")}
+                    className="flex-1"
+                  >
+                    {inventories?.map((inventory, idx) => (
+                      <option value={inventory.id} key={idx}>
+                        {inventory.name}({categories[inventory.category]})
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+              </Box>
+              <Box
+                variant="horizontally"
+                className={inventoryCheck ? "" : "hidden"}
+              >
+                <Label htmlFor="amount" className="w-20">
+                  追加数量<span className="text-destructive pl-0.5">*</span>
+                </Label>
+                <div className="flex-1">
+                  <Input
+                    type="text"
+                    id="amount"
+                    {...register("amount")}
+                    className="w-36"
+                  />
+                  {errors.amount && (
+                    <Paragraph variant="error">
+                      {errors.amount.message}
+                    </Paragraph>
+                  )}
+                </div>
+              </Box>
+            </>
+          )}
         </Box>
         <Box
           variant="horizontally"
