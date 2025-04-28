@@ -9,6 +9,7 @@ import Label from "../ui/label";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import Paragraph from "../ui/paragraph";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   id: z
@@ -44,6 +45,7 @@ const formSchema = z.object({
 type formType = z.infer<typeof formSchema>;
 
 const CredentialSignup = () => {
+  const router = useRouter();
   const [sendMessage, setSendMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const {
@@ -89,8 +91,8 @@ const CredentialSignup = () => {
         }
       }
       if (res.ok) {
-        setSendMessage("");
-        setResponseMessage(data.message);
+        router.push("/signup/complete");
+        router.refresh();
       }
     } catch {
       setError("root", { message: "サーバーエラーが発生しました" });
