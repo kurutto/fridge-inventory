@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useHandleOpen } from "./useHandleOpen";
 import { useHandleEdit } from "./useHandleEdit";
+import { networkErrorMessage } from "@/constants/messages";
 
 export const useUpdateAccount = () => {
   const { update } = useSession();
@@ -30,8 +31,7 @@ export const useUpdateAccount = () => {
             message: resData.message,
           });
         } else {
-          const errData = await res.json();
-          alert(errData.message);
+          alert(resData.message);
         }
       } else {
         handleEdit(false);
@@ -45,9 +45,8 @@ export const useUpdateAccount = () => {
           handleOpen(false);
         }, 2000);
       }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+    } catch {
+      alert(networkErrorMessage);
     }
   };
   return { updateAccount, isOpen, handleOpen, isEdit, handleEdit };

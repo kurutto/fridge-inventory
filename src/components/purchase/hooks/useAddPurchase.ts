@@ -5,6 +5,7 @@ import { formType } from "../purchaseForm";
 import { putData } from "@/lib/putData";
 import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
+import { networkErrorMessage } from "@/constants/messages";
 
 export const useAddPurchase = (fridgeId: string) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
@@ -40,9 +41,8 @@ export const useAddPurchase = (fridgeId: string) => {
           inventoryId: values.inventoryId,
           amount: amount,
         });
-      } catch (err) {
-        console.error("Fetch failed:", err);
-        alert(`サーバーエラーが発生しました`);
+      } catch {
+        alert(networkErrorMessage);
       }
     }
 

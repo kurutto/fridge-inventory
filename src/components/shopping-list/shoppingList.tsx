@@ -25,7 +25,7 @@ const ShoppingList = async ({
             color="primary"
             aria-label="買物リスト追加"
           />
-          ボタンを押してショッピングリストを追加してください。
+          ボタンを押して買物リストを追加してください。
         </Paragraph>
       ) : (
         <List space="none" className="leading-[1.1] -mt-2.5">

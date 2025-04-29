@@ -10,6 +10,7 @@ import Input from "../ui/input";
 import Button from "../ui/button";
 import { useRouter } from "next/navigation";
 import { postData } from "@/lib/postData";
+import { networkErrorMessage } from "@/constants/messages";
 
 interface UserRegistrationProps {
   fridgeId: string;
@@ -32,9 +33,8 @@ const MemberRegistration = ({ fridgeId }: UserRegistrationProps) => {
       setUser(undefined);
       inputId.current!.value = "";
       router.refresh();
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+    } catch {
+      alert(networkErrorMessage);
     }
   };
   return (

@@ -10,6 +10,7 @@ import Box from "../ui/box";
 import Heading from "../ui/heading";
 import Paragraph from "../ui/paragraph";
 import { postData } from "@/lib/postData";
+import { networkErrorMessage } from "@/constants/messages";
 
 const formSchema = z.object({
   name: z.string()
@@ -44,9 +45,8 @@ const CreateAccount = ({ userId }: CreateAccountProps) => {
       });
       reset();
       router.refresh();
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+    } catch {
+      alert(networkErrorMessage);
     }
   };
   return (

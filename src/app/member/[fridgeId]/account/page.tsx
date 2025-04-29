@@ -23,7 +23,7 @@ const FridgePage = async () => {
   return (
     <>
       <Heading level={1}>冷蔵庫アカウント管理</Heading>
-      <div className="md:flex md:gap-7 max-md:space-y-6">
+      <div className="md:flex md:gap-x-11 max-md:space-y-6">
         <Box variant="rounded" className="flex-1/2">
           <Heading level={2} className="justify-center">
             アカウント情報
