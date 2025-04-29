@@ -40,6 +40,7 @@ interface PurchaseFormProps {
 const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
   const { isAdded, inventories, addPurchase } = useAddPurchase(fridgeId);
   const [inventoryCheck, setInventoryCheck] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -55,7 +56,9 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
+    setIsSubmitting(true);
     addPurchase(inventoryCheck, values, reset, userId);
+    setIsSubmitting(false);
   };
   return (
     <>
@@ -173,7 +176,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
           variant="horizontally"
           className="md:mt-8 max-md:mt-6 justify-center"
         >
-          <Button type="submit" color="primary" className="w-45">
+          <Button type="submit" color="primary" className="w-45" disabled={isSubmitting}>
             送信
           </Button>
         </Box>

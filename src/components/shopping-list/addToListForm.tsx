@@ -8,7 +8,7 @@ import Input from "../ui/input";
 import Label from "../ui/label";
 import Paragraph from "../ui/paragraph";
 import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 
 const formSchema = z.object({
@@ -28,6 +28,7 @@ interface AddToListFormProps {
 const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
   const { isAdded, createItem } = useCreateDataFromModal();
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
     },
   });
   const onSubmit = async (values: formType) => {
+    setIsSubmitting(true);
     await createItem(
       `/fridge/${fridgeId}/shopping-list`,
       {
@@ -54,6 +56,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
       values.name,
       handleOpen
     );
+    setIsSubmitting(false);
   };
   return (
     <>
@@ -102,6 +105,7 @@ const AddToListForm = ({ userId, fridgeId }: AddToListFormProps) => {
           type="submit"
           color="primary"
           className="block mx-auto w-45 md:mt-8 max-md:mt-6"
+          disabled={isSubmitting}
         >
           送信
         </Button>

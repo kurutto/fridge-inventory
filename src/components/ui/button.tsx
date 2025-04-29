@@ -7,9 +7,10 @@ import {
   FaArrowDown,
   FaArrowUp,
 } from "react-icons/fa6";
+import React from "react";
 
 interface ButtonProps
-  extends Omit<React.ComponentPropsWithoutRef<"button">, "className"> {
+  extends Omit<React.ComponentPropsWithRef<"button">, "className"> {
   variant?: "base" | "add" | "delete" | "photo" | "angle" | "text";
   angle?: "up" | "down";
   color?: "primary" | "secondary" | "outline" | "destructive";
@@ -17,16 +18,16 @@ interface ButtonProps
   children?: React.ReactNode;
   className?: string;
 }
-
-const Button = ({
-  variant = "base",
-  angle,
-  color,
-  size,
-  children,
-  className,
-  ...props
-}: ButtonProps) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({
+    variant = "base",
+    angle,
+    color,
+    size,
+    children,
+    className,
+    ...props
+  }, ref) => {
   const button = tv({
     base: "cursor-pointer hover:opacity-90 transition",
     variants: {
@@ -84,6 +85,7 @@ const Button = ({
         className
       )}
       {...props}
+      ref={ref}
     >
       {variant === "base" || variant === "text" ? (
         <>{children}</>
@@ -100,6 +102,6 @@ const Button = ({
       ) : null}
     </button>
   );
-};
+});
 
 export default Button;
