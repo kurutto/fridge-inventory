@@ -45,7 +45,7 @@ export const useUpdateAccount = () => {
           handleOpen(false);
         }, 2000);
       }
-    } catch (err) {
+    } catch {
       alert(networkErrorMessage);
     }
   };

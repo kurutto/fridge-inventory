@@ -20,7 +20,7 @@ export const useUpdateDataFromModal = () => {
       reset();
       router.refresh();
       handleOpen();
-    } catch (err) {
+    } catch {
       alert(networkErrorMessage);
     }
   };
