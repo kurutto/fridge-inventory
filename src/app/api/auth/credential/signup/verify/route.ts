@@ -1,17 +1,30 @@
 import prisma from "@/lib/prisma";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+import {
+  invalidTokenMessage,
+  invalidOrExpiredTokenMessage,
+  serverErrorMessage,
+} from "@/constants/apiMessages";
 
 export async function GET(req: Request) {
   try {
     const token = await req.url.split("?token=")[1];
     if (!token) {
-      return NextResponse.json({ message: "無効なトークン" }, { status: 400 });
+      return NextResponse.json(
+        { message: invalidTokenMessage },
+        { status: 400 }
+      );
     }
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as jwt.JwtPayload;
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
+    } catch (error) {
+      return NextResponse.json(
+        { message: invalidOrExpiredTokenMessage },
+        { status: 400 }
+      );
+    }
     const id = decoded.id;
     const userId = decoded.userId;
     const name = decoded.name;
@@ -37,10 +50,8 @@ export async function GET(req: Request) {
       },
     });
     return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/signin`);
-  } catch (error) {
-    return NextResponse.json(
-      { message: "無効または期限切れのトークン", error },
-      { status: 400 }
-    );
+  } catch (err) {
+    console.error("GET Error:", err);
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createId } from "@paralleldrive/cuid2";
+import { serverErrorMessage } from "@/constants/apiMessages";
 
 const YAHOO_API_URL = "https://jlp.yahooapis.jp/FuriganaService/V2/furigana";
 const APP_ID = process.env.YAHOO_API_CLIENT_ID;
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("POST Error:", err);
     return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }

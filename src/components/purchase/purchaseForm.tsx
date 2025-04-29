@@ -12,8 +12,12 @@ import Paragraph from "../ui/paragraph";
 import Select from "../ui/select";
 import { categories } from "@/constants/categories";
 import { useAddPurchase } from "./hooks/useAddPurchase";
+import { InventoryType } from "@/types/types";
 
-export const formSchema = (inventoryCheck: boolean) =>
+export const formSchema = (
+  inventoryCheck: boolean,
+  inventories: InventoryType[]
+) =>
   z.object({
     name: z
       .string()
@@ -23,11 +27,12 @@ export const formSchema = (inventoryCheck: boolean) =>
       message: "必須項目です",
     }),
     date: z.string(),
-    inventoryId: inventoryCheck
-      ? z.string().min(1, {
-          message: "必須項目です",
-        })
-      : z.string(),
+    inventoryId:
+      inventoryCheck && inventories.length > 0
+        ? z.string().min(1, {
+            message: "必須項目です",
+          })
+        : z.string(),
     amount: z.coerce.number({ message: "半角整数で入力してください" }),
   });
 
@@ -49,7 +54,7 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
     reset,
     formState: { errors },
   } = useForm<formType>({
-    resolver: zodResolver(formSchema(inventoryCheck)),
+    resolver: zodResolver(formSchema(inventoryCheck, inventories)),
     defaultValues: {
       category: "0",
       date: new Date().toISOString().split("T")[0],
@@ -122,56 +127,57 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
             />
           </Box>
 
-          {inventories.length === 0 ? (
-            <Paragraph className={inventoryCheck ? "" : "hidden"}>
-              在庫管理品がありません。先に在庫管理登録を行なってください。
-            </Paragraph>
-          ) : (
-            <>
-              <Box
-                variant="horizontally"
-                className={inventoryCheck ? "" : "hidden"}
+          <Paragraph
+            className={
+              inventoryCheck && inventories.length === 0 ? "" : "hidden"
+            }
+          >
+            在庫管理品がありません。先に在庫管理登録を行なってください。
+          </Paragraph>
+          <Box
+            variant="horizontallyForm"
+            className={inventories.length > 0 && inventoryCheck ? "" : "!hidden"}
+          >
+            <Label htmlFor="inventoryId" className="sm:w-20">
+              在庫管理名
+            </Label>
+            <div>
+              <Select
+                id="inventoryId"
+                {...register("inventoryId")}
+                className="flex-1"
               >
-                <Label htmlFor="inventoryId" className="sm:w-20">
-                  在庫管理名
-                </Label>
-                <div>
-                  <Select
-                    id="inventoryId"
-                    {...register("inventoryId")}
-                    className="flex-1"
-                  >
-                    {inventories?.map((inventory, idx) => (
-                      <option value={inventory.id} key={idx}>
-                        {inventory.name}({categories[inventory.category]})
-                      </option>
-                    ))}
-                  </Select>
-                </div>
-              </Box>
-              <Box
-                variant="horizontally"
-                className={inventoryCheck ? "" : "hidden"}
-              >
-                <Label htmlFor="amount" className="w-20">
-                  追加数量<span className="text-destructive pl-0.5">*</span>
-                </Label>
-                <div className="flex-1">
-                  <Input
-                    type="text"
-                    id="amount"
-                    {...register("amount")}
-                    className="w-36"
-                  />
-                  {errors.amount && (
-                    <Paragraph variant="error">
-                      {errors.amount.message}
-                    </Paragraph>
-                  )}
-                </div>
-              </Box>
-            </>
-          )}
+                <option value="">既存の在庫管理品から選択</option>
+                {inventories?.map((inventory, idx) => (
+                  <option value={inventory.id} key={idx}>
+                    {inventory.name}({categories[inventory.category]})
+                  </option>
+                ))}
+              </Select>
+              {errors.inventoryId && (
+                <Paragraph variant="error">{errors.inventoryId.message}</Paragraph>
+              )}
+            </div>
+          </Box>
+          <Box
+            variant="horizontallyForm"
+            className={inventories.length > 0 && inventoryCheck ? "" : "!hidden"}
+          >
+            <Label htmlFor="amount" className="w-20">
+              追加数量<span className="text-destructive pl-0.5">*</span>
+            </Label>
+            <div className="flex-1">
+              <Input
+                type="text"
+                id="amount"
+                {...register("amount")}
+                className="w-36"
+              />
+              {errors.amount && (
+                <Paragraph variant="error">{errors.amount.message}</Paragraph>
+              )}
+            </div>
+          </Box>
         </Box>
         <Box
           variant="horizontally"

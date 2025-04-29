@@ -1,3 +1,4 @@
+import { serverErrorMessage } from "@/constants/apiMessages";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("POST Error:", err);
     return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }

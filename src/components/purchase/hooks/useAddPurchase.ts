@@ -52,7 +52,7 @@ export const useAddPurchase = (fridgeId: string) => {
       {
         userId: userId,
         fridgeId: fridgeId,
-        inventoryId: inventoryCheck ? values.inventoryId : null,
+        inventoryId: inventoryCheck && inventories.length > 0 ? values.inventoryId : null,
         name: values.name,
         category: Number(values.category),
         date: new Date(values.date),

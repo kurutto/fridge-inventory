@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { serverErrorMessage } from "@/constants/apiMessages";
 
 export async function POST(req: Request) {
   try {
@@ -16,10 +17,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (err) {
     console.error("POST Error:", err);
-    return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }
 
@@ -41,11 +39,8 @@ export async function PUT(req: Request) {
     });
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (err) {
-    console.error("POST Error:", err);
-    return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
-      { status: 500 }
-    );
+    console.error("PUT Error:", err);
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }
 export async function GET(req: Request) {
@@ -59,9 +54,6 @@ export async function GET(req: Request) {
     return NextResponse.json(inventories);
   } catch (err) {
     console.error("GET Error:", err);
-    return NextResponse.json(
-      { message: "データの取得に失敗しました。" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }

@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import { createId } from "@paralleldrive/cuid2";
+import { emailAlreadyRegisteredMessage } from "@/constants/apiMessages";
+import { serverErrorMessage } from "@/constants/apiMessages";
 
 export async function POST(req: Request) {
   try {
@@ -28,7 +30,7 @@ export async function POST(req: Request) {
     if (checkEmail) {
       return NextResponse.json(
         {
-          message: "このメールアドレスは既に登録されています",
+          message: emailAlreadyRegisteredMessage,
           errorId: "INVALID_EMAIL",
         },
         { status: 400 }
@@ -68,14 +70,11 @@ export async function POST(req: Request) {
       subject: "【重要】メールアドレスの認証を完了してください",
       text: `${name}様\n\nこのたびはFridgeInventoryにご登録いただき、誠にありがとうございます。\n 登録を完了するには、以下のリンクをクリックしてメールアドレスの認証を行ってください。\n\n▼メールアドレスの認証\n${verificationUrl}\n\n※このリンクの有効期限は1時間です。\n※本メールにお心当たりのない場合は、お手数ですが破棄してください。\n\n今後ともFridgeInventoryをよろしくお願いいたします。  `,
     });
-
-    return NextResponse.json(
-      { message: "確認メールを送信しました" },
-      { status: 200 }
-    );
+    return NextResponse.json({ status: 200 });
   } catch (err) {
+    console.error("POST Error:", err);
     return NextResponse.json(
-      { message: "サーバーエラー", err },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }

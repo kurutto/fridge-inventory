@@ -1,3 +1,4 @@
+import { idAlreadyRegisteredMessage, serverErrorMessage } from "@/constants/apiMessages";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -7,7 +8,7 @@ export async function PUT(req: Request) {
     const fridge = await prisma.fridge.findFirst({ where: { id: id } });
     if (fridge && fridgeId !== id) {
       return NextResponse.json(
-        { message: "このIDは既に登録されています", errorId: "INVALID_ID" },
+        { message: idAlreadyRegisteredMessage, errorId: "INVALID_ID" },
         { status: 400 }
       );
     }
@@ -21,11 +22,11 @@ export async function PUT(req: Request) {
         description: description,
       },
     });
-    return NextResponse.json({ message: "Success" }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     console.error("POST Error:", err);
     return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }
@@ -52,7 +53,7 @@ export async function GET(req: Request) {
   } catch (err) {
     console.error("GET Error:", err);
     return NextResponse.json(
-      { message: "データの取得に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }
@@ -68,6 +69,10 @@ export async function DELETE(req: Request) {
     });
     return NextResponse.json({ message: "Success" }, { status: 201 });
   } catch (err) {
-    return NextResponse.json(err);
+    console.error("DELETE Error:", err);
+    return NextResponse.json(
+      { message: serverErrorMessage },
+      { status: 500 }
+    );
   }
 }

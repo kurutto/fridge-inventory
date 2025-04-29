@@ -1,3 +1,4 @@
+import { serverErrorMessage } from "@/constants/apiMessages";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -9,8 +10,12 @@ export async function DELETE(req: Request) {
         id: itemId,
       },
     });
-    return NextResponse.json({ message: "Success" }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
-    return NextResponse.json(err);
+    console.error("DELETE Error:", err);
+    return NextResponse.json(
+      { message: serverErrorMessage },
+      { status: 500 }
+    );
   }
 }
