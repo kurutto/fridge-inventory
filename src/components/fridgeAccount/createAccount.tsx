@@ -12,9 +12,9 @@ import Paragraph from "../ui/paragraph";
 import { postData } from "@/lib/postData";
 
 const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "必須項目です",
-  }),
+  name: z.string()
+  .transform((value) => value.trim())
+  .refine((value) => value.length > 0, { message: "必須項目です" }),
   description: z.string(),
 });
 type formType = z.infer<typeof formSchema>;

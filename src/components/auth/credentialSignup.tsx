@@ -24,8 +24,9 @@ const formSchema = z.object({
     .string({
       invalid_type_error: "入力値に誤りがります",
     })
-    .min(2, {
-      message: "2文字以上で入力してください",
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, {
+      message: "必須項目です",
     }),
   email: z
     .string({

@@ -12,9 +12,10 @@ import { useContext, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 
 const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "必須項目です",
-  }),
+  name: z
+    .string()
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, { message: "必須項目です" }),
   amount: z.string(),
   dueDate: z.string(),
 });

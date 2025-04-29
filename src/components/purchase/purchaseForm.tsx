@@ -15,9 +15,10 @@ import { useAddPurchase } from "./hooks/useAddPurchase";
 
 export const formSchema = (inventoryCheck: boolean) =>
   z.object({
-    name: z.string().min(1, {
-      message: "必須項目です",
-    }),
+    name: z
+      .string()
+      .transform((value) => value.trim())
+      .refine((value) => value.length > 0, { message: "必須項目です" }),
     category: z.string().min(1, {
       message: "必須項目です",
     }),
@@ -176,7 +177,12 @@ const PurchaseForm = ({ userId, fridgeId }: PurchaseFormProps) => {
           variant="horizontally"
           className="md:mt-8 max-md:mt-6 justify-center"
         >
-          <Button type="submit" color="primary" className="w-45" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            color="primary"
+            className="w-45"
+            disabled={isSubmitting}
+          >
             送信
           </Button>
         </Box>

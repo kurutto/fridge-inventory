@@ -21,9 +21,10 @@ import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 
 const formSchema = z.object({
   category: z.coerce.number(),
-  name: z.string().min(1, {
-    message: "必須項目です",
-  }),
+  name: z
+    .string()
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, { message: "必須項目です" }),
   remaining: z.coerce.number({ message: "半角整数で入力してください" }),
 });
 
