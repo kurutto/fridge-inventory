@@ -1,3 +1,4 @@
+import { serverErrorMessage } from "@/constants/apiMessages";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -9,12 +10,9 @@ export async function DELETE(req: Request) {
         id: inventoryId,
       },
     });
-    return NextResponse.json({ message: "Success" }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     console.error("DELETE Error:", err);
-    return NextResponse.json(
-      { message: "データの削除に失敗しました。" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }

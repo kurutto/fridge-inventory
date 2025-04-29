@@ -13,7 +13,7 @@ import { categories } from "@/constants/categories";
 import { InventoryType, KanaDataType } from "@/types/types";
 import { cn } from "@/lib/utils";
 import { getKana } from "@/lib/inventory";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalContext, ModalContextType } from "@/context/modalContext";
 import { useDeleteDataFromModal } from "@/hooks/useDeleteDataFromModal";
 import { useUpdateDataFromModal } from "@/hooks/useUpdateDataFromModal";
@@ -21,9 +21,10 @@ import { useCreateDataFromModal } from "@/hooks/useCreateDataFromModal";
 
 const formSchema = z.object({
   category: z.coerce.number(),
-  name: z.string().min(1, {
-    message: "必須項目です",
-  }),
+  name: z
+    .string()
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, { message: "必須項目です" }),
   remaining: z.coerce.number({ message: "半角整数で入力してください" }),
 });
 
@@ -36,6 +37,7 @@ interface InventoryFormProps {
 const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   const { handleOpen } = useContext<ModalContextType>(ModalContext);
   const { isAdded, createItem } = useCreateDataFromModal();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { updateItem } = useUpdateDataFromModal();
   const { deleteItem } = useDeleteDataFromModal();
   const {
@@ -53,6 +55,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
   });
 
   const onSubmit = async (values: formType) => {
+    setIsSubmitting(true);
     const kanaData = await getKana(fridgeId, values.name);
     const kanaArr = kanaData.result.word.map((kanaObj: KanaDataType) =>
       kanaObj.furigana ? kanaObj.furigana : kanaObj.surface
@@ -88,6 +91,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
         handleOpen
       );
     }
+    setIsSubmitting(false);
   };
 
   const handleDelete = async () => {
@@ -166,6 +170,7 @@ const InventoryForm = ({ fridgeId, inventory }: InventoryFormProps) => {
             type="submit"
             color="primary"
             className={cn("block", inventory ? "w-30" : "w-45")}
+            disabled={isSubmitting}
           >
             送信
           </Button>

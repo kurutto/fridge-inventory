@@ -27,7 +27,7 @@ export const useUpdateAccount = () => {
         if (resData.errorId === "INVALID_ID") {
           setError("id", {
             type: "server",
-            message: "このIDはすでに使われています",
+            message: resData.message,
           });
         } else {
           const errData = await res.json();

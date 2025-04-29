@@ -22,13 +22,9 @@ const formSchema = z.object({
       message: "6文字以上で入力してください",
     }),
   name: z
-    .string({
-      required_error: "必須項目です",
-      invalid_type_error: "入力値に誤りがります",
-    })
-    .min(2, {
-      message: "2文字以上で入力してください",
-    }),
+    .string()
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, { message: "必須項目です" }),
   description: z.string(),
 });
 

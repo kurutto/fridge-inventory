@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { createId } from "@paralleldrive/cuid2";
+import { serverErrorMessage } from "@/constants/apiMessages";
 export async function POST(req: Request) {
   const { userId, name, description } = await req.json();
   try {
@@ -20,10 +21,14 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Success", fridgeId: fridgeId },
+      { fridgeId: fridgeId },
       { status: 201 }
     );
   } catch (err) {
-    return NextResponse.json({ message: "Error", err }, { status: 500 });
+      console.error("POST Error:", err);
+      return NextResponse.json(
+        { message: serverErrorMessage },
+        { status: 500 }
+      );
   }
 }

@@ -9,6 +9,7 @@ import Label from "../ui/label";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import Paragraph from "../ui/paragraph";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   id: z
@@ -23,8 +24,9 @@ const formSchema = z.object({
     .string({
       invalid_type_error: "入力値に誤りがります",
     })
-    .min(2, {
-      message: "2文字以上で入力してください",
+    .transform((value) => value.trim())
+    .refine((value) => value.length > 0, {
+      message: "必須項目です",
     }),
   email: z
     .string({
@@ -44,6 +46,7 @@ const formSchema = z.object({
 type formType = z.infer<typeof formSchema>;
 
 const CredentialSignup = () => {
+  const router = useRouter();
   const [sendMessage, setSendMessage] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const {
@@ -89,8 +92,8 @@ const CredentialSignup = () => {
         }
       }
       if (res.ok) {
-        setSendMessage("");
-        setResponseMessage(data.message);
+        router.push("/signup/complete");
+        router.refresh();
       }
     } catch {
       setError("root", { message: "サーバーエラーが発生しました" });

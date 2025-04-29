@@ -1,3 +1,4 @@
+import { serverErrorMessage } from "@/constants/apiMessages";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -24,7 +25,7 @@ export async function PUT(req: Request) {
   } catch (err) {
     console.error("PUT Error:", err);
     return NextResponse.json(
-      { message: "データの送信に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }
@@ -49,7 +50,11 @@ export async function GET(req: Request) {
     });
     return NextResponse.json(user);
   } catch (err) {
-    return NextResponse.json(err);
+    console.error("GET Error:", err);
+    return NextResponse.json(
+      { message: serverErrorMessage },
+      { status: 500 }
+    );
   }
 }
 
@@ -61,11 +66,11 @@ export async function DELETE(req: Request) {
         id: userId,
       },
     });
-    return NextResponse.json({ message: "Success" }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     console.error("DELETE Error:", err);
     return NextResponse.json(
-      { message: "データの削除に失敗しました。" },
+      { message: serverErrorMessage },
       { status: 500 }
     );
   }

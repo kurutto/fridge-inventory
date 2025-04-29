@@ -1,6 +1,11 @@
 import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import {
+  idNotRegisteredMessage,
+  passwordIncorrectMessage,
+  serverErrorMessage,
+} from "@/constants/apiMessages";
 
 export async function POST(req: Request) {
   try {
@@ -12,7 +17,7 @@ export async function POST(req: Request) {
     });
     if (!existingUser) {
       return NextResponse.json(
-        { message: "このIDは登録されていません" },
+        { message: idNotRegisteredMessage },
         { status: 400 }
       );
     }
@@ -29,11 +34,12 @@ export async function POST(req: Request) {
       return NextResponse.json(user, { status: 201 });
     } else {
       return NextResponse.json(
-        { message: "パスワードが間違っています" },
+        { message: passwordIncorrectMessage },
         { status: 400 }
       );
     }
   } catch (err) {
-    return NextResponse.json(err);
+    console.error("POST Error:", err);
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }
