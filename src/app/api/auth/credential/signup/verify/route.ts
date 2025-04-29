@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     let decoded;
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { message: invalidOrExpiredTokenMessage },
         { status: 400 }
