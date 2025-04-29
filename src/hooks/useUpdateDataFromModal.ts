@@ -1,3 +1,4 @@
+import { networkErrorMessage } from "@/constants/messages";
 import { putData } from "@/lib/putData";
 import { DataType } from "@/types/types";
 import { useRouter } from "next/navigation";
@@ -12,16 +13,15 @@ export const useUpdateDataFromModal = () => {
   ) => {
     try {
       const res = await putData(fetchPath, data);
+      const resData = await res.json();
       if (!res.ok) {
-        const errData = await res.json();
-        alert(errData.message);
+        alert(resData.message);
       }
       reset();
       router.refresh();
       handleOpen();
     } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+      alert(networkErrorMessage);
     }
   };
   return { updateItem };

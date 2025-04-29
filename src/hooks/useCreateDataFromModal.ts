@@ -1,3 +1,4 @@
+import { networkErrorMessage } from "@/constants/messages";
 import { postData } from "@/lib/postData";
 import { DataType } from "@/types/types";
 import { usePathname, useRouter } from "next/navigation";
@@ -31,9 +32,8 @@ export const useCreateDataFromModal = () => {
       } else {
         handleOpen();
       }
-    } catch (err) {
-      console.error("Fetch failed:", err);
-      alert(`サーバーエラーが発生しました`);
+    } catch {
+      alert(networkErrorMessage);
     }
   };
   return { isAdded, createItem };
