@@ -47,8 +47,8 @@ export async function POST(req: Request) {
       },
     });
 
-    const paylodad = { id, userId, name, email };
-    const token = jwt.sign(paylodad, process.env.JWT_SECRET!, {
+    const payload = { id, userId, name, email };
+    const token = jwt.sign(payload, process.env.JWT_SECRET!, {
       expiresIn: "1h",
     });
 
