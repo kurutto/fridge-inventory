@@ -67,15 +67,12 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "【重要】メールアドレスの認証を完了してください",
-      text: `${name}様\n\nこのたびはFridgeInventoryにご登録いただき、誠にありがとうございます。\n 登録を完了するには、以下のリンクをクリックしてメールアドレスの認証を行ってください。\n\n▼メールアドレスの認証\n${verificationUrl}\n\n※このリンクの有効期限は1時間です。\n※本メールにお心当たりのない場合は、お手数ですが破棄してください。\n\n今後ともFridgeInventoryをよろしくお願いいたします。  `,
+      subject: "【FI買物リスト】メールアドレスの認証を完了してください",
+      text: `${name}様\n\nFI買物リストにご登録いただきありがとうございます。\n 登録を完了するには、以下のリンクをクリックしてメールアドレスの認証を行ってください。\n\n▼メールアドレスの認証\n${verificationUrl}\n\n※このリンクの有効期限は1時間です。\n※本メールにお心当たりのない場合は、お手数ですが破棄してください。\n\n今後ともFI買物リストをよろしくお願いいたします。\n\nFI買物リスト運営チーム\nfishoppinglist@gmail.com  `,
     });
     return NextResponse.json({ status: 200 });
   } catch (err) {
     console.error("POST Error:", err);
-    return NextResponse.json(
-      { message: serverErrorMessage },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: serverErrorMessage }, { status: 500 });
   }
 }

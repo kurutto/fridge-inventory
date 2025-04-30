@@ -4,6 +4,7 @@ import { nextAuthOptions } from "@/lib/next-auth/options";
 import { redirect } from "next/navigation";
 import FridgeModal from "@/components/fridge/fridgeModal";
 import BottomMenu from "@/components/bottomMenu/bottomMenu";
+import { getUser } from "@/lib/user";
 
 export default async function RootLayout({
   children,
@@ -13,6 +14,10 @@ export default async function RootLayout({
   const session = await getServerSession(nextAuthOptions);
   if (!session) {
     redirect("/signin");
+  }
+  const user = await getUser(session.user.id);
+  if (!user) {
+    redirect("/signout");
   }
 
   return (
