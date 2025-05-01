@@ -24,9 +24,16 @@ const SignIn = async () => {
       </Paragraph>
       <Box variant="rounded" className="md:mx-auto md:max-w-md">
         <CredentialSignin />
-        <Button variant="text" className="mx-auto block">
-          <Link href="/signup">アカウント作成はこちら</Link>
-        </Button>
+        <Box variant="spaceY">
+          <Button variant="text" className="mx-auto block">
+            <Link href="/reset-password/send-mail">
+              パスワードを忘れた方はこちら
+            </Link>
+          </Button>
+          <Button variant="text" className="mx-auto block">
+            <Link href="/signup">アカウント作成はこちら</Link>
+          </Button>
+        </Box>
       </Box>
     </>
   );

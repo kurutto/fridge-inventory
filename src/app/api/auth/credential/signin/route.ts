@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const hashedPassword = await existingUser.hashedPassword;
+    const hashedPassword = existingUser.hashedPassword;
     const isMatch = await bcrypt.compare(password, hashedPassword);
 
     if (isMatch) {

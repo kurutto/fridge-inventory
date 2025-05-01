@@ -10,6 +10,7 @@ import Input from "../ui/input";
 import Button from "../ui/button";
 import Paragraph from "../ui/paragraph";
 import { useRouter } from "next/navigation";
+import { networkErrorMessage } from "@/constants/messages";
 
 const formSchema = z.object({
   id: z
@@ -88,7 +89,7 @@ const CredentialSignup = () => {
           setError("email", { message: data.message });
         } else {
           setSendMessage("");
-          setError("root", { message: "サインアップに失敗しました" });
+          setError("root", { message: data.message });
         }
       }
       if (res.ok) {
@@ -96,7 +97,7 @@ const CredentialSignup = () => {
         router.refresh();
       }
     } catch {
-      setError("root", { message: "サーバーエラーが発生しました" });
+      setError("root", { message: networkErrorMessage });
     }
   };
 
