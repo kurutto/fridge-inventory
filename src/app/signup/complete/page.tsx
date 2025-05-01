@@ -2,11 +2,11 @@ import Box from "@/components/ui/box";
 import Heading from "@/components/ui/heading";
 import Paragraph from "@/components/ui/paragraph";
 
-const SignupComplate = () => {
+const SignupComplete = () => {
   return (
-    <Box variant="roundedMaxMd" className="md:w-lg mx-auto">
+    <Box variant="roundedMaxMd">
       <Heading level={2} className="justify-center">ご登録メールアドレスに確認メールを送信しました</Heading>
-      <div className="space-y-4 sm:text-center max-w-md mx-auto">
+      <div className="space-y-4 sm:text-center max-w-lg mx-auto">
       <Paragraph>
         まだ登録は完了していません。
         </Paragraph>
@@ -20,4 +20,4 @@ const SignupComplate = () => {
     </Box>
   );
 };
-export default SignupComplate;
+export default SignupComplete;
