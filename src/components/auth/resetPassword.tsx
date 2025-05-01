@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Heading from "../ui/heading";
 import Box from "../ui/box";
 import Label from "../ui/label";
 import Input from "../ui/input";
