@@ -20,23 +20,34 @@ export async function PUT(req: Request) {
         { status: 400 }
       );
     }
-    const userId = decoded.userId;
-    console.log("userIdだよ", userId);
+    const email = decoded.email;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const credential = await prisma.credential.findFirst({
-      where: { userId: userId },
-    });
-    console.log("credentialだよ", credential);
-    if (!credential) {
+    if (typeof email !== "string") {
       return NextResponse.json(
         { message: invalidTokenMessage, errorId: "INVALID_TOKEN" },
         { status: 400 }
       );
     }
-
+    const user = await prisma.user.findFirst({
+      where: { email: email },
+      include: {
+        credential: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (!user) {
+      return NextResponse.json(
+        { message: invalidTokenMessage, errorId: "INVALID_TOKEN" },
+        { status: 400 }
+      );
+    }
+    //credentialでアカウントを作成する時に既に登録されているuserIdとemailの場合、新規にcredentialでアカウントを作成できないので、credential[0]としても問題はない
     await prisma.credential.update({
       where: {
-        id: credential.id,
+        id: user.credential[0].id,
       },
       data: {
         hashedPassword: hashedPassword,

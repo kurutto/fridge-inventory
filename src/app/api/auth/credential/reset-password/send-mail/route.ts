@@ -7,22 +7,25 @@ import { serverErrorMessage } from "@/constants/apiMessages";
 
 export async function POST(req: Request) {
   try {
-    const { userId, email } = await req.json();
+    const { email } = await req.json();
 
+    //アカウントの有無/credentialで登録されているかの確認
     const checkUser = await prisma.user.findFirst({
       where: {
-        id: userId,
         email: email,
       },
+      include:{
+        credential:true
+      }
     });
-    if (!checkUser) {
+    if (!checkUser || checkUser.credential.length===0 ) {
       return NextResponse.json(
         { message: accountNotFoundMessage, errorId: "INVALID_ACCOUNT" },
         { status: 400 }
       );
     }
 
-    const payload = { userId };
+    const payload = { email };
     const token = jwt.sign(payload, process.env.JWT_SECRET!, {
       expiresIn: "1h",
     });
