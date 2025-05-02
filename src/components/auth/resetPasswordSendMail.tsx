@@ -12,14 +12,6 @@ import { useRouter } from "next/navigation";
 import { networkErrorMessage } from "@/constants/messages";
 
 const formSchema = z.object({
-  userId: z
-    .string({
-      invalid_type_error: "入力値に誤りがります",
-    })
-    .regex(/^[a-zA-Z0-9]+$/, { message: "半角英数字で入力してください" })
-    .min(6, {
-      message: "6文字以上で入力してください",
-    }),
   email: z
     .string({
       invalid_type_error: "入力値に誤りがります",
@@ -47,7 +39,6 @@ const ResetPasswordSendMail = () => {
         {
           method: "POST",
           body: JSON.stringify({
-            userId: values.userId,
             email: values.email,
           }),
           headers: {
@@ -83,22 +74,6 @@ const ResetPasswordSendMail = () => {
         >
           <Box variant="spaceY" className="mx-auto sm:max-w-md">
             {errors.root && <Paragraph>{errors.root.message}</Paragraph>}
-            <Box variant="horizontallyForm">
-              <Label htmlFor="userId" className="sm:w-35">
-                ユーザーID<span className="text-destructive">*</span>
-              </Label>
-              <div className="flex-1">
-                <Input
-                  type="text"
-                  id="userId"
-                  {...register("userId")}
-                  className="w-full"
-                />
-                {errors.userId && (
-                  <Paragraph variant="error">{errors.userId.message}</Paragraph>
-                )}
-              </div>
-            </Box>
             <Box variant="horizontallyForm">
               <Label htmlFor="email" className="sm:w-35">
                 メールアドレス<span className="text-destructive">*</span>
