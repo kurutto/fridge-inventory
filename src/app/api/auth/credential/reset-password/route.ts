@@ -22,6 +22,12 @@ export async function PUT(req: Request) {
     }
     const email = decoded.email;
     const hashedPassword = await bcrypt.hash(password, 10);
+    if (typeof email !== "string") {
+      return NextResponse.json(
+        { message: invalidTokenMessage, errorId: "INVALID_TOKEN" },
+        { status: 400 }
+      );
+    }
     const user = await prisma.user.findFirst({
       where: { email: email },
       include: {
