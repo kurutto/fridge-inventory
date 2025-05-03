@@ -9,6 +9,7 @@ import { useChangeFridgeAccount } from "@/hooks/useChangeFridgeAccount";
 import { useHandleOpen } from "@/hooks/useHandleOpen";
 import Overlay from "../ui/overlay";
 import CloseButton from "../ui/closeButton";
+import Paragraph from "../ui/paragraph";
 
 interface HamburgerMenu {
   session?: SessionType | null;
@@ -34,85 +35,88 @@ const HamburgerMenu = ({ user, session }: HamburgerMenu) => {
       <Overlay isOpen={isOpen} handleOpen={handleOpen} />
       <div
         className={cn(
-          "fixed w-80 h-screen top-0 transition-all bg-white z-50",
+          "fixed w-80 h-screen top-0 transition-all bg-white z-50 flex flex-col justify-between",
           isOpen ? "right-0" : "-right-80"
         )}
       >
-        <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
-        <ul>
-          <HamburgerMenuItem
-            href={
-              session?.user?.fridgeId
-                ? `/member/${session.user.fridgeId}`
-                : session?.user?.fridgeId
-                ? "/member/fridge-account"
-                : "/signin"
-            }
-            onClick={() => handleOpen()}
-          >
-            トップページ
-          </HamburgerMenuItem>
-          {user && (
-            <HamburgerMenuItem>
-              <HamburgerMenuLink
-                href="/member/fridge-account"
-                onClick={() => handleOpen()}
-              >
-                冷蔵庫アカウント作成・切替
-              </HamburgerMenuLink>
-              {fridgeAccounts && (
-                <ul>
-                  {fridgeAccounts.map((fridgeAccount, idx) => (
-                    <HamburgerSubMenuItem
-                      key={idx}
-                      onClick={() =>
-                        handleAccountClick(
-                          fridgeAccount.fridgeId,
-                          fridgeAccount.fridge.name
-                        )
-                      }
-                    >
-                      {fridgeAccount.fridge.name}
-                    </HamburgerSubMenuItem>
-                  ))}
-                </ul>
-              )}
-            </HamburgerMenuItem>
-          )}
-          {session?.user?.fridgeId && (
+        <div>
+          <CloseButton handleOpen={handleOpen} className="ml-auto mt-4 mr-4" />
+          <ul>
             <HamburgerMenuItem
-              href={`/member/${session?.user?.fridgeId}/account`}
+              href={
+                session?.user?.fridgeId
+                  ? `/member/${session.user.fridgeId}`
+                  : session?.user?.fridgeId
+                  ? "/member/fridge-account"
+                  : "/signin"
+              }
               onClick={() => handleOpen()}
             >
-              冷蔵庫アカウント管理
+              トップページ
             </HamburgerMenuItem>
-          )}
-          {user ? (
-            <>
+            {user && (
+              <HamburgerMenuItem>
+                <HamburgerMenuLink
+                  href="/member/fridge-account"
+                  onClick={() => handleOpen()}
+                >
+                  冷蔵庫アカウント作成・切替
+                </HamburgerMenuLink>
+                {fridgeAccounts && (
+                  <ul>
+                    {fridgeAccounts.map((fridgeAccount, idx) => (
+                      <HamburgerSubMenuItem
+                        key={idx}
+                        onClick={() =>
+                          handleAccountClick(
+                            fridgeAccount.fridgeId,
+                            fridgeAccount.fridge.name
+                          )
+                        }
+                      >
+                        {fridgeAccount.fridge.name}
+                      </HamburgerSubMenuItem>
+                    ))}
+                  </ul>
+                )}
+              </HamburgerMenuItem>
+            )}
+            {session?.user?.fridgeId && (
               <HamburgerMenuItem
-                href="/member/mypage"
+                href={`/member/${session?.user?.fridgeId}/account`}
                 onClick={() => handleOpen()}
               >
-                マイページ
+                冷蔵庫アカウント管理
               </HamburgerMenuItem>
-              <HamburgerMenuItem
-                href="/api/auth/signout"
-                onClick={() => handleOpen()}
-              >
-                ログアウト
-              </HamburgerMenuItem>
-            </>
-          ) : (
-            <>
-              <HamburgerMenuItem href="/signin" onClick={() => handleOpen()}>
-                ログイン
-              </HamburgerMenuItem>
-              <HamburgerMenuItem href="/signup" onClick={() => handleOpen()}>
-                アカウント作成
-              </HamburgerMenuItem>
-            </>
-          )}
-        </ul>
+            )}
+            {user ? (
+              <>
+                <HamburgerMenuItem
+                  href="/member/mypage"
+                  onClick={() => handleOpen()}
+                >
+                  マイページ
+                </HamburgerMenuItem>
+                <HamburgerMenuItem
+                  href="/api/auth/signout"
+                  onClick={() => handleOpen()}
+                >
+                  ログアウト
+                </HamburgerMenuItem>
+              </>
+            ) : (
+              <>
+                <HamburgerMenuItem href="/signin" onClick={() => handleOpen()}>
+                  ログイン
+                </HamburgerMenuItem>
+                <HamburgerMenuItem href="/signup" onClick={() => handleOpen()}>
+                  アカウント作成
+                </HamburgerMenuItem>
+              </>
+            )}
+          </ul>
+        </div>
+        <Paragraph color="gray" className="text-center text-xs p-2">&copy; 2025 FI買物リスト</Paragraph>
       </div>
     </>
   );
